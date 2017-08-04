@@ -1,0 +1,279 @@
+%\documentclass[journal=jacsat]{achemso}
+
+\documentclass[10pt,aps,prb,twocolumn,amsmath,amssymb,superscriptaddress,longbibliography]{revtex4-1}
+
+%\documentclass[preprint,showpacs,preprintnumbers,amsmath,amssymb]{revtex4-1}
+%\documentclass[twocolumn,showpacs,preprintnumbers,amsmath,amssymb]{revtex4}
+% Some other (several out of many) possibilities
+%\documentclass[preprint,aps]{revtex4}
+%\documentclass[preprint,aps,draft]{revtex4}
+%\documentclass[prb,amsmath,amssymb]{revtex4}% Physical Review B
+
+\usepackage{graphicx}% Include figure files
+\usepackage{dcolumn}% Align table columns on decimal point
+\usepackage{bm}% bold math
+\usepackage{amsmath}% bold math
+\usepackage{siunitx}% si units
+\usepackage{color}
+\usepackage{graphicx}
+%\usepackage[normalem]{ulem}
+%\nofiles
+
+\bibliographystyle{achemso}
+%\bibliographystyle{naturemag}
+%\bibliographystyle{abbrv}
+
+\begin{document}
+
+\title{
+Low-cost linear-scaling \emph{ab initio} molecular dynamics for weakly-interacting systems
+}
+
+\author{Hayden Scheiber}
+\email{hayden.scheiber@mcgill.ca}
+\author{Yifei Shi}
+\author{Rustam Z. Khaliullin}
+\email{rustam.khaliullin@mcgill.ca}
+\affiliation{Department of Chemistry, McGill University, 801 Sherbrooke St. West, Montreal, QC H3A 0B8, Canada}
+
+\date{\today}
+
+\begin{abstract}
+Linear scaling density functional theory based on absolutely localized molecular orbitals is used in conjunction with the Langevin equation of motion to create a low-cost molecular dynamics method for weakly coupled molecular systems which retains sufficient accuracy to generate correct dynamical properties in water. 
+
+The approach utilizes a systematically inaccurate linear-scaling potential energy surface (PES) calculation method. 
+Inaccuracies in the calculation of force using this method are balanced by a weighted version of the Langevin Equation of motion. 
+The stochastic ``white noise'' of the Langevin Equation acts to smooth out PES discontinuities while also thermostating the system to maintain a constant thermodynamic temperature. 
+We show that Langevin dynamics can be successfully implemented to reduce computational cost by allowing systematic error in PES calculation to be absorbed into the stochastic and damping forces associated with the Langevin equation. 
+We also introduce a simple heuristic approach to find the best Langevin Equation parameters to use for balancing system-specific imperfect forces and maintaining correct dynamical behavior.
+\end{abstract}
+
+\maketitle
+\section{Introduction}
+Since the unification of molecular dynamics (MD) and density functional theory (DFT) in 1985 by Car and Parrinello,~\cite{a:thecpmd} much research has been focused on reducing the computational overhead of \emph{ab initio} molecular dynamics (AIMD) potential energy calculations.~\cite{b:aimd} 
+% Remove Following text for some journals
+AIMD provides a great advantage over traditional predefined-potential molecular dynamics in that it calculates its PES on-the-fly, rather than needing to be laboriously optimized to the specific system of interest beforehand. 
+This allows for exploration of much more chemically complex systems than are possible with traditional MD methods. 
+AIMD also allows for much greater predictive capability than traditional MD, as a first principles approach is not confined to a predetermined range of system parameters. 
+The tradeoff is the computational complexity involved in calculating an accurate set of forces for each atom at every time step of the simulation.~\cite{a:2gen-cpmd}
+% End remove
+
+The computational cost of the straightforward approach to Kohn-Sham DFT is known to grow (or \emph{scale}) cubically with system size because it involves either diagonalization of the effective Kohn-Sham Hamiltonian or, if the direct optimization of Kohn-Sham orbitals is performed, the equally costly inversion of a preconditioner.~\cite{a:ot} % Add other references here?
+This cubic scaling severely constricts the possible length and time scales accessible by AIMD using such an approach. 
+In an attempt to address this issue, there has been much research into the possibility of linear scaling (LS) DFT methods for the calculation of forces.
+
+% Most methods are based on localization of electrons into small sub domains of the system, so that long range charge transfer is ignored.~\cite{a:linscale3,a:lee-yang-1996,a:ls-scuseria-1997,a:ls-manolopoulos-1998,a:ls-helgaker-2001,a:ls-niklasson-2003,a:curvy2,a:ls-dm-sign,a:ls-parinello} So far the available methods still suffer from a high computational cost prefactor, even though they scale linearly for large systems. This has limited the available time scales for LS AIMD severely.
+
+% Re-write the following section and include any recent advances
+A number of such alternative methods explore the natural sparsity of the one-electron density matrix (DM)~\cite{a:ls-kohn-1996,a:ls-rev-1999} and are capable of yielding linear scaling (LS) for large systems.~\cite{a:linscale3,a:lee-yang-1996,a:ls-scuseria-1997,a:ls-manolopoulos-1998,a:ls-helgaker-2001,a:ls-niklasson-2003,a:curvy2,a:ls-dm-sign} 
+Unfortunately, the variational optimization of the DM is very inefficient for accurate DFT calculations~\cite{a:ls-rev-1999,a:ls-dm-sign}, which require many basis functions per atom. 
+Therefore, the applications of DM-based LS methods have been limited to minimal-basis tight-binding problems. 
+The optimal basis variants of the DM methods~\cite{a:ls-stechel-1994,a:ls-gillan-1995,a:ls-gillan-1996,a:ls-onetep-2003} designed to address this issue contract the large basis set into a small number of new localized basis functions and then optimize the DM in the contracted basis. 
+Although such methods have been successfully used for the evaluation of accurate DFT energies of very large systems~\cite{a:ls-onetep-2009,a:ls-conquest-2010,a:ls-onetep-2010-app1,a:ls-rev-2012} their application for AIMD is hampered by the computationally costly optimization of both the contracted orbitals and the density matrix.
+%
+From this point of view, methods based on the direct optimization of localized KS orbitals~\cite{a:ls-galli-parrinello-1992,a:ls-mauri-galli-car-1993,a:ls-ordejon-1993,a:ls-mauri-galli-1994,a:ls-ordejon-1995,a:ls-kim-mauri-galli-1995,a:ls-fattebert-2004,a:ls-fattebert-2006,a:burger-yang-2008} are advantageous since they require only the occupied orbitals and, thus, deal with fewer variational degrees of freedom than the DM methods. 
+Unfortunately, the progress in the development of orbital-based LS methods has been hindered by the inherently difficult convergence of the localized-orbital optimization.~\cite{a:ls-mauri-galli-car-1993,a:ls-ordejon-1995,a:ls-fattebert-2004,a:ls-rev-1999,a:weitao-yang-2013} 
+%Furthermore, numerous proposed LS functionals exhibit multiple local minima, which limits their applicability in molecular dynamics simulations because of the resulting poor conservation of the total energy~\cite{a:ls-rev-1999}.
+
+Hence, the computational prefactor of the existing LS DFT methods~\cite{a:ls-rev-1995,a:ls-rev-1999,a:ls-rev-2002,a:ls-rev-2012} remains very high and most AIMD simulations are still performed using conventional low-prefactor cubic scaling DFT methods.
+
+Here, we introduce a new low-cost linear scaling AIMD method for weakly-interacting molecular systems based on the recently developed absolutely localized molecular orbitals (ALMO) DFT approach.~\cite{a:almo-ls} 
+
+
+This method exploits non-orthogonal molecular orbitals (MOs) in a two-step self-consistent filed (SCF) approach that is designed to avoid the usual convergence issues.~\cite{a:ls-mauri-galli-car-1993,a:ls-ordejon-1995,a:ls-fattebert-2004,a:ls-rev-1999} 
+We show that due to its linear scaling nature and relatively low computational prefactor, ALMO-based DFT calculations allow for simulation of very large weakly-coupled molecular systems. 
+To decrease the cost even further, the present paper builds on the ALMO SCF method as well as other recent work involving Brownian dynamics to balance force calculation errors.~\cite{a:ls-parinello,a:2ndcpmd,a:langevin-why} 
+We will show that our approach lowers the computation cost pre-factor for the ALMO SCF method, while maintaining LS and accuracy for calculation of dynamical properties. 
+This is done by balancing a new computationally economical but systemically inaccurate force calculation method with an optimized version of the Langevin Equation of motion. 
+We also introduce an easy to follow algorithmic approach to optimize a system for generating correct dynamical behaviour.
+
+\maketitle
+\section{Theory} 
+
+Our approach is based on the ALMO SCF two-step variational method.~\cite{a:almo-ls} 
+Initially, the electrons are partitioned into groups based on a logical approach, generally corresponding to molecules. 
+In the first step, the basis atomic orbitals (AOs) are constrained to their parent molecules and a variational optimization is performed under the Born-Oppenheimer approximation using the DFT-SCF method within the non-overlapping domains. 
+This is akin to calculating the electronic structure of each molecule (with frozen nuclei) within a coulombic field produced by the surrounding molecules. 
+Charge transfer is completely constrained at this step. 
+In the second step, the variationally optimized but constrained MOs are allowed to delocalize onto nearby groups up to a desired cutoff radius $R_{c}$. 
+This step requires a second variational optimization to be performed. 
+Because of the logical partitioning of the groups and ignoring of long range forces, both steps of the electronic structure calculation are linear scaling with respect to system size. 
+For more details on this method, see ref.\ \citenum{a:almo-ls}.
+
+A known source of error in force calculation within the ALMO SCF paradigm occurs due to the discontinuous jump in potential energy when a neighboring molecule passes beyond the cutoff radius $R_{c}$ and is suddenly ignored in potential energy calculations. 
+Setting $R_{c}$ to a larger value reduces this discontinuity, but greatly increases the computational cost as longer distance (and less important) interactions must be calculated. 
+As long as the discontinuity in force is small compared with the random error of the calculation, it can be safely ignored. Previously, this meant that $R_{c}$ had to be kept relatively large to maintain good accuracy of dynamical properties.
+
+In the present article, we propose a new approach which allows for relaxation of the constraint on $R_{c}$ by introducing related damping and stochastic terms to the force calculation by utilizing the Langevin Equation of motion.~\cite{a:Kubo-1986}
+
+\begin{align}
+\label{eq:langevin}
+m_i \ddot{r}_{i\alpha} = f^{\text{SCF}}_{i\alpha} - \gamma_L m_i \dot{r}_{i\alpha} + R^{\gamma_L}_{i\alpha} (t),
+\end{align}
+
+Where $m_i$ refers to the mass of the i-th particle, and $r_{i\alpha}$ its position along dimension $\alpha$. 
+$f^{\text{SCF}}_{i\alpha}$ is the force calculated using the ALMO SCF method described above for the i-th particle along dimension $\alpha$, $\gamma_L$ is the Langevin scaling factor which sets the strength of both the damping term  $\gamma_L m_i \dot{r}_{i\alpha}$ and the stochastic Gaussian ``white noise'' term $R^{\gamma_L}_{i\alpha} (t)$. 
+In order to correctly sample the canonical distribution, the random force must be zero mean. 
+As well, the damping and white noise terms must be related by the second fluctuation dissipation theorem.~\cite{a:Kubo-1986,a:langevin-why,b:tuckerman-stat}
+%
+\begin{align}
+\label{eq:stochastic}
+\langle R^{\gamma_L}_{i\alpha} (t) \rangle &= 0, \\
+\langle R^{\gamma_L}_{i\alpha} (t)  R^{\gamma_L}_{j\beta} (t') \rangle &= 2 k_B T \gamma_L m_i \delta_{ij} \delta_{\alpha\beta} \delta(t-t')
+\end{align}
+%
+This means the damping and white noise terms will work to maintain a constant temperature while also generating the correct Maxwell-Boltzmann distribution of velocities. 
+It has previously been shown that Langevin dynamics can be utilized to correct imperfect force calculations while maintaining accurate dynamical properties.~\cite{a:langevin-why,a:2ndcpmd,b:tuckerman-stat,a:ceriotti} 
+By utilizing Eq.(\ref{eq:langevin}) in conjunction with the ALMO DFT method of force calculation, we will show that discontinuity in the PES can be ignored for sufficiently large $\gamma_L$. 
+Note that increasing $\gamma_L$ increases the sample size required to generate accurate dynamical properties, as random Gaussian noise is introduced.
+
+The concept of balancing an error in force calculation with the Langevin equation can be taken even further, thereby reducing computational overhead even more. 
+During the second step of the ALMO SCF method described above, a self-consistent variational approach is taken to converge the non-orthogonal MOs. 
+Generally, this step utilizes a iterative search function in order to reduce the absolute norm of the energy gradient to some max allowable value $\epsilon_{err}$. 
+Previously, $\epsilon_{err}$ had to be set very low to ensure sufficient accuracy of the electron structure calculations. 
+By increasing the allowable $\epsilon_{err}$, a great reduction in computational cost can be achieved. 
+Obviously, this introduces a significant error into the calculation of forces during each time step. 
+We assume that this error has the form
+%
+\begin{align}
+\label{eq:assumption}
+f^{\text{SCF}}_{i\alpha} = f^{\text{APP}}_{i\alpha} + R^{\Delta}_{i\alpha} (t)
+\end{align}
+%
+Where $f^{\text{SCF}}_{i\alpha}$ is the fully converged ALMO DFT force calculation, $f^{\text{APP}}_{i\alpha}$ is the approximate force calculated by allowing a large $\epsilon_{err}$, and $R^{\Delta}_{i\alpha} (t)$ is a stochastic ``white noise'' term that obeys
+%
+\begin{align}
+\label{eq:stochastic2}
+\langle R^{\Delta}_{i\alpha} (t) \rangle &= 0, \\
+\label{eq:stochastic3}
+\langle R^{\Delta}_{i\alpha} (t)  R^{\Delta}_{j\beta} (t') \rangle &= 2 k_B T \Delta m_i \delta_{ij} \delta_{\alpha\beta} \delta(t-t')
+\end{align}
+%
+We will see that this assumption is sufficiently justified later (see fig. \ref{fig:randomforce}). 
+The Langevin equation of motion (\ref{eq:langevin}) can be re-written with the two stochastic terms combined into one $\gamma = \gamma_L+\Delta$.
+%
+\begin{align}
+\label{eq:langevin2}
+m_i \ddot{r}_{i\alpha} = f^{\text{APP}}_{i\alpha} - \gamma_L m_i \dot{r}_{i\alpha} + R^{\gamma}_{i\alpha} (t)
+\end{align}
+%
+Note that $\Delta$ can be either positive or negative depending on the way in which errors are introduced in the system of interest. 
+$\Delta$ was found to be negative for all systems considered here.
+
+\section{Optimizing the values of $\gamma_L$ and $\Delta$}
+
+In theory, both $\gamma_L$ and $\Delta$ should be system-size independent, but in practice only $\gamma_L$ is.
+$\Delta$ is dependent on system size due to finite size effects, which decay for increasing system size.
+Fortunately, $\gamma_L$ and $\Delta$ can be separately optimized for a given system of interest, assuming a method of accurate force calculation can be applied to the system for a short trajectory. 
+
+An optimized $\gamma_L$ is one that is: large enough to adequately smooth force discontinuities; large enough to correctly thermostat the system of interest; and small enough not to significantly affect dynamical properties. 
+The relative weight of the three is determined by the specifics of the system and what is most important to the researcher. 
+To optimize $\gamma_L$ given the relative importance of the above properties, we suggest running several short trajectories on the system of interest (or a scaled-down version of it) using a tightly converged PES calculation and varying the value of $\gamma_L$. 
+We found that a value of $\gamma_L$ between \SI{1e-5}{\per\fs} and \SI{1e-3}{\per\fs} was optimal for the purposes of the research presented here.
+
+An optimized $\Delta$ is one that, in the absence of $\gamma_L$, perfectly offsets any systematic inaccuracies in the force calculation. 
+A trajectory with inaccurate forces, \mbox{$\gamma_L = \SI{0}{\per\fs}$}, and optimized $\Delta$ should have no long term drift in the total energy of the system. Short term energy fluctuations should be expected, and can later be ``smoothed out'' by setting a finite $\gamma_L$.
+
+$\Delta$ can therefore be optimized simply by trying various values of $\Delta$ (with \mbox{$\gamma_L = 0$}) until the simulation described by Eq. (\ref{eq:langevin2}) has long-term stable total energy and satisfies the equipartition theorem. 
+%
+\begin{align}
+\label{eq:eqipartition}
+\langle \dfrac{1}{2} m_i \dot{\bm{r}}^{2}_{i} \rangle &= \dfrac{3}{2} k_{B} T
+\end{align}
+%
+Another approach based on Eq. (\ref{eq:assumption}) can be used to find $\Delta$ within an order of magnitude if one can afford computing tightly converged SCF forces for a short MD trajectory. 
+First, run the simulation with $\Delta = 0$ and converged SCF forces. 
+Second, compute approximate forces for snapshots along the trajectory and calculate the random term $R^{\Delta}_{i\alpha} (t)$ using Eq. \ref{eq:assumption}. 
+Third, calculate the autocovariance function (ACF) of the noise $\text{ACF}(t) = \langle R^{\Delta}_{i\alpha} (0)  R^{\Delta}_{i\alpha} (t) \rangle$, which should be sharply peaked around zero lag time if our assumption is correct. 
+Finally, integrate Eq.(\ref{eq:stochastic3}) to obtain the following expression for $\Delta$.
+%
+\begin{align}
+\label{eq:delta}
+\Delta &= (2 k_B T m_i )^{-1} \int_{-\infty}^{\infty}\langle R^{\Delta}_{i\alpha} (0)  R^{\Delta}_{i\alpha} (t) \rangle dt
+\end{align}
+%
+In other words, we use the integral of the ACF to estimate the strength of the random force. 
+In practice, this method for estimating $\Delta$ is not particularly accurate due to rapidly oscillating correlations between sequential values of $R^{\Delta}_{i\alpha} (t)$, the ACF of which is not possible to accurately integrate without running a reference trajectory with extremely short time-steps (see figure~\ref{fig:randomforce}).
+
+Once $\gamma_L$ and $\Delta$ are both optimized, approximate forces can be used to perform long MD simulations efficiently.
+\bigskip
+
+\begin{figure}
+\includegraphics[trim={2.2cm 0.5cm 3cm 0.2cm},clip,width=8cm]{125mol_ALMO_Early_Random_force.eps}
+\caption{\label{fig:randomforce}The average ``Random force'' along a water molecule dimension $\langle R^{\Delta}_{i\alpha} \rangle (t)$ calculated as the difference between the fully converged Born-Oppenheimer forces and unconverged ALMO DFT forces, where $\epsilon_{err} = \num{1e-2}$. 
+(a) Plot of $\langle R^{\Delta}_{i\alpha} \rangle (t)$ as a function of time. 
+Here it is clear that Eq.\ (\ref{eq:stochastic2}) is satisfied. 
+(b) Autocovariance function of $\langle R^{\Delta}_{i\alpha} \rangle (t)$. 
+The ACF is clearly not a delta-function, and is characterized by rapid oscillation between positive and negative correlation. 
+However, the autocorrelation decays rapidly enough that these forces can be considered random and uncorrelated to a good approximation for sufficiently long time scales. 
+Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and the TZV2P basis set on 128 water molecules.}
+\end{figure}
+
+\maketitle
+\section{Implementation}
+
+The methods presented here are built into CP2K, an open source MD simulation package.~\cite{www:cp2k} 
+The computation scheme used is mostly identical to that described in the implementation section of ref.\ \citenum{a:almo-ls}. 
+For the dynamical properties calculations using ALMO DFT calculation methods, a periodic cell containing 128 water molecules was simulated for $\SI{40}{\ns}$ at a constant temperature of $\SI{298}{\K}$ and a constant density of $\SI{0.9966}{\g\per\cm^{3}}$. 
+The system was thermostated using the Langevin ensemble (eq.\ \ref{eq:langevin2}) where $\gamma_L$ was set to $\SI{1e-3}{\per\fs}$, and $\Delta$ was optimized to the order of $10^{-5}$ - $10^{-4}\ \mathrm{fs^{-1}}$. 
+Note that for timing benchmarks, $\Delta$ was not optimized. 
+This should not have a perceptible effect on calculation time.
+Simulations for timing benchmarks were run for ten time steps, which is sufficient for convergence of wavefunctions from an initial guess.
+The TZV2P basis set was used to represent MOs, and a cutoff of $\SI{320}{Ry}$ used to represent electron density. 
+The exchange-correlation energy was approximated using the PBE functional, which expands upon the local density approximation by considering derivatives of the electron density at each point.~\cite{a:PBEfunctional} 
+
+The reference PES was calculated using the orbital transformation (OT) method~\cite{a:ot,a:ot2} and the canonical sampling through velocity rescaling (CSVR) thermostat~\cite{a:CSVR} with a time constant of $\SI{200}{fs}$. 
+Otherwise, system parameters were identical for the reference.
+
+IR spectra, radial distribution functions, diffusivity plots, and diffusion constants were calculated using the open source trajectory analyzer program TRAVIS.~\cite{a:travis-main,a:travis-ir1,a:travis-ir2}
+
+
+How $\gamma$, $\gamma_L$, and $\gamma_{\Delta}$ are related to GAMMA, NOISY\_GAMMA, and SHADOW\_GAMMA in CP2K?
+
+\begin{align}
+\label{eq:rels}
+GAMMA + NOISY\_GAMMA &= \gamma_L + \gamma_{\Delta} = \gamma \nonumber \\
+GAMMA + SHADOW\_GAMMA &= \gamma_L = \gamma - \gamma_{\Delta} \nonumber
+\end{align}
+%
+One set of useful expressions
+%
+\begin{align}
+\gamma_{\Delta} &= NOISY\_GAMMA - SHADOW\_GAMMA \nonumber \\
+\gamma_L &= GAMMA + SHADOW\_GAMMA \nonumber \\
+\gamma &= GAMMA + NOISY\_GAMMA \nonumber
+\end{align}
+%
+%and another one
+%%
+%\begin{align}
+%GAMMA &=  \nonumber \\
+%SHADOW\_GAMMA &= \nonumber \\
+%NOISY\_GAMMA &= \nonumber
+%\end{align}
+%%
+
+Practical guide:
+%
+\begin{itemize}
+\item The code designed so that any effect can be achieved with positive GAMMAs.
+\item Situation 1. NVT with perfect forces. Set NOISY and SHADOW to zeros to produce balanced canonical distributions. Large GAMMA adds lots of noise but leads to fast equilibration. Small GAMMA -- approach NVE. 
+\item Situation 2. NVT with imperfect forces. Use either NOISY or SHADOW but not both. The value of GAMMA is chosen as in the previous situation. A. Set SHADOW to finite value to get excessive damping. B. Set NOISY to get excessive stochastic boost.
+\end{itemize}
+
+Integrator implemented in \$CP2K/src/motion/integrator.F eqns (19) and (20) from http://dx.doi.org/10.1080/0026897031000108113. Another integrator can be implemented using Eq (15.5.17) from the book of Tuckerman.
+
+
+
+
+
+\section{Conclusions} 
+
+\textbf{Acknowledgments.} The research was funded by the Natural Sciences and Engineering Research Council of Canada through the Discovery Grant. The authors are grateful to Compute Canada and McGill HPC Centre for computer time.
+
+%\textbf{Supporting Information}
+%Calculated radial distribution functions of liquid water, comparison of timing benchmarks for the DZVP and TZV2P basis sets, timing benchmarks for systems containing 32,768 water molecules, timing benchmarks for the Kohn-Sham matrix build. This material is available free of charge via the Internet at http://pubs.acs.org.
+
+\bibliography{almo-langevin}
+
+\end{document}
