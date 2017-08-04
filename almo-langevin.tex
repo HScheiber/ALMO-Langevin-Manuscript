@@ -52,7 +52,7 @@ We also introduce a simple heuristic approach to find the best Langevin Equation
 \section{Introduction}
 Since the unification of molecular dynamics (MD) and density functional theory (DFT) in 1985 by Car and Parrinello,~\cite{a:thecpmd} much research has been focused on reducing the computational overhead of \emph{ab initio} molecular dynamics (AIMD) potential energy calculations.~\cite{b:aimd} 
 % Remove Following text for some journals
-AIMD provides a great advantage over traditional predefined-potential molecular dynamics in that it calculates its PES on-the-fly, rather than needing to be laboriously optimized to the specific system of interest beforehand. 
+AIMD provides a great advantage over traditional predefined-potential molecular dynamics in that it calculates its potential energy surface (PES) on-the-fly, rather than needing to be laboriously optimized to the specific system of interest beforehand. 
 This allows for exploration of much more chemically complex systems than are possible with traditional MD methods. 
 AIMD also allows for much greater predictive capability than traditional MD, as a first principles approach is not confined to a predetermined range of system parameters. 
 The tradeoff is the computational complexity involved in calculating an accurate set of forces for each atom at every time step of the simulation.~\cite{a:2gen-cpmd}
@@ -87,7 +87,6 @@ We will show that our approach lowers the computation cost pre-factor for the AL
 This is done by balancing a new computationally economical but systemically inaccurate force calculation method with an optimized version of the Langevin Equation of motion. 
 We also introduce an easy to follow algorithmic approach to optimize a system for generating correct dynamical behaviour.
 
-\maketitle
 \section{Theory} 
 
 Our approach is based on the ALMO SCF two-step variational method.~\cite{a:almo-ls} 
@@ -169,10 +168,10 @@ Fortunately, $\gamma_L$ and $\Delta$ can be separately optimized for a given sys
 An optimized $\gamma_L$ is one that is: large enough to adequately smooth force discontinuities; large enough to correctly thermostat the system of interest; and small enough not to significantly affect dynamical properties. 
 The relative weight of the three is determined by the specifics of the system and what is most important to the researcher. 
 To optimize $\gamma_L$ given the relative importance of the above properties, we suggest running several short trajectories on the system of interest (or a scaled-down version of it) using a tightly converged PES calculation and varying the value of $\gamma_L$. 
-We found that a value of $\gamma_L$ between \SI{1e-5}{\per\fs} and \SI{1e-3}{\per\fs} was optimal for the purposes of the research presented here.
+We found that a value of $\gamma_L$ between $10^{-5}$ and $10^{-3}\ \mathrm{fs^{-1}}$ was optimal for the purposes of the research presented here.
 
 An optimized $\Delta$ is one that, in the absence of $\gamma_L$, perfectly offsets any systematic inaccuracies in the force calculation. 
-A trajectory with inaccurate forces, \mbox{$\gamma_L = \SI{0}{\per\fs}$}, and optimized $\Delta$ should have no long term drift in the total energy of the system. Short term energy fluctuations should be expected, and can later be ``smoothed out'' by setting a finite $\gamma_L$.
+A trajectory with inaccurate forces, \mbox{$\gamma_L = 0$}, and optimized $\Delta$ should have no long term drift in the total energy of the system. Short term energy fluctuations should be expected, and can later be ``smoothed out'' by setting finite $\gamma_L$.
 
 $\Delta$ can therefore be optimized simply by trying various values of $\Delta$ (with \mbox{$\gamma_L = 0$}) until the simulation described by Eq. (\ref{eq:langevin2}) has long-term stable total energy and satisfies the equipartition theorem. 
 %
@@ -193,7 +192,7 @@ Finally, integrate Eq.(\ref{eq:stochastic3}) to obtain the following expression 
 \end{align}
 %
 In other words, we use the integral of the ACF to estimate the strength of the random force. 
-In practice, this method for estimating $\Delta$ is not particularly accurate due to rapidly oscillating correlations between sequential values of $R^{\Delta}_{i\alpha} (t)$, the ACF of which is not possible to accurately integrate without running a reference trajectory with extremely short time-steps (see figure~\ref{fig:randomforce}).
+In practice, this method for estimating $\Delta$ is not particularly accurate due to rapidly oscillating correlations between sequential values of $R^{\Delta}_{i\alpha} (t)$. The ACF is not usually possible to accurately integrate without running a reference trajectory with extremely short time-steps (see figure~\ref{fig:randomforce}).
 
 Once $\gamma_L$ and $\Delta$ are both optimized, approximate forces can be used to perform long MD simulations efficiently.
 \bigskip
@@ -206,18 +205,18 @@ Here it is clear that Eq.\ (\ref{eq:stochastic2}) is satisfied.
 (b) Autocovariance function of $\langle R^{\Delta}_{i\alpha} \rangle (t)$. 
 The ACF is clearly not a delta-function, and is characterized by rapid oscillation between positive and negative correlation. 
 However, the autocorrelation decays rapidly enough that these forces can be considered random and uncorrelated to a good approximation for sufficiently long time scales. 
-Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and the TZV2P basis set on 128 water molecules.}
+Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and the TZV2P basis set on 125 water molecules.}
 \end{figure}
 
-\maketitle
 \section{Implementation}
 
 The methods presented here are built into CP2K, an open source MD simulation package.~\cite{www:cp2k} 
 The computation scheme used is mostly identical to that described in the implementation section of ref.\ \citenum{a:almo-ls}. 
-For the dynamical properties calculations using ALMO DFT calculation methods, a periodic cell containing 128 water molecules was simulated for $\SI{40}{\ns}$ at a constant temperature of $\SI{298}{\K}$ and a constant density of $\SI{0.9966}{\g\per\cm^{3}}$. 
-The system was thermostated using the Langevin ensemble (eq.\ \ref{eq:langevin2}) where $\gamma_L$ was set to $\SI{1e-3}{\per\fs}$, and $\Delta$ was optimized to the order of $10^{-5}$ - $10^{-4}\ \mathrm{fs^{-1}}$. 
+For the dynamical properties calculations using ALMO DFT calculation methods, a periodic cell containing 125 water molecules was simulated for $\SI{40}{\ns}$ at a constant temperature of $\SI{298}{\K}$ and a constant density of $\SI{0.9966}{\g\per\cm^{3}}$. 
+The system was thermostated using the Langevin ensemble (eq.\ \ref{eq:langevin2}) where $\gamma_L$ was set to $\SI{e-5}{\per\fs}$, and $\Delta$ was optimized to the order of $10^{-5}$ - $10^{-4}\, \mathrm{fs^{-1}}$. 
 Note that for timing benchmarks, $\Delta$ was not optimized. 
-This should not have a perceptible effect on calculation time.
+This does not have a perceptible effect on calculation time.
+
 Simulations for timing benchmarks were run for ten time steps, which is sufficient for convergence of wavefunctions from an initial guess.
 The TZV2P basis set was used to represent MOs, and a cutoff of $\SI{320}{Ry}$ used to represent electron density. 
 The exchange-correlation energy was approximated using the PBE functional, which expands upon the local density approximation by considering derivatives of the electron density at each point.~\cite{a:PBEfunctional} 
@@ -227,41 +226,14 @@ Otherwise, system parameters were identical for the reference.
 
 IR spectra, radial distribution functions, diffusivity plots, and diffusion constants were calculated using the open source trajectory analyzer program TRAVIS.~\cite{a:travis-main,a:travis-ir1,a:travis-ir2}
 
+\section{Accuracy}
 
-How $\gamma$, $\gamma_L$, and $\gamma_{\Delta}$ are related to GAMMA, NOISY\_GAMMA, and SHADOW\_GAMMA in CP2K?
+To test the accuracy of ALMO DFT based MD, we computed dynamical properties for 40 ns MD trajectories using fully converged Kohn-Sham DFT forces and forces computed with our ALMO DFT methods (see fig. %\ref{fig:dynproperties}).
 
-\begin{align}
-\label{eq:rels}
-GAMMA + NOISY\_GAMMA &= \gamma_L + \gamma_{\Delta} = \gamma \nonumber \\
-GAMMA + SHADOW\_GAMMA &= \gamma_L = \gamma - \gamma_{\Delta} \nonumber
-\end{align}
-%
-One set of useful expressions
-%
-\begin{align}
-\gamma_{\Delta} &= NOISY\_GAMMA - SHADOW\_GAMMA \nonumber \\
-\gamma_L &= GAMMA + SHADOW\_GAMMA \nonumber \\
-\gamma &= GAMMA + NOISY\_GAMMA \nonumber
-\end{align}
-%
-%and another one
-%%
-%\begin{align}
-%GAMMA &=  \nonumber \\
-%SHADOW\_GAMMA &= \nonumber \\
-%NOISY\_GAMMA &= \nonumber
-%\end{align}
-%%
 
-Practical guide:
-%
-\begin{itemize}
-\item The code designed so that any effect can be achieved with positive GAMMAs.
-\item Situation 1. NVT with perfect forces. Set NOISY and SHADOW to zeros to produce balanced canonical distributions. Large GAMMA adds lots of noise but leads to fast equilibration. Small GAMMA -- approach NVE. 
-\item Situation 2. NVT with imperfect forces. Use either NOISY or SHADOW but not both. The value of GAMMA is chosen as in the previous situation. A. Set SHADOW to finite value to get excessive damping. B. Set NOISY to get excessive stochastic boost.
-\end{itemize}
 
-Integrator implemented in \$CP2K/src/motion/integrator.F eqns (19) and (20) from http://dx.doi.org/10.1080/0026897031000108113. Another integrator can be implemented using Eq (15.5.17) from the book of Tuckerman.
+
+\section{Speed}
 
 
 
