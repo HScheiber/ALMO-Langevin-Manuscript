@@ -79,7 +79,6 @@ Hence, the computational prefactor of the existing LS DFT methods~\cite{a:ls-rev
 
 Here, we introduce a new low-cost linear scaling AIMD method for weakly-interacting molecular systems based on the recently developed absolutely localized molecular orbitals (ALMO) DFT approach.~\cite{a:almo-ls} 
 
-
 This method exploits non-orthogonal molecular orbitals (MOs) in a two-step self-consistent filed (SCF) approach that is designed to avoid the usual convergence issues.~\cite{a:ls-mauri-galli-car-1993,a:ls-ordejon-1995,a:ls-fattebert-2004,a:ls-rev-1999} 
 We show that due to its linear scaling nature and relatively low computational prefactor, ALMO-based DFT calculations allow for simulation of very large weakly-coupled molecular systems. 
 To decrease the cost even further, the present paper builds on the ALMO SCF method as well as other recent work involving Brownian dynamics to balance force calculation errors.~\cite{a:ls-parinello,a:2ndcpmd,a:langevin-why} 
@@ -200,8 +199,8 @@ Once $\gamma_L$ and $\Delta$ are both optimized, approximate forces can be used 
 \begin{figure}
 \includegraphics[trim={0.5cm 0.7cm 0.5cm 0cm},clip,width=8cm]{DeltaForceComparison_with_ACF.eps}
 \caption{\label{fig:randomforce}The average ``Random force'' along a water molecule dimension $\langle R^{\Delta}_{i\alpha} \rangle (t)$ calculated as the difference between the fully converged Born-Oppenheimer forces and ALMO DFT forces. Here it is clear that Eq.\ (\ref{eq:stochastic2}) is satisfied. 
-(a) Plot of $\langle R^{\Delta}_{i\alpha} \rangle (t)$ as a function of time, where $R_{C} = 1.6$ VdW Radii and $\epsilon_{err} = \num{1e-2}$.
-(b) Plot of $\langle R^{\Delta}_{i\alpha} \rangle (t)$ as a function of time, where $R_{C} = 1.6$ VdW Radii and forces are fully converged.
+(a) Plot of $\langle R^{\Delta}_{i\alpha} \rangle (t)$ as a function of time, where $R_{C} = 1.6$ VdWR and $\epsilon_{err} = \num{1e-2}$.
+(b) Plot of $\langle R^{\Delta}_{i\alpha} \rangle (t)$ as a function of time, where $R_{C} = 1.6$ VdWR and forces are fully converged.
 (c) Autocorrelation function of plot a, $\langle R^{\Delta}_{i\alpha} (t) R^{\Delta}_{i\alpha} (t+\tau) \rangle $.
 Using Eq.\ \ref{eq:delta}, $\Delta = \SI{2e-5}{\per\fs}$, but its true value is $\SI{8e-5}{\per\fs}$ for this system.
 Note that the  ACF is not truly a delta-function, and is characterized by rapidly oscillating correlations for short lag times. 
@@ -229,18 +228,45 @@ IR spectra, radial distribution functions, diffusivity plots, and diffusion cons
 
 \section{Accuracy}
 
-In order to confirm that ALMO DFT forces are accurate in the limit of $R_{c} = \infty$, we computed the average difference in force between fully converged Born-Oppenheimer forces and forces calculated from ALMO DFT with varying $R_{c}$. Figure \ref{fig:forcecomp} shows that as $R_{c}$ is increased to infinity, forces converge toward the Born-Oppenheimer limit.
+In order to confirm that ALMO DFT forces are accurate in the limit where localization radius $R_{c} = \infty$, we computed the average difference in force between fully converged Born-Oppenheimer forces and forces calculated from ALMO DFT with varying $R_{c}$. Figure \ref{fig:forcecomp} shows that as $R_{c}$ is increased to infinity, forces converge toward the Born-Oppenheimer limit.
 
 \begin{figure}
 \includegraphics[trim={0.1cm 0cm 0cm 0cm},clip,width=8cm]{DeltaForceComparison_ALMO_SCF.eps}
-\caption{\label{fig:forcecomp}The average ``Random force'' along a water molecule dimension $\langle R^{\Delta}_{i\alpha} \rangle (t)$ calculated as the average difference between fully converged Born-Oppenheimer forces and fully converged ALMO DFT forces with varying $R_{c}$.
+\caption{\label{fig:forcecomp}The average ``Random force'' $\langle R^{\Delta}_{i\alpha} \rangle (t)$ calculated as the average difference between fully converged Born-Oppenheimer forces and fully converged ALMO DFT forces, averaged across all dimensions and all molecules separately at each time step. 
+Plotted are the random forces with varying localization radius $R_{c}$, in units of Van der Waals Radii.
 Here it is clear that ALMO DFT forces converge to Born-Oppenheimer forces in the limit of $R_{c} = \infty$.
 Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and the TZV2P basis set on 125 water molecules for 10 ps.}
 \end{figure}
 
-To test the accuracy of ALMO DFT based MD, we computed dynamical properties for 40 ns MD trajectories using fully converged Kohn-Sham DFT forces and compared with equivalent trajectories using forces computed with ALMO DFT methods (see fig. %\ref{fig:dynproperties}).
+To test the accuracy of ALMO DFT based MD, we computed dynamical properties for 30 ns MD trajectories using fully converged Kohn-Sham DFT forces and compared with equivalent trajectories using forces computed with ALMO DFT methods (see fig. %\ref{fig:dynproperties}).
 
 \section{Speed}
+
+To show the computational efficiency gained by using unconverged ALMO DFT forces, we compare the average wall-time per MD step over 10 time steps for various values of $\epsilon_{err}$ in figures \ref{fig:strongscaling_linear} and \ref{fig:strongscaling_log}.
+For these simulations, we chose to set the localization radius to 1.6 Van der Waal Radii (VdWR), as was done for calculation of dynamical properties.
+We also show timing of the fully converged OT SCF method, as well as the recently developed ``second generation Car-Parinello'' SCF method, which improves upon the OT computational cost prefactor.~\cite{a:2ndcpmd}
+All plots in figures \ref{fig:strongscaling_linear} and \ref{fig:strongscaling_log} were generating using 256 CPU cores. 
+ALMO methods show excellent LS behavior for all values of $\epsilon_{err}$ tested.
+OT SCF scales approximately cubically, as expected.
+Our findings show that the fastest ALMO SCF method beats out second-generation Car-Parinello using OT SCF at 256 molecules.
+
+
+\begin{figure}
+\includegraphics[trim={1.9cm 0.4cm 3.5cm 1.7cm},clip,width=8cm]{strongscaling_linear.eps}
+\caption{\label{fig:strongscaling_linear} Linear plots showing LS behaviour of all ALMO methods for liquid water at 298 K. 
+Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set on 256 CPUs. 
+The localization radius was set to $R_{c} = 1.6$ VdWR.}
+\end{figure}
+
+\begin{figure}
+\includegraphics[trim={2.8cm 0.4cm 3.5cm 1.2cm},clip,width=8cm]{strongscaling_log.eps}
+\caption{\label{fig:strongscaling_log} Log-log plots which clearly show the asymptotic LS behaviour of ALMO methods for liqid water at 298 K. 
+Cyan lines represent perfect cubic scaling, whereas gray lines represent perfect linear scaling. 
+Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set on 256 CPUs. 
+The localization radius was set to $R_{c} = 1.6$ VdWR.}
+\end{figure}
+
+
 
 \section{Conclusions} 
 
