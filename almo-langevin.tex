@@ -235,7 +235,7 @@ In order to confirm that ALMO DFT forces are accurate in the limit where localiz
 \includegraphics[trim={0.1cm 0cm 0cm 0cm},clip,width=8cm]{DeltaForceComparison_ALMO_SCF.eps}
 \caption{\label{fig:forcecomp}The average ``Random force'' $\langle R^{\Delta}_{i\alpha} \rangle (t)$ calculated as the average difference between fully converged Born-Oppenheimer forces and fully converged ALMO DFT forces, averaged across all dimensions and all molecules separately at each time step. 
 Plotted are the random forces with varying localization radius $R_{c}$, in units of Van der Waals Radii.
-Here it is clear that ALMO DFT forces converge to Born-Oppenheimer forces in the limit of $R_{c} = \infty$.
+Here it is clear that ALMO DFT forces converge to Born-Oppenheimer forces in the limit of $R_{c} \rightarrow \infty$.
 Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and the TZV2P basis set on 125 water molecules for 10 ps.}
 \end{figure}
 
@@ -246,10 +246,10 @@ To test the accuracy of ALMO DFT based MD, we computed dynamical properties for 
 To show the computational efficiency gained by using unconverged ALMO DFT forces, we compare the average wall-time per MD step over 10 time steps for various values of $\epsilon_{err}$ in figures \ref{fig:strongscaling_linear} and \ref{fig:strongscaling_log}.
 For these simulations, we chose to set the localization radius to 1.6 Van der Waal Radii (VdWR), as was done for calculation of dynamical properties.
 We also show timing of the fully converged OT SCF method, as well as the recently developed ``second generation Car-Parinello'' SCF method, which improves upon the OT computational cost prefactor.~\cite{a:2ndcpmd}
-All plots in figures \ref{fig:strongscaling_linear} and \ref{fig:strongscaling_log} were generating using 256 CPU cores. 
+All plots in figures \ref{fig:strongscaling_linear} and \ref{fig:strongscaling_log} were generated using 256 CPU cores. 
 ALMO methods show excellent LS behavior for all values of $\epsilon_{err}$ tested.
 OT SCF scales approximately cubically, as expected.
-Our findings show that the fastest ALMO SCF method beats out second-generation Car-Parinello using OT SCF at 256 molecules.
+Our findings show that the fastest ALMO SCF method presented here runs faster than second-generation Car-Parinello using OT SCF for water simulations larger than 256 molecules.
 
 
 \begin{figure}
