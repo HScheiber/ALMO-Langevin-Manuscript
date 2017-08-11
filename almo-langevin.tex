@@ -202,9 +202,10 @@ Once $\gamma_L$ and $\Delta$ are both optimized, approximate forces can be used 
 (a) Plot of $\langle R^{\Delta}_{i\alpha} \rangle (t)$ as a function of time, where $R_{C} = 1.6$ VdWR and $\epsilon_{err} = \num{1e-2}$.
 (b) Plot of $\langle R^{\Delta}_{i\alpha} \rangle (t)$ as a function of time, where $R_{C} = 1.6$ VdWR and forces are fully converged.
 (c) Autocorrelation function of plot a, $\langle R^{\Delta}_{i\alpha} (t) R^{\Delta}_{i\alpha} (t+\tau) \rangle $.
-Using Eq.\ \ref{eq:delta}, $\Delta = \SI{2e-5}{\per\fs}$, but its true value is $\SI{8e-5}{\per\fs}$ for this system.
+Using Eq.\ \ref{eq:delta}, we calculated $\Delta \approx \SI{2e-5}{\per\fs}$, but its true value is $\SI{8e-5}{\per\fs}$ for this system.
 Note that the  ACF is not truly a delta-function, and is characterized by rapidly oscillating correlations for short lag times. 
-However, the autocorrelation decays rapidly enough that these forces can be considered random and uncorrelated to a good approximation for sufficiently long time scales. 
+The high frequency correlations made integration of the ACF inaccurate, but provided a decent starting point for further investigation.
+The autocorrelation decays rapidly enough that these forces can be considered random and uncorrelated to a good approximation for sufficiently long time scales ($\gg\SI{300}{\fs}$ for this system). 
 Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and the TZV2P basis set on 125 water molecules for 10 ps.}
 \end{figure}
 
