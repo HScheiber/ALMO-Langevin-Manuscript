@@ -128,7 +128,7 @@ Note that increasing $\gamma_L$ increases the sample size required to generate a
 The concept of balancing an error in force calculation with the Langevin equation can be taken even further, thereby reducing computational overhead even more. 
 During the second step of the ALMO SCF method described above, a self-consistent variational approach is taken to converge the non-orthogonal MOs. 
 Generally, this step utilizes a iterative search function in order to reduce the absolute norm of the energy gradient to some max allowable value $\epsilon_{err}$. 
-Previously, $\epsilon_{err}$ had to be set very low to ensure sufficient accuracy of the electron structure calculations. 
+Previously, $\epsilon_{err}$ had to be set very low to ensure convergence of the electron structure calculations. 
 By increasing the allowable $\epsilon_{err}$, a great reduction in computational cost can be achieved. 
 Obviously, this introduces a significant error into the calculation of forces during each time step. 
 We assume that this error has the form
@@ -197,9 +197,9 @@ Once $\gamma_L$ and $\Delta$ are both optimized, approximate forces can be used 
 \bigskip
 
 \begin{figure}
-\includegraphics[trim={0.5cm 0.7cm 0.5cm 0cm},clip,width=8cm]{DeltaForceComparison_with_ACF.eps}
-\caption{\label{fig:randomforce}The average ``Random force'' along a water molecule dimension $\langle R^{\Delta}_{i\alpha} \rangle (t)$ calculated as the difference between the fully converged Born-Oppenheimer forces and ALMO DFT forces. Here it is clear that Eq.\ (\ref{eq:stochastic2}) is satisfied. 
-(a) Plot of $\langle R^{\Delta}_{i\alpha} \rangle (t)$ as a function of time, where $R_{C} = 1.6$ VdWR and $\epsilon_{err} = \num{1e-2}$.
+\includegraphics[trim={0.6cm 0.7cm 0.7cm 0.3cm},clip,width=8.6cm]{DeltaForceComparison_with_ACF.eps}
+\caption{\label{fig:randomforce}The ``Random force'' along a water molecule dimension $\langle R^{\Delta}_{i\alpha} \rangle (t)$ calculated as the difference between the fully converged Born-Oppenheimer forces and ALMO DFT forces. Here it is clear that Eq.\ (\ref{eq:stochastic2}) is satisfied. 
+(a) Plot of $\langle R^{\Delta}_{i\alpha} \rangle (t)$ as a function of time, where $R_{C} = 1.6$ VdWR and $\epsilon_{err} = 10^{-2}$.
 (b) Plot of $\langle R^{\Delta}_{i\alpha} \rangle (t)$ as a function of time, where $R_{C} = 1.6$ VdWR and forces are fully converged.
 (c) Autocorrelation function of plot a, $\langle R^{\Delta}_{i\alpha} (t) R^{\Delta}_{i\alpha} (t+\tau) \rangle $.
 Using Eq.\ \ref{eq:delta}, we calculated $\Delta \approx \SI{2e-5}{\per\fs}$, but its true value is $\SI{8e-5}{\per\fs}$ for this system.
@@ -232,8 +232,8 @@ IR spectra, radial distribution functions, diffusivity plots, and diffusion cons
 In order to confirm that ALMO DFT forces are accurate in the limit where localization radius $R_{c} = \infty$, we computed the average difference in force between fully converged Born-Oppenheimer forces and forces calculated from ALMO DFT with varying $R_{c}$. Figure \ref{fig:forcecomp} shows that as $R_{c}$ is increased to infinity, forces converge toward the Born-Oppenheimer limit.
 
 \begin{figure}
-\includegraphics[trim={0.1cm 0cm 0cm 0cm},clip,width=8cm]{DeltaForceComparison_ALMO_SCF.eps}
-\caption{\label{fig:forcecomp}The average ``Random force'' $\langle R^{\Delta}_{i\alpha} \rangle (t)$ calculated as the average difference between fully converged Born-Oppenheimer forces and fully converged ALMO DFT forces, averaged across all dimensions and all molecules separately at each time step. 
+\includegraphics[trim={0.1cm 0cm 0.2cm 0.1cm},clip,width=8.6cm]{DeltaForceComparison_ALMO_SCF.eps}
+\caption{\label{fig:forcecomp}The ``Random force'' $\langle R^{\Delta}_{i\alpha} \rangle (t)$ calculated as the average difference between fully converged Born-Oppenheimer forces and fully converged ALMO DFT forces, averaged across all dimensions and all molecules separately at each time step. 
 Plotted are the random forces with varying localization radius $R_{c}$, in units of Van der Waals Radii.
 Here it is clear that ALMO DFT forces converge to Born-Oppenheimer forces in the limit of $R_{c} \rightarrow \infty$.
 Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and the TZV2P basis set on 125 water molecules for 10 ps.}
@@ -243,31 +243,43 @@ To test the accuracy of ALMO DFT based MD, we computed dynamical properties for 
 
 \section{Speed}
 
-To show the computational efficiency gained by using unconverged ALMO DFT forces, we compare the average wall-time per MD step over 10 time steps for various values of $\epsilon_{err}$ in figures \ref{fig:strongscaling_linear} and \ref{fig:strongscaling_log}.
+To show the computational efficiency gained by using unconverged ALMO DFT forces, we compare the average wall-time per MD step over 10 time steps for various values of $\epsilon_{err}$ in figure \ref{fig:strongscaling_log}.
 For these simulations, we chose to set the localization radius to 1.6 Van der Waal Radii (VdWR), as was done for calculation of dynamical properties.
-We also show timing of the fully converged OT SCF method, as well as the recently developed ``second generation Car-Parinello'' SCF method, which improves upon the OT computational cost prefactor.~\cite{a:2ndcpmd}
-All plots in figures \ref{fig:strongscaling_linear} and \ref{fig:strongscaling_log} were generated using 256 CPU cores. 
+We also show timing of the fully converged OT SCF method, as well as the recently developed ``second generation Car-Parinello'' SCF method using OT, which improves upon the OT computational cost prefactor.~\cite{a:2ndcpmd}
 ALMO methods show excellent LS behavior for all values of $\epsilon_{err}$ tested.
 OT SCF scales approximately cubically, as expected.
 Our findings show that the fastest ALMO SCF method presented here runs faster than second-generation Car-Parinello using OT SCF for water simulations larger than 256 molecules.
 
+Figure \ref{fig:weakscaling} shows that ALMO MD code is well optimized for parallelization, and that computational cost grows linearly under a wide range of available computing power. 
+In fact, we were able to successfully simulate systems as large as 32768 water molecules within 25 minutes of wall-clock time using 4096 cores.
+
+
+%\begin{figure}
+%\includegraphics[trim={1.7cm 0.5cm 3.3cm 0.1cm},clip,width=8.6cm]{strongscaling_linear.eps}
+%\caption{\label{fig:strongscaling_linear} Linear plots showing LS behaviour of all ALMO methods for liquid water at 298 K. 
+%Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set on 256 CPUs. 
+%The localization radius was set to $R_{c} = 1.6$ VdWR.}
+%\end{figure}
 
 \begin{figure}
-\includegraphics[trim={1.9cm 0.4cm 3.5cm 1.7cm},clip,width=8cm]{strongscaling_linear.eps}
-\caption{\label{fig:strongscaling_linear} Linear plots showing LS behaviour of all ALMO methods for liquid water at 298 K. 
-Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set on 256 CPUs. 
-The localization radius was set to $R_{c} = 1.6$ VdWR.}
-\end{figure}
-
-\begin{figure}
-\includegraphics[trim={2.8cm 0.4cm 3.5cm 1.2cm},clip,width=8cm]{strongscaling_log.eps}
-\caption{\label{fig:strongscaling_log} Log-log plots which clearly show the asymptotic LS behaviour of ALMO methods for liqid water at 298 K. 
+\includegraphics[trim={2.5cm 0.5cm 3.4cm 0.1cm},clip,width=8.6cm]{strongscaling_log.eps}
+\caption{\label{fig:strongscaling_log} Logscale plots which show the asymptotic LS behaviour of ALMO methods for liquid water at 298 K.
+Compared with the orbital transformation using fully converged SCF and second generation Car-Parinello force calculation methods.
 Cyan lines represent perfect cubic scaling, whereas gray lines represent perfect linear scaling. 
-Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set on 256 CPUs. 
+Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set on 256 CPUs, averaged over 10 MD steps. 
 The localization radius was set to $R_{c} = 1.6$ VdWR.}
 \end{figure}
 
 
+\begin{figure}
+\includegraphics[trim={1.6cm 0cm 4.7cm 0cm},clip,width=8.6cm]{weakscaling.eps}
+\caption{\label{fig:weakscaling} Weak scalability benchmarks which show optimization of code for parallel computing.
+Dashed gray lines connect systems simulated using the same number of CPU cores, showing LS behaviour over a range of configurations.
+Of note is the 32768 molecule system successfully simulated using 4096 cores at around 25 minutes per MD step.
+We also show that systems as large as 8192 molecules can be simulated for 10,000 MD steps in under a month using our method.
+Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set, averaged over 10 MD steps. 
+The localization radius was set to $R_{c} = 1.6$ VdWR and $\epsilon_{err} = 10^{-2}$.}
+\end{figure}
 
 \section{Conclusions} 
 
