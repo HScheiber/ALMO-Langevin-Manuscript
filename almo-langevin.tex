@@ -127,9 +127,9 @@ Note that increasing $\gamma_L$ increases the sample size required to generate a
 
 The concept of balancing an error in force calculation with the Langevin equation can be taken even further, thereby reducing computational overhead even more. 
 During the second step of the ALMO SCF method described above, a self-consistent variational approach is taken to converge the non-orthogonal MOs. 
-Generally, this step utilizes a iterative search function in order to reduce the absolute norm of the energy gradient to some max allowable value $\epsilon_{err}$. 
-Previously, $\epsilon_{err}$ had to be set very low to ensure convergence of the electron structure calculations. 
-By increasing the allowable $\epsilon_{err}$, a great reduction in computational cost can be achieved. 
+Generally, this step utilizes a iterative search function in order to reduce the absolute norm of the energy gradient to some max allowable value $\epsilon_{SCF}$. 
+Previously, $\epsilon_{SCF}$ had to be set very low to ensure convergence of the electron structure calculations. 
+By increasing the allowable $\epsilon_{SCF}$, a great reduction in computational cost can be achieved. 
 Obviously, this introduces a significant error into the calculation of forces during each time step. 
 We assume that this error has the form
 %
@@ -138,7 +138,7 @@ We assume that this error has the form
 f^{\text{SCF}}_{i\alpha} = f^{\text{APP}}_{i\alpha} + R^{\Delta}_{i\alpha} (t)
 \end{align}
 %
-Where $f^{\text{SCF}}_{i\alpha}$ is the fully converged ALMO DFT force calculation, $f^{\text{APP}}_{i\alpha}$ is the approximate force calculated by allowing a large $\epsilon_{err}$, and $R^{\Delta}_{i\alpha} (t)$ is a stochastic ``white noise'' term that obeys
+Where $f^{\text{SCF}}_{i\alpha}$ is the fully converged ALMO DFT force calculation, $f^{\text{APP}}_{i\alpha}$ is the approximate force calculated by allowing a large $\epsilon_{SCF}$, and $R^{\Delta}_{i\alpha} (t)$ is a stochastic ``white noise'' term that obeys
 %
 \begin{align}
 \label{eq:stochastic2}
@@ -199,10 +199,10 @@ Once $\gamma_L$ and $\Delta$ are both optimized, approximate forces can be used 
 \begin{figure}
 \includegraphics[trim={0.6cm 0.7cm 0.7cm 0.3cm},clip,width=8.6cm]{DeltaForceComparison_with_ACF.eps}
 \caption{\label{fig:randomforce}The ``Random force'' along a water molecule dimension $\langle R^{\Delta}_{i\alpha} \rangle (t)$ calculated as the difference between the fully converged Born-Oppenheimer forces and ALMO DFT forces. Here it is clear that Eq.\ (\ref{eq:stochastic2}) is satisfied. 
-(a) Plot of $\langle R^{\Delta}_{i\alpha} \rangle (t)$ as a function of time, where $R_{C} = 1.6$ VdWR and $\epsilon_{err} = 10^{-2}$.
+(a) Plot of $\langle R^{\Delta}_{i\alpha} \rangle (t)$ as a function of time, where $R_{C} = 1.6$ VdWR and $\epsilon_{SCF} = 10^{-2}$.
 (b) Plot of $\langle R^{\Delta}_{i\alpha} \rangle (t)$ as a function of time, where $R_{C} = 1.6$ VdWR and forces are fully converged.
 (c) Autocorrelation function of plot a, $\langle R^{\Delta}_{i\alpha} (t) R^{\Delta}_{i\alpha} (t+\tau) \rangle $.
-Using Eq.\ \ref{eq:delta}, we calculated $\Delta \approx \SI{2e-5}{\per\fs}$, but its true value is $\SI{8e-5}{\per\fs}$ for this system.
+Using Eq.\ \ref{eq:delta}, we calculated $\Delta \approx \SI{2e-5}{\per\fs}$, but its true value is $\SI{6e-5}{\per\fs}$ for this system.
 Note that the  ACF is not truly a delta-function, and is characterized by rapidly oscillating correlations for short lag times. 
 The high frequency correlations made integration of the ACF inaccurate, but provided a decent starting point for further investigation.
 The autocorrelation decays rapidly enough that these forces can be considered random and uncorrelated to a good approximation for sufficiently long time scales ($\gg\SI{300}{\fs}$ for this system). 
@@ -213,8 +213,8 @@ Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and the TZ
 
 The methods presented here are built into CP2K, an open source MD simulation package.~\cite{www:cp2k} 
 The computation scheme used is mostly identical to that described in the implementation section of ref.\ \citenum{a:almo-ls}. 
-For the dynamical properties calculations using ALMO DFT calculation methods, a periodic cell containing 125 water molecules was simulated for $\SI{40}{\ns}$ at a constant temperature of $\SI{298}{\K}$ and a constant density of $\SI{0.9966}{\g\per\cm^{3}}$. 
-The system was thermostated using the Langevin ensemble (eq.\ \ref{eq:langevin2}) where $\gamma_L$ was set to $\SI{e-5}{\per\fs}$, and $\Delta$ was optimized to the order of $10^{-5}$ - $10^{-4}\, \mathrm{fs^{-1}}$. 
+For the dynamical properties calculations using ALMO DFT calculation methods, a periodic cell containing 125 water molecules was simulated for $\SI{10}{\ps}$ at a temperature of $\SI{293}{\K}$ and a constant density of $\SI{1.00597}{\g\per\cm^{3}}$. 
+The system was thermostated using the Langevin ensemble (eq.\ \ref{eq:langevin2}) where $\gamma_L$ was set to $\SI{e-3}{\per\fs}$, and $\Delta$ was optimized to the order of $10^{-5}\, \mathrm{fs^{-1}}$. 
 Note that for timing benchmarks, $\Delta$ was not optimized. 
 This does not have a perceptible effect on calculation time.
 
@@ -222,8 +222,8 @@ Simulations for timing benchmarks were run for ten time steps, which is sufficie
 The TZV2P basis set was used to represent MOs, and a cutoff of $\SI{320}{Ry}$ used to represent electron density. 
 The exchange-correlation energy was approximated using the PBE functional, which expands upon the local density approximation by considering derivatives of the electron density at each point.~\cite{a:PBEfunctional} 
 
-The reference PES was calculated using the orbital transformation (OT) method~\cite{a:ot,a:ot2} and the canonical sampling through velocity rescaling (CSVR) thermostat~\cite{a:CSVR} with a time constant of $\SI{200}{fs}$. 
-Otherwise, system parameters were identical for the reference.
+The reference PES was calculated using the orbital transformation (OT) method~\cite{a:ot,a:ot2} and the Langevin thermostat with $\gamma_L = \SI{e-3}{\per\fs}$. 
+All other system parameters were set identical to the ALMO system.
 
 IR spectra, radial distribution functions, diffusivity plots, and diffusion constants were calculated using the open source trajectory analyzer program TRAVIS.~\cite{a:travis-main,a:travis-ir1,a:travis-ir2}
 
@@ -239,14 +239,30 @@ Here it is clear that ALMO DFT forces converge to Born-Oppenheimer forces in the
 Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and the TZV2P basis set on 125 water molecules for 10 ps.}
 \end{figure}
 
-To test the accuracy of ALMO DFT based MD, we computed dynamical properties for 30 ns MD trajectories using fully converged Kohn-Sham DFT forces and compared with equivalent trajectories using forces computed with ALMO DFT methods (see fig. %\ref{fig:dynproperties}).
+To test the accuracy of ALMO DFT based MD we computed the Infrared (IR) spectrum, radial distribution function (RDF), kinetic energy distribution, and mean-squared displacement (MSD) function from a 10 ps MD trajectory. 
+We compared the IR spectrum, RDF, and MSD to equivalent functions calculated from fully converged Kohn-Sham DFT forces (see fig. \ref{fig:dynproperties} and supporting information).
+From the MSD functions we also calculated diffusion constants for water at approximately 300 K.
+With fully converged forces we calculated D = $\SI{5.47e-9}{\m^{2}\per\s}$.
+With ALMO unconverged forces we calculated D = $\SI{5.55E-09}{\m^{2}\per\s}$.
+
+
+\begin{figure}
+\includegraphics[trim={1.3cm 0.1cm 3.3cm 1.3cm},clip,width=8.6cm]{Dynamical_Data_Tiled.eps}
+\caption{\label{fig:dynproperties} Calculated dynamic and static properties of water using ALMO DFT with $\epsilon_{SCF} = 10^{-2}$ and $R_{c} = 1.6$ VdWR.
+(a) Radial distribution function of an ALMO simulation compared to OT SCF with fully converged PES. 
+(b) Kinetic Energy distribution of an ALMO simulation compared to the theoretical Maxwell-Boltzmann kinetic energy distribution.
+(c) Calculated Infrared spectrum of an ALMO simulation compared to OT SCF with fully converged PES.
+Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set, using 125 water molecules for 10 ps.}
+\end{figure}
+
+
 
 \section{Speed}
 
-To show the computational efficiency gained by using unconverged ALMO DFT forces, we compare the average wall-time per MD step over 10 time steps for various values of $\epsilon_{err}$ in figure \ref{fig:strongscaling_log}.
+To show the computational efficiency gained by using unconverged ALMO DFT forces, we compare the average wall-time per MD step over 10 time steps for various values of $\epsilon_{SCF}$ in figure \ref{fig:strongscaling_log}.
 For these simulations, we chose to set the localization radius to 1.6 Van der Waal Radii (VdWR), as was done for calculation of dynamical properties.
 We also show timing of the fully converged OT SCF method, as well as the recently developed ``second generation Car-Parinello'' SCF method using OT, which improves upon the OT computational cost prefactor.~\cite{a:2ndcpmd}
-ALMO methods show excellent LS behavior for all values of $\epsilon_{err}$ tested.
+ALMO methods show excellent LS behavior for all values of $\epsilon_{SCF}$ tested.
 OT SCF scales approximately cubically, as expected.
 Our findings show that the fastest ALMO SCF method presented here runs faster than second-generation Car-Parinello using OT SCF for water simulations larger than 256 molecules.
 
@@ -278,8 +294,9 @@ Dashed gray lines connect systems simulated using the same number of CPU cores, 
 Of note is the 32768 molecule system successfully simulated using 4096 cores at around 25 minutes per MD step.
 We also show that systems as large as 8192 molecules can be simulated for 10,000 MD steps in under a month using our method.
 Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set, averaged over 10 MD steps. 
-The localization radius was set to $R_{c} = 1.6$ VdWR and $\epsilon_{err} = 10^{-2}$.}
+The localization radius was set to $R_{c} = 1.6$ VdWR and $\epsilon_{SCF} = 10^{-2}$.}
 \end{figure}
+
 
 \section{Conclusions} 
 
