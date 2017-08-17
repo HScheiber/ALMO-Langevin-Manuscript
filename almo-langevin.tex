@@ -148,7 +148,7 @@ where $f^{\text{SCF}}_{i\alpha}$ is the fully converged ALMO DFT force calculati
 \end{align}
 %
 It's clear from figure \ref{fig:randomforce} that this assumption is sufficiently justified. 
-The Langevin equation of motion (\ref{eq:langevin}) can be re-written with the two stochastic terms combined into one $\gamma = \gamma_L-\Delta$.
+The Langevin equation of motion (\ref{eq:langevin}) can be re-written with the two stochastic terms combined into one $\gamma = \gamma_L+\Delta$.
 %
 \begin{align}
 \label{eq:langevin2}
@@ -156,7 +156,7 @@ m_i \ddot{r}_{i\alpha} = f^{\text{APP}}_{i\alpha} - \gamma_L m_i \dot{r}_{i\alph
 \end{align}
 %
 Note that $\Delta$ can be either positive or negative depending on the way in which errors are introduced in the system of interest. 
-$\Delta$ was found to be positive for all systems considered here, reducing the effective random force on the system.
+$\Delta$ was found to be positive for all systems considered here, increasing the effective random force on the system.
 
 %\section{Optimizing the values of $\gamma_L$ and $\Delta$}
 
