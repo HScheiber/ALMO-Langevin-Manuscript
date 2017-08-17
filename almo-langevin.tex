@@ -1,7 +1,8 @@
 %\documentclass[journal=jacsat]{achemso}
 
-\documentclass[10pt,aps,prl,twocolumn,amsmath,amssymb,superscriptaddress,longbibliography]{revtex4-1}
+\documentclass[aps,prl,reprint,amsmath,amssymb]{revtex4-1}
 
+%\documentclass[aps,prl,,reprint,amsmath,amssymb,superscriptaddress,longbibliography]{revtex4-1}
 %\documentclass[preprint,showpacs,preprintnumbers,amsmath,amssymb]{revtex4-1}
 %\documentclass[twocolumn,showpacs,preprintnumbers,amsmath,amssymb]{revtex4}
 % Some other (several out of many) possibilities
@@ -15,7 +16,8 @@
 \usepackage{amsmath}% bold math
 \usepackage{siunitx}% si units
 \usepackage{color}
-\usepackage{graphicx}
+\usepackage{epstopdf} 
+%\graphicspath{{pics}}
 %\usepackage[normalem]{ulem}
 %\nofiles
 
@@ -27,6 +29,8 @@
 
 \title{
 Low-cost linear-scaling \emph{ab initio} molecular dynamics for weakly-interacting systems
+%%for weakly-coupled atoms
+%% for non-covalently bonded atoms
 }
 
 \author{Hayden Scheiber}
@@ -49,23 +53,18 @@ We also introduce a simple heuristic approach to find the best Langevin Equation
 \end{abstract}
 
 \maketitle
-\section{Introduction}
-Since the unification of molecular dynamics (MD) and density functional theory (DFT) in 1985 by Car and Parrinello,~\cite{a:thecpmd} much research has been focused on reducing the computational overhead of \emph{ab initio} molecular dynamics (AIMD) potential energy calculations.~\cite{b:aimd} 
-% Remove Following text for some journals
-AIMD provides a great advantage over traditional predefined-potential molecular dynamics in that it calculates its potential energy surface (PES) on-the-fly, rather than needing to be laboriously optimized to the specific system of interest beforehand. 
-This allows for exploration of much more chemically complex systems than are possible with traditional MD methods. 
-AIMD also allows for much greater predictive capability than traditional MD, as a first principles approach is not confined to a predetermined range of system parameters. 
-The tradeoff is the computational complexity involved in calculating an accurate set of forces for each atom at every time step of the simulation.~\cite{a:2gen-cpmd}
-% End remove
 
-The computational cost of the straightforward approach to Kohn-Sham DFT is known to grow (or \emph{scale}) cubically with system size because it involves either diagonalization of the effective Kohn-Sham Hamiltonian or, if the direct optimization of Kohn-Sham orbitals is performed, the equally costly inversion of a preconditioner.~\cite{a:ot} % Add other references here?
-This cubic scaling severely constricts the possible length and time scales accessible by AIMD using such an approach. 
-In an attempt to address this issue, there has been much research into the possibility of linear scaling (LS) DFT methods for the calculation of forces.
+\section{Introduction}
+
+Since the unification of molecular dynamics and density functional theory (DFT)~\cite{a:thecpmd},
+\emph{ab initio} molecular dynamics (AIMD)~\cite{b:aimd} has become an important tool for computational studies of weakly bonded ensembles of molecules such as gas-phase clusters, molecular and ionic liquids, solutions, and molecular solids. [of gas-phase molecules and condensed-phase systems.] 
+Unfortunately, the computational cost of AIMD based on the conventional Kohn-Sham (KS) DFT grows cubically with the number of atoms in the system and severely limits the \emph{length scale} accessible by AIMD. 
+In an attempt to address this issue, substantial efforts have been directed to the development of linear scaling (LS) DFT methods for the on-the-fly calculation of forces.
 
 % Most methods are based on localization of electrons into small sub domains of the system, so that long range charge transfer is ignored.~\cite{a:linscale3,a:lee-yang-1996,a:ls-scuseria-1997,a:ls-manolopoulos-1998,a:ls-helgaker-2001,a:ls-niklasson-2003,a:curvy2,a:ls-dm-sign,a:ls-parinello} So far the available methods still suffer from a high computational cost prefactor, even though they scale linearly for large systems. This has limited the available time scales for LS AIMD severely.
 
 % Re-write the following section and include any recent advances
-A number of such alternative methods explore the natural sparsity of the one-electron density matrix (DM)~\cite{a:ls-kohn-1996,a:ls-rev-1999} and are capable of yielding LS for large systems.~\cite{a:linscale3,a:lee-yang-1996,a:ls-scuseria-1997,a:ls-manolopoulos-1998,a:ls-helgaker-2001,a:ls-niklasson-2003,a:curvy2,a:ls-dm-sign} 
+The steep scaling of the conventional KS DFT originates from the delocalized nature of the canonical KS orbitals, which tend to delocalize over all atoms in the system, with an alternative set of electronic descriptors. All LS methods must A number of such methods explore the natural sparsity of the one-electron density matrix (DM)~\cite{a:ls-kohn-1996,a:ls-rev-1999} and are capable of yielding LS for large systems.~\cite{a:linscale3,a:lee-yang-1996,a:ls-scuseria-1997,a:ls-manolopoulos-1998,a:ls-helgaker-2001,a:ls-niklasson-2003,a:curvy2,a:ls-dm-sign} 
 Unfortunately, the variational optimization of the DM is very inefficient for accurate DFT calculations,~\cite{a:ls-rev-1999,a:ls-dm-sign} which require many basis functions per atom. 
 Therefore, the applications of DM-based LS methods have been limited to minimal-basis tight-binding problems. 
 The optimal basis variants of the DM methods~\cite{a:ls-stechel-1994,a:ls-gillan-1995,a:ls-gillan-1996,a:ls-onetep-2003} designed to address this issue contract the large basis set into a small number of new localized basis functions and then optimize the DM in the contracted basis. 
@@ -77,9 +76,7 @@ Unfortunately, the progress in the development of orbital-based LS methods has b
 
 Hence, the computational prefactor of the existing LS DFT methods~\cite{a:ls-rev-1995,a:ls-rev-1999,a:ls-rev-2002,a:ls-rev-2012} remains very high and most AIMD simulations are still performed using conventional low-prefactor cubic scaling DFT methods.
 
-Here, we introduce a new low-cost linear scaling AIMD method for weakly-interacting molecular systems based on the recently developed absolutely localized molecular orbitals (ALMO) DFT approach.~\cite{a:almo-ls} 
-
-This method exploits non-orthogonal molecular orbitals (MOs) in a two-step self-consistent filed (SCF) approach that is designed to avoid the usual convergence issues.~\cite{a:ls-mauri-galli-car-1993,a:ls-ordejon-1995,a:ls-fattebert-2004,a:ls-rev-1999} 
+Here, we introduce a new low-cost linear scaling AIMD method for weakly-interacting molecular systems based on the recently developed absolutely localized molecular orbitals (ALMO) DFT approach~\cite{a:almo-ls}. ALMO DFT exploits non-orthogonal molecular orbitals (MOs) in a two-step self-consistent filed (SCF) approach that is designed to avoid the usual convergence issues~\cite{a:ls-mauri-galli-car-1993,a:ls-ordejon-1995,a:ls-fattebert-2004,a:ls-rev-1999} and .
 We show that due to its linear scaling nature and relatively low computational prefactor, ALMO-based DFT calculations allow for simulation of very large weakly-coupled molecular systems. 
 To decrease the cost even further, the present paper builds on the ALMO SCF method as well as other recent work involving Brownian dynamics to balance force calculation errors.~\cite{a:ls-parinello,a:2ndcpmd,a:langevin-why} 
 We will show that our approach lowers the computation cost pre-factor for the ALMO SCF method, while maintaining LS and accuracy for calculation of dynamical properties. 
@@ -195,9 +192,9 @@ In practice, this method for estimating $\Delta$ is not particularly accurate du
 
 Once $\gamma_L$ and $\Delta$ are both optimized, approximate forces can be used to perform long MD simulations efficiently.
 \bigskip
-
+ 
 \begin{figure}
-\includegraphics[trim={0.5cm 0.7cm 0.5cm 0cm},clip,width=8cm]{DeltaForceComparison_with_ACF.eps}
+\includegraphics[trim={0.5cm 0.7cm 0.5cm 0cm},clip,width=8cm]{DeltaForceComparison_with_ACF}
 \caption{\label{fig:randomforce}The average ``Random force'' along a water molecule dimension $\langle R^{\Delta}_{i\alpha} \rangle (t)$ calculated as the difference between the fully converged Born-Oppenheimer forces and ALMO DFT forces. Here it is clear that Eq.\ (\ref{eq:stochastic2}) is satisfied. 
 (a) Plot of $\langle R^{\Delta}_{i\alpha} \rangle (t)$ as a function of time, where $R_{C} = 1.6$ VdWR and $\epsilon_{err} = \num{1e-2}$.
 (b) Plot of $\langle R^{\Delta}_{i\alpha} \rangle (t)$ as a function of time, where $R_{C} = 1.6$ VdWR and forces are fully converged.
@@ -232,7 +229,7 @@ IR spectra, radial distribution functions, diffusivity plots, and diffusion cons
 In order to confirm that ALMO DFT forces are accurate in the limit where localization radius $R_{c} = \infty$, we computed the average difference in force between fully converged Born-Oppenheimer forces and forces calculated from ALMO DFT with varying $R_{c}$. Figure \ref{fig:forcecomp} shows that as $R_{c}$ is increased to infinity, forces converge toward the Born-Oppenheimer limit.
 
 \begin{figure}
-\includegraphics[trim={0.1cm 0cm 0cm 0cm},clip,width=8cm]{DeltaForceComparison_ALMO_SCF.eps}
+\includegraphics[trim={0.1cm 0cm 0cm 0cm},clip,width=8cm]{DeltaForceComparison_ALMO_SCF}
 \caption{\label{fig:forcecomp}The average ``Random force'' $\langle R^{\Delta}_{i\alpha} \rangle (t)$ calculated as the average difference between fully converged Born-Oppenheimer forces and fully converged ALMO DFT forces, averaged across all dimensions and all molecules separately at each time step. 
 Plotted are the random forces with varying localization radius $R_{c}$, in units of Van der Waals Radii.
 Here it is clear that ALMO DFT forces converge to Born-Oppenheimer forces in the limit of $R_{c} \rightarrow \infty$.
@@ -253,14 +250,14 @@ Our findings show that the fastest ALMO SCF method presented here runs faster th
 
 
 \begin{figure}
-\includegraphics[trim={1.9cm 0.4cm 3.5cm 1.7cm},clip,width=8cm]{strongscaling_linear.eps}
+\includegraphics[trim={1.9cm 0.4cm 3.5cm 1.7cm},clip,width=8cm]{strongscaling_linear}
 \caption{\label{fig:strongscaling_linear} Linear plots showing LS behaviour of all ALMO methods for liquid water at 298 K. 
 Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set on 256 CPUs. 
 The localization radius was set to $R_{c} = 1.6$ VdWR.}
 \end{figure}
 
 \begin{figure}
-\includegraphics[trim={2.8cm 0.4cm 3.5cm 1.2cm},clip,width=8cm]{strongscaling_log.eps}
+\includegraphics[trim={2.8cm 0.4cm 3.5cm 1.2cm},clip,width=8cm]{strongscaling_log}
 \caption{\label{fig:strongscaling_log} Log-log plots which clearly show the asymptotic LS behaviour of ALMO methods for liqid water at 298 K. 
 Cyan lines represent perfect cubic scaling, whereas gray lines represent perfect linear scaling. 
 Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set on 256 CPUs. 
@@ -268,8 +265,13 @@ The localization radius was set to $R_{c} = 1.6$ VdWR.}
 \end{figure}
 
 
-
 \section{Conclusions} 
+
+%Such simulations are important for Use if empirical force fields or QM/MM are not applicable:
+%Chemical reactions that happen throughout your system, not in a localized spatial region (e.g. proton transfer in water)
+%Unusual thermodynamic states for which simple analytical potential become inaccurate (e.g. high pressure states, interfaces, heterojunctions)
+%Electron density is an important observable (e.g. X-ray scattering) or information of the electronic wavefunctions is crucial.
+
 
 \textbf{Acknowledgments.} The research was funded by the Natural Sciences and Engineering Research Council of Canada through the Discovery Grant. The authors are grateful to Compute Canada and McGill HPC Centre for computer time.
 
