@@ -43,47 +43,57 @@ Low-cost linear-scaling \emph{ab initio} molecular dynamics for weakly-interacti
 \date{\today}
 
 \begin{abstract}
-Linear scaling density functional theory based on absolutely localized molecular orbitals is used in conjunction with the Langevin equation of motion to create a low-cost molecular dynamics method for weakly coupled molecular systems which retains sufficient accuracy to generate correct dynamical properties in water. 
+Linear scaling density functional theory based on absolutely localized molecular orbitals is used in conjunction with the Langevin equation of motion to create a low-cost molecular dynamics method for large systems of weakly-interacting molecules. which retains sufficient accuracy to generate correct dynamical properties in water. 
 
 The approach utilizes a systematically inaccurate linear-scaling potential energy surface (PES) calculation method. 
 Inaccuracies in the calculation of force using this method are balanced by a weighted version of the Langevin Equation of motion. 
 The stochastic ``white noise'' of the Langevin Equation acts to smooth out PES discontinuities while also thermostating the system to maintain a constant thermodynamic temperature. 
 We show that Langevin dynamics can be successfully implemented to reduce computational cost by allowing systematic error in PES calculation to be absorbed into the stochastic and damping forces associated with the Langevin equation. 
 We also introduce a simple heuristic approach to find the best Langevin Equation parameters to use for balancing system-specific imperfect forces and maintaining correct dynamical behavior.
+
+% We developed a linear-scaling AIMD method with low computational overhead by utilizing compact molecular orbitals strictly localized within predefined radii. High efficiency of the method is achieved without sacrificing its accuracy with a combination of two techniques: (1) on-the-fly construction of accurate localized orbitals without lengthy self-consistent optimization and (2) the unbalanced Langevin integrator that is fine-tuned to retain stable dynamics even with imperfect forces. A remarkable feature of the implemented method is that it remains efficient even for challenging condensed phase systems even if large diffuse basis sets are used. We demonstrated that, for systems well-represented by the compact orbitals (e.g. molecular systems, ionic salts), the new AIMD method enables simulations on previously inaccessible time and length scales. The first steps towards generalizing the method to more challenging systems of strongly interacting atoms (e.g. covalent crystals) will also be discussed.
+
 \end{abstract}
 
 \maketitle
 
-\section{Introduction}
+%\section{Introduction}
 
 Since the unification of molecular dynamics and density functional theory (DFT)~\cite{a:thecpmd},
-\emph{ab initio} molecular dynamics (AIMD)~\cite{b:aimd} has become an important tool for computational studies of weakly bonded ensembles of molecules such as gas-phase clusters, molecular and ionic liquids, solutions, and molecular solids. [of gas-phase molecules and condensed-phase systems.] 
-Unfortunately, the computational cost of AIMD based on the conventional Kohn-Sham (KS) DFT grows cubically with the number of atoms in the system and severely limits the \emph{length scale} accessible by AIMD. 
-In an attempt to address this issue, substantial efforts have been directed to the development of linear scaling (LS) DFT methods for the on-the-fly calculation of forces.
-
-% Most methods are based on localization of electrons into small sub domains of the system, so that long range charge transfer is ignored.~\cite{a:linscale3,a:lee-yang-1996,a:ls-scuseria-1997,a:ls-manolopoulos-1998,a:ls-helgaker-2001,a:ls-niklasson-2003,a:curvy2,a:ls-dm-sign,a:ls-parinello} So far the available methods still suffer from a high computational cost prefactor, even though they scale linearly for large systems. This has limited the available time scales for LS AIMD severely.
+\emph{ab initio} molecular dynamics (AIMD)~\cite{b:aimd} has become an important tool for studying of weakly bonded ensembles of molecules such as gas-phase molecular clusters, liquids, solutions, and molecular solids. %[of gas-phase molecules and condensed-phase systems.] 
+Unfortunately, the computational cost of the conventional Kohn-Sham (KS) DFT grows cubically with the number of atoms, which severely limits the \emph{length scales} accessible by AIMD. %and hinders it application to large heterogeneous systems (interfaces, nuclei, defects). 
+To address this issue and calculate forces in large systems efficiently, substantial efforts have been directed to the development of linear scaling (LS) DFT methods.
 
 % Re-write the following section and include any recent advances
-The steep scaling of the conventional KS DFT originates from the delocalized nature of the canonical KS orbitals, which tend to delocalize over all atoms in the system, with an alternative set of electronic descriptors. All LS methods must A number of such methods explore the natural sparsity of the one-electron density matrix (DM)~\cite{a:ls-kohn-1996,a:ls-rev-1999} and are capable of yielding LS for large systems.~\cite{a:linscale3,a:lee-yang-1996,a:ls-scuseria-1997,a:ls-manolopoulos-1998,a:ls-helgaker-2001,a:ls-niklasson-2003,a:curvy2,a:ls-dm-sign} 
-Unfortunately, the variational optimization of the DM is very inefficient for accurate DFT calculations,~\cite{a:ls-rev-1999,a:ls-dm-sign} which require many basis functions per atom. 
-Therefore, the applications of DM-based LS methods have been limited to minimal-basis tight-binding problems. 
-The optimal basis variants of the DM methods~\cite{a:ls-stechel-1994,a:ls-gillan-1995,a:ls-gillan-1996,a:ls-onetep-2003} designed to address this issue contract the large basis set into a small number of new localized basis functions and then optimize the DM in the contracted basis. 
-Although such methods have been successfully used for the evaluation of accurate DFT energies of very large systems~\cite{a:ls-onetep-2009,a:ls-conquest-2010,a:ls-onetep-2010-app1,a:ls-rev-2012} their application for AIMD is hampered by the computationally costly optimization of both the contracted orbitals and the density matrix.
-%
-From this point of view, methods based on the direct optimization of localized KS orbitals~\cite{a:ls-galli-parrinello-1992,a:ls-mauri-galli-car-1993,a:ls-ordejon-1993,a:ls-mauri-galli-1994,a:ls-ordejon-1995,a:ls-kim-mauri-galli-1995,a:ls-fattebert-2004,a:ls-fattebert-2006,a:burger-yang-2008} are advantageous since they require only the occupied orbitals and, thus, deal with fewer variational degrees of freedom than the DM methods. 
-Unfortunately, the progress in the development of orbital-based LS methods has been hindered by the inherently difficult convergence of the localized-orbital optimization.~\cite{a:ls-mauri-galli-car-1993,a:ls-ordejon-1995,a:ls-fattebert-2004,a:ls-rev-1999,a:weitao-yang-2013} 
-%Furthermore, numerous proposed LS functionals exhibit multiple local minima, which limits their applicability in molecular dynamics simulations because of the resulting poor conservation of the total energy~\cite{a:ls-rev-1999}.
+In all LS DFT methods, the \emph{delocalized} eigenstates of the effective KS Hamiltonian, known as canonical KS orbitals, must be replaced with an alternative set of \emph{local} electronic descriptors
+~\footnote{Canonical KS orbitals are delocalized over all atoms in the system. 
+This delocalization is the main reason for the steep growth of the cost of the conventional KS DFT: since both the number of orbitals and the number of localization regions (e.g. atomic basis functions) increase linearly with the number of atoms, the total number of the electronic degrees of freedom that describe delocalized orbitals grows quadratically.}. 
+Most LS methods~\cite{a:linscale3,a:lee-yang-1996,a:ls-scuseria-1997,a:ls-manolopoulos-1998,a:ls-helgaker-2001,a:ls-niklasson-2003,a:curvy2,a:ls-dm-sign} explore the natural locality of the one-electron density matrix (DM). 
+%However, the variational optimization of the DM is very inefficient for accurate DFT calculations that require many basis functions per atom~\cite{a:ls-rev-1999,a:ls-dm-sign}. 
+However, in accurate DFT calculations that require many basis functions per atom, the variational optimization of the DM formulation is advantageous only for impractically large systems~\cite{a:ls-rev-1999,a:ls-dm-sign,a:almo-ls}.
+%However, in accurate DFT calculations with many basis functions per atom are required, the DM becomes sufficiently sparse only for impractically large systems~\cite{a:ls-rev-1999,a:ls-dm-sign,a:almo-ls}. 
+Therefore, the application of DM-based LS methods have been restricted to minimal-basis tight-binding problems. 
+The optimal basis variants of the DM methods~\cite{a:ls-stechel-1994,a:ls-gillan-1995,a:ls-gillan-1996,a:ls-onetep-2003} designed to rectify this issue contract large basis sets into a small number of new localized basis functions and then optimize the DM in the contracted basis. 
+Although such methods have been successfully used for the evaluation of accurate DFT energies of large static systems~\cite{a:ls-onetep-2009,a:ls-conquest-2010,a:ls-onetep-2010-app1,a:ls-rev-2012} their use in AIMD is hampered by the costly optimization of both the contracted orbitals and the density matrix. 
+Alternatively, LS can be achieved using a set of local electronic descriptors constructed by enforcing strict locality on the KS orbitals and, at the same time, by relaxing the orthogonality constraints imposed on them. 
+From the computational point of view, LS methods based on the direct optimization of such compact localized nonorthogonal orbitals~\cite{a:ls-galli-parrinello-1992,a:ls-mauri-galli-car-1993,a:ls-ordejon-1993,a:ls-mauri-galli-1994,a:ls-ordejon-1995,a:ls-kim-mauri-galli-1995,a:ls-fattebert-2004,a:ls-fattebert-2006,a:burger-yang-2008} are more promising since they require only the occupied orbitals and, thus, deal with fewer variational degrees of freedom than the DM methods. 
+Unfortunately, the progress in the development of orbital-based LS methods has been hindered by the inherently difficult optimization of localized orbitals~\cite{a:ls-mauri-galli-car-1993,a:ls-ordejon-1995,a:ls-fattebert-2004,a:ls-rev-1999,a:weitao-yang-2013}. 
 
-Hence, the computational prefactor of the existing LS DFT methods~\cite{a:ls-rev-1995,a:ls-rev-1999,a:ls-rev-2002,a:ls-rev-2012} remains very high and most AIMD simulations are still performed using conventional low-prefactor cubic scaling DFT methods.
+%Thus, despite remarkable recent progress in linear scaling density function theory, the computational cost of existing methods remains too high for routine \emph{ab initio} molecular dynamics (AIMD) simulations.
+Thus, despite remarkable recent progress the high computational overhead of existing asymptotically linear-scaling DFT methods restrict their use in AIMD simulations to very short \emph{time scales}, systems of low dimensions, or problems that can be adequately described with minimal basis sets. Otherwise, LS DFT cannot compete with the straightforward cubically scaling KS DFT on the length scales accessible in routine AIMD.
+%Thus,  the computational cost of the existing asymptotically linear-scaling DFT methods remains too high to compete with the straightforward cubically scaling KS DFT on the length scales practically accessible in routine AIMD simulations.
+%Thus, although there exist numerous DFT methods capable of yielding asymptotic LS, their computational cost for systems in/on the practically accessible length scale remains too high to compete with the conventional cubically scaling KS DFT with its highly-optimized numerical algorithms.  
 
-Here, we introduce a new low-cost linear scaling AIMD method for weakly-interacting molecular systems based on the recently developed absolutely localized molecular orbitals (ALMO) DFT approach~\cite{a:almo-ls}. ALMO DFT exploits non-orthogonal molecular orbitals (MOs) in a two-step self-consistent filed (SCF) approach that is designed to avoid the usual convergence issues~\cite{a:ls-mauri-galli-car-1993,a:ls-ordejon-1995,a:ls-fattebert-2004,a:ls-rev-1999} and .
+In this work, we introduce a new AIMD method for weakly-interacting molecular systems that can reach the linear scaling regime for systems of medium size while maintaining a low computational overhead. Using liquid water as an example, we demonstrate that the proposed AIMD methodology enables computational studies of molecular systems on previously inaccessible time and length scales. 
+
+ALMO DFT exploits non-orthogonal molecular orbitals (MOs) in a two-step self-consistent filed (SCF) approach that is designed to avoid the usual convergence issues~\cite{a:ls-mauri-galli-car-1993,a:ls-ordejon-1995,a:ls-fattebert-2004,a:ls-rev-1999} and .
 We show that due to its linear scaling nature and relatively low computational prefactor, ALMO-based DFT calculations allow for simulation of very large weakly-coupled molecular systems. 
 To decrease the cost even further, the present paper builds on the ALMO SCF method as well as other recent work involving Brownian dynamics to balance force calculation errors.~\cite{a:ls-parinello,a:2ndcpmd,a:langevin-why} 
 We will show that our approach lowers the computation cost pre-factor for the ALMO SCF method, while maintaining LS and accuracy for calculation of dynamical properties. 
 This is done by balancing a new computationally economical but systemically inaccurate force calculation method with an optimized version of the Langevin Equation of motion. 
 We also introduce an easy to follow heuristic approach to optimize a system for generating correct dynamical behaviour.
 
-\section{Theory} 
+%\section{Theory} 
 
 Our approach is based on the ALMO SCF two-step variational method.~\cite{a:almo-ls} 
 Initially, the electrons are partitioned into groups based on a logical approach, generally corresponding to molecules. 
@@ -94,6 +104,15 @@ In the second step, the variationally optimized but constrained MOs are allowed 
 This step requires a second variational optimization to be performed. 
 Because of the logical partitioning of the groups and ignoring of long range forces, both steps of the electronic structure calculation are linear scaling with respect to system size. 
 For more details on this method, see ref.\ \citenum{a:almo-ls}.
+
+It is important to note that the presented logical partitioning with the subsequent construction of localized MOs is a rather general approach used in a large number of electronic structure theories, which are collectively known as fragmentation methods~\cite{a:fragmentation-rev}. These methods vary greatly in how the partitioning and recombination are performed and, therefore, differ in accuracy and computational cost. We would like to emphasize that in our approach a proper quantum mechanical description of the entire system is constructed in the form of the total idempotent density matrix:
+%
+\begin{eqnarray}
+\label{eq:properdm}
+\hat{R} = \sum_{x} \vert \psi^{xi} \rangle \langle \psi_{xi}\vert.
+\end{eqnarray}
+%
+This approach provides the most rigorous description of the electronic structure.
 
 A known source of error in force calculation within the ALMO SCF paradigm occurs due to the discontinuous jump in potential energy when a neighboring molecule passes beyond the cutoff radius $R_{c}$ and is suddenly ignored in potential energy calculations. 
 Setting $R_{c}$ to a larger value reduces this discontinuity, but greatly increases the computational cost as longer distance (and less important) interactions must be calculated. 
@@ -296,6 +315,10 @@ The localization radius was set to $R_{c} = 1.6$ VdWR and $\epsilon_{SCF} = 10^{
 
 
 \section{Conclusions} 
+
+To summarize, a low-cost linear-scaling AIMD method for weakly-interacting molecular systems was developed by utilizing compact molecular orbitals strictly localized within predefined radii. High efficiency of the method is achieved without sacrificing its accuracy with a combination of two techniques: (1) on-the-fly construction of accurate localized orbitals without lengthy self-consistent optimization and (2) a modified Langevin equation that is fine-tuned to compensate retain stable dynamics even with imperfect forces. A remarkable feature of the implemented method is that it remains efficient even for challenging condensed phase systems, even with diffuse atom-centered basis sets. Using liquid water as an example, it is demonstrated that the new AIMD method enables simulations of molecular systems on previously inaccessible time and length scales. 
+
+Generalization of the method to more challenging systems of strongly interacting atoms (e.g. covalent crystals) will also be discussed.
 
 %Such simulations are important for Use if empirical force fields or QM/MM are not applicable:
 %Chemical reactions that happen throughout your system, not in a localized spatial region (e.g. proton transfer in water)
