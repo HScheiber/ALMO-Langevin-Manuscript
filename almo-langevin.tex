@@ -241,9 +241,9 @@ Note that for our system, the ACF decays rapidly enough that the forces can be c
 \includegraphics[trim={0.5cm 0cm 0.7cm 0.1cm},clip,width=8.6cm]{DeltaForceComparison_with_ACF.eps}
 \caption{\label{fig:randomforce} Comparison of random force introduced from $R_{c}$ and $\epsilon_{\text{SCF}}$. 
 The red line is the Euclidean norm of the instantaneous error $\langle \| \delta \vec{f_{i}}(t) \| \rangle_{i}$, the black line is the magnitude of the time average of the instantaneous error vector, and the green line is the standard deviation from the average. 
-(a) $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$, using fully converged ALMO SCF reference.
+(a) $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$~a.u., using fully converged ALMO SCF reference.
 (b) $R_{c} = 1.6$ vdWR and fully converged ALMO SCF, using fully converged SCF reference.
-(c) $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$, using fully converged SCF reference.
+(c) $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$~a.u., using fully converged SCF reference.
 (d) Normalized ACF of the instantaneous error in panel (a) $\frac{1}{3}\langle \delta \vec{f}_i (t) \cdot \delta\vec{f}_i(t+\tau) \rangle_{it} $.
 Forces are computed with the PBE XC functional and TZV2P basis set for the configurations from a 10-ps trajectory generated with KS-based AIMD at T=298~K. 
 }
@@ -286,7 +286,7 @@ However, raising both $R_{c}$ and $\gamma$ decreases computation time significan
 
 \begin{figure}
 \includegraphics[trim={1.3cm 0.1cm 3.3cm 1.3cm},clip,width=8.6cm]{Dynamical_Data_Tiled.eps}
-\caption{\label{fig:dynproperties} Calculated dynamic and static properties of water using ALMO DFT with $\epsilon_{\text{SCF}} = 10^{-2}$ and $R_{c} = 1.6$ vdWR.
+\caption{\label{fig:dynproperties} Calculated dynamic and static properties of water using ALMO DFT with $\epsilon_{\text{SCF}} = 10^{-2}$~a.u. and $R_{c} = 1.6$ vdWR.
 (a) Radial distribution function of an ALMO simulation compared to fully converged OT SCF. 
 (b) Kinetic energy distribution of an ALMO simulation compared to the theoretical Maxwell-Boltzmann kinetic energy distribution.
 (c) Calculated Infrared spectrum of an ALMO simulation compared to fully converged OT SCF.
@@ -328,7 +328,7 @@ Dashed gray lines connect systems simulated using the same number of cores, veri
 Of note is the 32768 molecule system successfully simulated using 4096 cores at around 25 minutes per MD step.
 We also show that systems as large as 8192 molecules can be simulated for 10,000 MD steps in under a month using this method.
 Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set, averaged over 10 MD steps. 
-The localization radius was set to $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$.}
+The localization radius was set to $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$~a.u.}
 \end{figure}
 
 %\section{Conclusions} 
