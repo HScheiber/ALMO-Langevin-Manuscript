@@ -58,7 +58,7 @@ In addition, we introduce a simple heuristic approach to find optimized Langevin
 %\section{Introduction}
 
 Since the unification of molecular dynamics and density functional theory (DFT)~\cite{a:thecpmd},
-\emph{ab initio} molecular dynamics (AIMD)~\cite{b:aimd} has become an important tool for studying of weakly bonded ensembles of molecules such as gas-phase molecular clusters, liquids, solutions, and molecular solids. %[of gas-phase molecules and condensed-phase systems.] 
+\emph{ab initio} molecular dynamics (AIMD)~\cite{b:aimd} has become an important tool for the study of weakly bonded ensembles of molecules such as gas-phase molecular clusters, liquids, solutions, and molecular solids. %[of gas-phase molecules and condensed-phase systems.] 
 Unfortunately, the computational cost of the conventional Kohn-Sham (KS) DFT grows cubically with the number of atoms, which severely limits the \emph{length scales} accessible by AIMD. %and hinders it application to large heterogeneous systems (interfaces, nuclei, defects). 
 To address this issue and calculate forces in large systems efficiently, substantial efforts have been directed to the development of linear scaling (LS) DFT methods.
 
@@ -100,11 +100,11 @@ In the first step, ALMOs are constrained to their localization centers~\cite{a:k
 To achieve a robust optimization in the problematic second step, it is important to keep the delocalization component of the trial wavefunction orthogonal to the fixed orbitals obtained in the first step. 
 For mathematical details, see ALMO SCF method in Ref.~\citenum{a:almo-ls}.
 
-ALMO constraints restrict/prohibit/forbid electron density transfer between distant molecules but retain all other types of interaction such as long-range electrostatic, exchange, polarization, and, if the exchange-correlation (XC) functional includes it, dispersion interactions~\cite{a:theeda}. 
-Since the energetic contribution of the electron transfer decays exponentially with distance, \mbox{ALMO} approximation provides a natural and accurate representation of the electronic structure of molecular systems with just [a?] few local variables if an appropriate localization radius is chosen. 
+ALMO constraints prohibit electron density transfer between distant molecules but retain all other types of interaction such as long-range electrostatic, exchange, polarization, and, if the exchange-correlation (XC) functional includes it, dispersion interactions~\cite{a:theeda}. 
+Since the energetic contribution of the electron transfer decays exponentially with distance, \mbox{ALMO} approximation provides a natural and accurate representation of the electronic structure of molecular systems with just a few local variables if an appropriate localization radius is chosen. 
 %The advantage of ALMO DFT is that its computational complexity is linear with respect to system size because long-range electron delocalization is ignored in both optimization steps.
 %Because of the greatly reduced number of electronic variables and their robust optimization the computational cost of the implemented ALMO DFT is so low that it is [has the potential] capable of extending the range of accurate simulations to systems of thousands of molecules.
-Because of the greatly reduced number of electronic descriptors and the robust optimization, the computational complexity of ALMO DFT is linear with the number of molecules while its computational overhead remains very low. These features make ALMO DFT a promising method to perform accurate AIMD simulations of large molecular systems.
+Because of the greatly reduced number of electronic descriptors and the robust optimization, the computational complexity of ALMO DFT grows linearly with the number of molecules while its computational overhead remains very low. These features make ALMO DFT a promising method to perform accurate AIMD simulations of large molecular systems.
 
 %To decrease the cost even further, the present paper builds on the ALMO SCF method as well as other recent work involving Brownian dynamics to compensate errors in the forces~\cite{a:ls-parinello,a:2ndcpmd,a:langevin-why}. 
 %We will show that our approach lowers the computation cost pre-factor for the ALMO SCF method, while maintaining LS and accuracy for calculation of dynamical properties. 
@@ -121,12 +121,12 @@ f^{\text{KS}}_{i\alpha}(t) = f^{\text{ALMO}}_{i\alpha}(t) + \delta f_{i\alpha} (
 %
 where $\alpha$ is a Cartesian component of the force acting on atom $i$ at time $t$. $\delta f_{i\alpha} (t)$ comprises neglected terms that originate from %fixed terms in the trial ALMOs (i.e. orbitals obtained in the first SCF step are not re-optimized in the second step), 
 a finite localization radius $R_c$ and incomplete SCF optimization of the electronic degrees of freedom. 
-$\delta f_{i\alpha} (t)$ can be reduced \emph{systematically} to zero by increasing $R_c$ (Figure~\ref{fig:forcecomp} in the Supplemental Material) and decreasing $\epsilon_{\text{SCF}}$ -- [ZZZ the value maximum norm of the gradient of the \mbox{ALMO} DFT energy with respect to the ALMO coefficients. below which the electronic ground state is considered sufficiently close to the Born-Oppenheimer state.]
+$\delta f_{i\alpha} (t)$ can be reduced \emph{systematically} to zero by increasing $R_c$ (Figure~\ref{fig:forcecomp} in the Supplemental Material) and decreasing $\epsilon_{\text{SCF}}$ -- the maximum norm of the gradient of the \mbox{ALMO} DFT energy with respect to the ALMO coefficients. $\epsilon_{\text{SCF}}$ is chosen such that the electronic ground state is considered sufficiently close to the Born-Oppenheimer state for values less than $\epsilon_{\text{SCF}}$.
 %ZZZ For $\epsilon_{\text{SCF}} \leqslant 10^{-7}$~a.u. ALMO SCF is considered converged.
 
 \begin{figure}[t]
-\includegraphics[trim={0.1cm 0cm 0.2cm 0.1cm},clip,width=8.6cm]{DeltaForceComparison_ALMO_SCF.eps}
-\caption{\label{fig:forcecomp} {\color{red} All figures: $\epsilon_{\text{SCF}}$ must have ``a.u.'' units. This figure: VdWR$\rightarrow$vdWR. Hayden, you state that you average over Cartesian components of forces. Unfortunately, averaging over Cartesian components must give zero for any sufficiently large isotropic system (i.e. for every component there will be equal  opposite component). I am afraid these plots underestimate our error and mostly show finite-size effects. It would be better to plot the instantaneous \emph{magnitude} of $\delta \vec{f}_i(t)$, averaged over all atoms/molecules $\langle \ldots \rangle_i$. Can you make a new plot? Replace legend with: $\langle \delta f_i(t) \rangle_i$ -- red, $\langle \delta f_i(t) \rangle_{it}$ -- black, $\sqrt{\langle \delta \vec{f}_i(t) \cdot \delta \vec{f}_i(t) \rangle_{it}}$ -- green. Or remove it completely. I suggest we plot two green lines: above and below the average.} Dependence of the Euclidean norm of the instantaneous error $\langle \delta f_i(t) \rangle_i$ (red line) on the ALMO localization radius $R_c$ expressed in units of atomic van der Waals radii. Black line is the time average of the instantaneous error, green line is the standard deviation from the average. %calculated as the average difference between fully converged Born-Oppenheimer forces and fully converged ALMO DFT forces, averaged over all dimensions and all molecules for each time step. 
+\includegraphics[trim={0cm 0cm 0.1cm 0.1cm},clip,width=8.6cm]{DeltaForceComparison_ALMO_SCF.eps}
+\caption{\label{fig:forcecomp} Dependence of the Euclidean norm of the instantaneous error $\langle \| \delta \vec{f_{i}}(t) \| \rangle_{i}$ (red line) on the ALMO localization radius $R_c$ expressed in units of atomic van der Waals radii. Black line is the magnitude of the time average of the instantaneous error vector. %calculated as the average difference between fully converged Born-Oppenheimer forces and fully converged ALMO DFT forces, averaged over all dimensions and all molecules for each time step. 
 Forces are computed with the PBE XC functional, TZV2P basis set, and $\epsilon_{\text{SCF}} = 10^{-7}$~a.u. for the configurations from a 10-ps trajectory generated with KS-based AIMD at T=298~K.}
 \end{figure}
 
@@ -136,16 +136,16 @@ Forces are computed with the PBE XC functional, TZV2P basis set, and $\epsilon_{
 
 In order to maintain stable and accurate dynamics, $R_{c}$ has to be larger and $\epsilon_{\text{SCF}}$ has to be smaller than the corresponding optimal values used in static energy calculations or Monte-Carlo simulations. 
 This, however, greatly increases the computational overhead of the simulation as longer-distance but physically less important interactions must be calculated. 
-Therefore, in this work, we propose a different approach to ALMO-based AIMD, which allows for relaxation of the tight constraints on $R_{c}$ and $\epsilon_{\text{SCF}}$ and great reduction of the simulation cost. The approach is inspired by ZZZ and requires the use of the Langevin equations of motion~\cite{a:Kubo-1986}
+Therefore, in this work we propose a different approach to ALMO-based AIMD, which allows for relaxation of the tight constraints on $R_{c}$ and $\epsilon_{\text{SCF}}$ and great reduction of the simulation cost. The approach is inspired by ``Second Generation Car-Parinello'' MD~\cite{a:2ndcpmd} and requires the use of the Langevin equations of motion~\cite{a:Kubo-1986}
 %
 \begin{align}
 \label{eq:langevin}
 m_i \ddot{r}_{i\alpha} = f^{\text{KS}}_{i\alpha} - \gamma m_i \dot{r}_{i\alpha} + R^{\gamma}_{i\alpha} (t),
 \end{align}
 %
-where $m_i$ is the mass of atom $i$, $r_{i\alpha}$ its position along dimension $\alpha$, $\gamma$ is the Langevin scaling factor.
+where $m_i$ is the mass of atom $i$, $r_{i\alpha}$ its position along dimension $\alpha$, and $\gamma$ is the Langevin scaling factor.
 % which defines the strength of both the damping term and the stochastic term $R^{\gamma}_{i\alpha} (t)$. 
-Langevin thermostat. In order to sample the canonical distribution correctly, the stochastic force must have zero mean and, according to the second fluctuation dissipation theorem~\cite{a:Kubo-1986,b:tuckerman-stat} must be related to the damping through $\gamma$:
+In order to sample the canonical distribution correctly, the stochastic force must have zero mean and, according to the second fluctuation dissipation theorem~\cite{a:Kubo-1986,b:tuckerman-stat} must be related to the damping through $\gamma$:
 %
 \begin{align}
 \label{eq:stochastic}
@@ -153,18 +153,18 @@ Langevin thermostat. In order to sample the canonical distribution correctly, th
 \langle R^{\gamma}_{i\alpha} (t)  R^{\gamma}_{j\beta} (t') \rangle &= 2 k_B T \gamma m_i \delta_{ij} \delta_{\alpha\beta} \delta(t-t')
 \end{align}
 %
-These equations mean that, for any value of $\gamma$, 
-Thus the perfectly balanced damping and stochastic terms, defined in the equations above, will maintain a constant temperature while also generating the correct Maxwell-Boltzmann distribution of velocities. In the limit $\gamma \rightarrow 0$, the Newton equations of motion are recovered and the microcanonical ensemble is sampled.
-Compromise between small and large $\gamma$: It has previously been shown that Langevin dynamics can be utilized to correct inaccurate force calculations to maintain correct dynamical properties.~\cite{a:langevin-why,a:2ndcpmd,b:tuckerman-stat,a:ceriotti} 
+These equations mean that, for any value of $\gamma$, the perfectly balanced damping and stochastic terms, defined in the equations above, will maintain a constant temperature and also generate the correct Maxwell-Boltzmann distribution of velocities. In the limit $\gamma \rightarrow 0$, the Newton equations of motion are recovered and the microcanonical ensemble is sampled.
+Larger values of $\gamma$ thermostat the system more strongly, but introduce more random noise necessitating longer trajectories when calculating system bulk properties.
+It has previously been shown that Langevin dynamics can be utilized to correct inaccurate force calculations to maintain correct dynamical properties.~\cite{a:langevin-why,a:2ndcpmd,b:tuckerman-stat,a:ceriotti} 
 
-By utilizing Eq.\ (\ref{eq:langevin}) in conjunction with the ALMO SCF method of force calculation, we will show that discontinuity in the PES can be ignored for sufficiently large $\gamma$. 
+%By utilizing Eq.\ (\ref{eq:langevin}) in conjunction with the ALMO SCF method of force calculation, we will show that discontinuity in the PES can be ignored for sufficiently large $\gamma$. 
 % Perhaps this statement is not correct: Note that increasing $\gamma$ increases the sample size required to generate accurate dynamical properties, as more random Gaussian noise is introduced.
 
 %The concept of balancing errors in force calculation with the Langevin equation can be taken even further, thereby reducing computational overhead even more. 
 %%During the second step of the ALMO SCF method described above, a self-consistent variational approach is taken to converge the non-orthogonal MOs. 
-%Generally, this step utilizes a iterative search function in order to reduce the absolute norm of the energy gradient to some target value $\epsilon_{SCF}$. 
-%Previously, $\epsilon_{SCF}$ had to be set very small to ensure sufficient convergence of the electron structure calculations. 
-%By increasing the allowable $\epsilon_{SCF}$, a great reduction in computational cost can be achieved. 
+%Generally, this step utilizes a iterative search function in order to reduce the absolute norm of the energy gradient to some target value $\epsilon_{\text{SCF}}$. 
+%Previously, $\epsilon_{\text{SCF}}$ had to be set very small to ensure sufficient convergence of the electron structure calculations. 
+%By increasing the allowable $\epsilon_{\text{SCF}}$, a great reduction in computational cost can be achieved. 
 %Obviously, this introduces a significant error into the calculation of forces during each time step. 
 
 The main assumption of ALMO AIMD is that the error in the ALMO forces is well approximated by a stochastic ``white noise'' term $R^{\Delta}_{i\alpha} (t)$
@@ -183,8 +183,8 @@ that obeys
 \langle R^{\Delta}_{i\alpha} (t)  R^{\Delta}_{j\beta} (t') \rangle &= 2 k_B T \Delta m_i \delta_{ij} \delta_{\alpha\beta} \delta(t-t')
 \end{align}
 %
-[ZZZ later?: Figure~\ref{fig:randomforce} shows that this assumption is sufficiently justified for the case of liquid water.] 
-If this assumption holds, the Langevin equations of motion (\ref{eq:langevin}) can be re-written with the two stochastic terms combined into one:
+Figure~\ref{fig:randomforce} shows that this assumption is sufficiently justified for the case of liquid water. 
+Therefore, the Langevin equations of motion (\ref{eq:langevin}) can be re-written with the two stochastic terms combined into one:
 %
 \begin{align}
 \label{eq:langevin2}
@@ -203,13 +203,13 @@ Fortunately, $\gamma$ and $\Delta$ can be separately optimized for a given syste
 
 An optimized $\gamma$ is one that is: large enough to adequately absorb force discontinuities; large enough to correctly thermostat the system of interest on a reasonable time scale; and small enough not to significantly affect dynamical properties on the time scale of interest. 
 The relative weight of the three is determined by the specifics of the system and what is most important to the researcher. 
-To optimize $\gamma$ given the relative importance of the above properties, we suggest running several short trajectories on the system of interest (or a scaled-down version of it) using a tightly converged PES calculation and varying the value of $\gamma$. 
+To optimize $\gamma$ given the relative importance of the above properties, we suggest running several short trajectories on the system of interest (or a scaled-down version of it) using a tightly converged potential energy surface calculation and varying the value of $\gamma$. 
 We found that a value of $\gamma$ between $10^{-5}$ and $10^{-3}\ \mathrm{fs^{-1}}$ was optimal for the purposes of the research presented here.
 
 To correctly thermostat the system of interest, $\Delta$ needs to be reduced to zero.
-This is done by finding the value of $\Delta$ and adding a third random force term $R^{-\Delta}_{i\alpha}$ to equation \ref{eq:langevin2} which cancels out the energy introduced to the system by $R^{\Delta}_{i\alpha}$.
+This is done by finding the value of $\Delta$ and adding a third random force term $R^{-\Delta}_{i\alpha}$ to equation \ref{eq:langevin2} which cancels out the extra forces introduced to the system by $R^{\Delta}_{i\alpha}$.
 This means that a trajectory with inaccurate forces and optimized $R^{-\Delta}_{i\alpha}$ should have no long term drift in the total energy of the system. 
-Short term energy fluctuations should be expected, and can later be ``smoothed out'' by setting finite $\gamma$.
+Short term energy fluctuations should be expected, and can later be ``smoothed out'' by setting $\gamma$ as needed.
 
 $R^{-\Delta}_{i\alpha}$ can therefore be optimized simply by trying various values of $\Delta$ (with \mbox{$\gamma = 0$}) until the simulation has long-term stable total energy and satisfies the equipartition theorem. 
 %
@@ -233,18 +233,19 @@ Finally, integrate Eq.(\ref{eq:stochastic3}) to obtain the following expression 
 In other words, we use the integral of the ACF to estimate the strength of the random force. 
 In practice, we found this method for estimating $\Delta$ was not particularly accurate due to rapidly oscillating correlations between sequential values of $R^{\Delta}_{i\alpha} (t)$. 
 The ACF was not possible to accurately integrate without running a reference trajectory with extremely short time-steps (see figure~\ref{fig:randomforce}).
-For example, using Eq.\ \ref{eq:delta} we calculated $\Delta \approx \SI{2e-5}{\per\fs}$, but value was optimized heuristically to $\SI{6e-5}{\per\fs}$.
+For example, using Eq.\ \ref{eq:delta} we calculated $\Delta \approx \SI{2e-5}{\per\fs}$, but the value was optimized heuristically to $\SI{6e-5}{\per\fs}$.
 Still, this method provided a decent order of magnitude starting point for further investigation.
 Note that for our system, the ACF decays rapidly enough that the forces can be considered random and uncorrelated to a good approximation for sufficiently long time scales ($\gg\SI{200}{\fs}$).
 
 \begin{figure}
 \includegraphics[trim={0.5cm 0cm 0.7cm 0.1cm},clip,width=8.6cm]{DeltaForceComparison_with_ACF.eps}
-\caption{\label{fig:randomforce} {\color{red} The top two panels should be changed to plot the Euclidean norm of the error as described in the notes to the previous Figure. Do not forget to change the legend. Plot (c), new x-axis label: ``Time lag $\tau$ (fs)''. As to the ACF, one should be extremely careful how the averaging is performed. This caption below shows the ACF we need. Let me briefly explain it. The main idea is that the correct ACF could be computed from only one Cartesian component of one molecule if we could observe it for really really long time and average over many many time origins. We perform averaging over components and molecules just to improve our statistics (it is a shame to discard so many data points). We, therefore, should not compute ACF from \emph{one} time series that is already averaged over all possible components. Instead we compute and ACF for each component and then average over these ACFs. Ok, here is the procedure. Fix the time lag $\tau$. For a given time origin $t$ and molecule $i$, compute: $p_{it}(\tau)=\frac{1}{3}\delta \vec{f}_i (t)\cdot \delta \vec{f}_i (t+\tau)$, $\frac{1}{3}$ averages over components. Now, average over time origins and molecules to get $\text{ACF}(\tau) = \langle p_{it}(\tau) \rangle_{it}$. I think we do not need to subtract the mean because you already showed that it is zero. I hope there is a function in MATLAB that can do this.} 
-Red line is the Euclidean norm of the instantaneous error $\langle \delta f_i(t) \rangle_i$, black line is the time average of the instantaneous error, green line is the standard deviation from the average. Forces are computed with the PBE XC functional and TZV2P basis set for the configurations from a 10-ps trajectory generated with KS-based AIMD at T=298~K. 
-% Here it is clear that Eq.\ (\ref{eq:stochastic2}) is satisfied. 
-(a) $R_{c} = 1.6$ vdWR and $\epsilon_{SCF} = 10^{-2}$, 
-(b) $R_{c} = 1.6$ vdWR and fully converged ALMO SCF,
-(c) Autocorrelation function of the instantaneous error in panel (a) $\frac{1}{3}\langle \delta \vec{f}_i (t) \cdot \delta\vec{f}_i(t+\tau) \rangle_{it} $.
+\caption{\label{fig:randomforce} Comparison of random force introduced from $R_{c}$ and $\epsilon_{\text{SCF}}$. 
+The red line is the Euclidean norm of the instantaneous error $\langle \| \delta \vec{f_{i}}(t) \| \rangle_{i}$, the black line is the magnitude of the time average of the instantaneous error vector, and the green line is the standard deviation from the average. 
+(a) $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$, using fully converged ALMO SCF reference.
+(b) $R_{c} = 1.6$ vdWR and fully converged ALMO SCF, using fully converged SCF reference.
+(c) $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$, using fully converged SCF reference.
+(d) Normalized ACF of the instantaneous error in panel (a) $\frac{1}{3}\langle \delta \vec{f}_i (t) \cdot \delta\vec{f}_i(t+\tau) \rangle_{it} $.
+Forces are computed with the PBE XC functional and TZV2P basis set for the configurations from a 10-ps trajectory generated with KS-based AIMD at T=298~K. 
 }
 \end{figure}
 
@@ -261,7 +262,7 @@ Simulations for timing benchmarks were run for ten time steps, which is sufficie
 The TZV2P basis set was used to represent MOs, and a cutoff of $\SI{320}{Ry}$ used to represent electron density. 
 The exchange-correlation energy was approximated using the PBE functional, which expands upon the local density approximation by considering derivatives of the electron density at each point.~\cite{a:PBEfunctional} 
 
-The reference PES was calculated using the orbital transformation (OT) method~\cite{a:ot,a:ot2} at $\SI{302}{\K}$ and the Langevin thermostat with $\gamma = \SI{e-3}{\per\fs}$. 
+The reference electronic structure was calculated using the orbital transformation (OT) method~\cite{a:ot,a:ot2} at $\SI{302}{\K}$ and the Langevin thermostat with $\gamma = \SI{e-3}{\per\fs}$. 
 All other system parameters were set identical to the ALMO system.
 
 IR spectra, radial distribution functions, diffusivity plots, and diffusion constants were calculated using the open source trajectory analyzer program TRAVIS.~\cite{a:travis-main,a:travis-ir1,a:travis-ir2}
@@ -279,25 +280,25 @@ Using fully converged KS DFT forces we calculated D = $\SI{5.47e-9}{\m^{2}\per\s
 
 Although the accuracy of calculated properties in figure \ref{fig:dynproperties} is quite good, it is clear that there are errors present.
 Some of the error can be attributed to the 9 K difference in the thermodynamic temperature between the reference system and our system of interest.
-Other sources of error are: small temporal sample size given our choice of $\gamma$; random error due to finite localization radius $R_{c}$, and random error due to high $\epsilon_{SCF}$.
-From figure \ref{fig:randomforce}, it's apparent that high values of $R_{c}$ introduce more random error than high values of $\epsilon_{SCF}$.
+Other sources of error present: small temporal sample size given our choice of $\gamma$; random error due to finite localization radius $R_{c}$; and random error due to high $\epsilon_{\text{SCF}}$.
+From figure \ref{fig:randomforce}, it's apparent that high values of $R_{c}$ and $\epsilon_{\text{SCF}}$ both introduce substantial error in calculation of forces.
 However, raising both $R_{c}$ and $\gamma$ decreases computation time significantly, and it is ultimately up to the user to determine their maximum tolerance of force inaccuracy when using ALMO DFT methods.
 
 \begin{figure}
 \includegraphics[trim={1.3cm 0.1cm 3.3cm 1.3cm},clip,width=8.6cm]{Dynamical_Data_Tiled.eps}
-\caption{\label{fig:dynproperties} Calculated dynamic and static properties of water using ALMO DFT with $\epsilon_{SCF} = 10^{-2}$ and $R_{c} = 1.6$ vdWR.
-(a) Radial distribution function of an ALMO simulation compared to OT SCF with a fully converged PES. 
+\caption{\label{fig:dynproperties} Calculated dynamic and static properties of water using ALMO DFT with $\epsilon_{\text{SCF}} = 10^{-2}$ and $R_{c} = 1.6$ vdWR.
+(a) Radial distribution function of an ALMO simulation compared to fully converged OT SCF. 
 (b) Kinetic energy distribution of an ALMO simulation compared to the theoretical Maxwell-Boltzmann kinetic energy distribution.
-(c) Calculated Infrared spectrum of an ALMO simulation compared to OT SCF with a fully converged PES.
+(c) Calculated Infrared spectrum of an ALMO simulation compared to fully converged OT SCF.
 Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set, using 125 water molecules for 10 ps.}
 \end{figure}
 
 %\section{Speed}
 
-To show the computational efficiency gained by using unconverged ALMO DFT forces, we compare the average wall-time per MD step over 10 time steps for various values of $\epsilon_{SCF}$ in figure \ref{fig:strongscaling_log}.
+To show the computational efficiency gained by using unconverged ALMO DFT forces, we compare the average wall-time per MD step over 10 time steps for various values of $\epsilon_{\text{SCF}}$ in figure \ref{fig:strongscaling_log}.
 For these simulations, we chose to set the localization radius $R_{c} = 1.6$ van der Waals radii (vdWR), as was done for calculation of dynamical properties.
 We also show timing of the fully converged OT SCF method, as well as the recently developed ``second generation Car-Parinello'' MD method, which improves upon the OT computational cost prefactor.~\cite{a:2ndcpmd}
-ALMO methods show clear asymptotic LS behavior for all values of $\epsilon_{SCF}$ tested.
+ALMO methods show clear asymptotic LS behavior for all values of $\epsilon_{\text{SCF}}$ tested.
 OT SCF scales approximately cubically, as expected.
 Our findings show that the fastest ALMO DFT method presented here runs faster than second-generation Car-Parinello using OT DFT for water simulations larger than 256 molecules.
 
@@ -327,7 +328,7 @@ Dashed gray lines connect systems simulated using the same number of cores, veri
 Of note is the 32768 molecule system successfully simulated using 4096 cores at around 25 minutes per MD step.
 We also show that systems as large as 8192 molecules can be simulated for 10,000 MD steps in under a month using this method.
 Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set, averaged over 10 MD steps. 
-The localization radius was set to $R_{c} = 1.6$ vdWR and $\epsilon_{SCF} = 10^{-2}$.}
+The localization radius was set to $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$.}
 \end{figure}
 
 %\section{Conclusions} 

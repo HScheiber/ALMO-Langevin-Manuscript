@@ -286,6 +286,14 @@ Khaliullin,~R.~Z.; Cobar,~E.~A.; Lochan,~R.~C.; Bell,~A.~T.; Head-Gordon,~M.
 \mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
 {\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
 \EndOfBibitem
+\bibitem[K{\"u}hne \latin{et~al.}(2007)K{\"u}hne, Krack, Mohamed, and
+  Parrinello]{a:2ndcpmd}
+K{\"u}hne,~T.~D.; Krack,~M.; Mohamed,~F.~R.; Parrinello,~M. \emph{Phys. Rev.
+  Lett.} \textbf{2007}, \emph{98}, 066401\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
 \bibitem[Kubo(1986)]{a:Kubo-1986}
 Kubo,~R. \emph{Science} \textbf{1986}, \emph{233}, 330--334\relax
 \mciteBstWouldAddEndPuncttrue
@@ -302,14 +310,6 @@ Tuckerman,~M.~E. \emph{Statistical Mechanics: Theory and Molecular Simulation};
 \bibitem[Dai and Yuan(2009)Dai, and Yuan]{a:langevin-why}
 Dai,~J.; Yuan,~J. \emph{EPL (Europhysics Letters)} \textbf{2009}, \emph{88},
   20001\relax
-\mciteBstWouldAddEndPuncttrue
-\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
-{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
-\EndOfBibitem
-\bibitem[K{\"u}hne \latin{et~al.}(2007)K{\"u}hne, Krack, Mohamed, and
-  Parrinello]{a:2ndcpmd}
-K{\"u}hne,~T.~D.; Krack,~M.; Mohamed,~F.~R.; Parrinello,~M. \emph{Phys. Rev.
-  Lett.} \textbf{2007}, \emph{98}, 066401\relax
 \mciteBstWouldAddEndPuncttrue
 \mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
 {\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
