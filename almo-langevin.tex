@@ -44,7 +44,7 @@ Low-cost linear-scaling \emph{ab initio} molecular dynamics for weakly-interacti
 \begin{abstract}
 A density functional theory approach based on absolutely localized molecular orbitals is used in conjunction with the Langevin equation of motion to create a low-cost molecular dynamics method for weakly coupled molecular systems which retains sufficient accuracy to generate accurate dynamical properties in water. 
 
-The approach utilizes a systematically inaccurate potential energy surface calculation method that grows linearly with the size of the simulated system. 
+The approach utilizes a systematically inaccurate potential energy surface calculation method that grows linearly in computational complexity with the size of the simulated system. 
 Systematic inaccuracies in the calculation of force using this method are balanced by a weighted version of the Langevin equation of motion. 
 The stochastic ``white noise'' of the Langevin equation acts to absorb force discontinuities while also thermostating the system to maintain the desired thermodynamic temperature. 
 In addition, we introduce a simple heuristic approach to find optimized Langevin equation parameters to use for balancing system-specific imperfect forces and maintaining correct dynamical behavior.
@@ -101,7 +101,7 @@ To achieve a robust optimization in the problematic second step, it is important
 For mathematical details, see ALMO SCF method in Ref.~\citenum{a:almo-ls}.
 
 ALMO constraints prohibit electron density transfer between distant molecules but retain all other types of interaction such as long-range electrostatic, exchange, polarization, and, if the exchange-correlation (XC) functional includes it, dispersion interactions~\cite{a:theeda}. 
-Since the energetic contribution of the electron transfer decays exponentially with distance, \mbox{ALMO} approximation provides a natural and accurate representation of the electronic structure of molecular systems with just a few local variables if an appropriate localization radius is chosen. 
+Since the energetic contribution of the electron transfer decays exponentially with distance, the \mbox{ALMO} approximation provides a natural and accurate representation of the electronic structure of molecular systems with just a few local variables if an appropriate localization radius is chosen. 
 %The advantage of ALMO DFT is that its computational complexity is linear with respect to system size because long-range electron delocalization is ignored in both optimization steps.
 %Because of the greatly reduced number of electronic variables and their robust optimization the computational cost of the implemented ALMO DFT is so low that it is [has the potential] capable of extending the range of accurate simulations to systems of thousands of molecules.
 Because of the greatly reduced number of electronic descriptors and the robust optimization, the computational complexity of ALMO DFT grows linearly with the number of molecules while its computational overhead remains very low. These features make ALMO DFT a promising method to perform accurate AIMD simulations of large molecular systems.
@@ -121,7 +121,7 @@ f^{\text{KS}}_{i\alpha}(t) = f^{\text{ALMO}}_{i\alpha}(t) + \delta f_{i\alpha} (
 %
 where $\alpha$ is a Cartesian component of the force acting on atom $i$ at time $t$. $\delta f_{i\alpha} (t)$ comprises neglected terms that originate from %fixed terms in the trial ALMOs (i.e. orbitals obtained in the first SCF step are not re-optimized in the second step), 
 a finite localization radius $R_c$ and incomplete SCF optimization of the electronic degrees of freedom. 
-$\delta f_{i\alpha} (t)$ can be reduced \emph{systematically} to zero by increasing $R_c$ (Figure~\ref{fig:forcecomp} in the Supplemental Material) and decreasing $\epsilon_{\text{SCF}}$ -- the maximum norm of the gradient of the \mbox{ALMO} DFT energy with respect to the ALMO coefficients. $\epsilon_{\text{SCF}}$ is chosen such that the electronic ground state is considered sufficiently close to the Born-Oppenheimer state for values less than $\epsilon_{\text{SCF}}$.
+$\delta f_{i\alpha} (t)$ can be reduced \emph{systematically} to zero by increasing $R_c$ (Figure~\ref{fig:forcecomp}) and decreasing $\epsilon_{\text{SCF}}$ -- the maximum norm of the gradient of the \mbox{ALMO} DFT energy with respect to the ALMO coefficients. $\epsilon_{\text{SCF}}$ is chosen such that the electronic ground state is considered sufficiently close to the Born-Oppenheimer state for values less than $\epsilon_{\text{SCF}}$.
 %ZZZ For $\epsilon_{\text{SCF}} \leqslant 10^{-7}$~a.u. ALMO SCF is considered converged.
 
 \begin{figure}[t]
@@ -136,16 +136,16 @@ Forces are computed with the PBE XC functional, TZV2P basis set, and $\epsilon_{
 
 In order to maintain stable and accurate dynamics, $R_{c}$ has to be larger and $\epsilon_{\text{SCF}}$ has to be smaller than the corresponding optimal values used in static energy calculations or Monte-Carlo simulations. 
 This, however, greatly increases the computational overhead of the simulation as longer-distance but physically less important interactions must be calculated. 
-Therefore, in this work we propose a different approach to ALMO-based AIMD, which allows for relaxation of the tight constraints on $R_{c}$ and $\epsilon_{\text{SCF}}$ and great reduction of the simulation cost. The approach is inspired by ``Second Generation Car-Parinello'' MD~\cite{a:2ndcpmd} and requires the use of the Langevin equations of motion~\cite{a:Kubo-1986}
+Therefore, in this work we propose a different approach to ALMO-based AIMD, which allows for relaxation of the tight constraints on $R_{c}$ and $\epsilon_{\text{SCF}}$ resulting in a great reduction in the simulation cost. The approach is inspired by ``Second Generation Car-Parinello'' MD~\cite{a:2ndcpmd} and requires the use of the Langevin equations of motion:~\cite{a:Kubo-1986}
 %
 \begin{align}
 \label{eq:langevin}
 m_i \ddot{r}_{i\alpha} = f^{\text{KS}}_{i\alpha} - \gamma m_i \dot{r}_{i\alpha} + R^{\gamma}_{i\alpha} (t),
 \end{align}
 %
-where $m_i$ is the mass of atom $i$, $r_{i\alpha}$ its position along dimension $\alpha$, and $\gamma$ is the Langevin scaling factor.
+where $m_i$ is the mass of atom $i$, $r_{i\alpha}$ is its position along dimension $\alpha$, and $\gamma$ is the Langevin scaling factor.
 % which defines the strength of both the damping term and the stochastic term $R^{\gamma}_{i\alpha} (t)$. 
-In order to sample the canonical distribution correctly, the stochastic force must have zero mean and, according to the second fluctuation dissipation theorem~\cite{a:Kubo-1986,b:tuckerman-stat} must be related to the damping through $\gamma$:
+In order to sample the canonical distribution correctly, the stochastic force must have zero vector average and, according to the second fluctuation dissipation theorem~\cite{a:Kubo-1986,b:tuckerman-stat} must be related to the damping through $\gamma$:
 %
 \begin{align}
 \label{eq:stochastic}
@@ -153,7 +153,7 @@ In order to sample the canonical distribution correctly, the stochastic force mu
 \langle R^{\gamma}_{i\alpha} (t)  R^{\gamma}_{j\beta} (t') \rangle &= 2 k_B T \gamma m_i \delta_{ij} \delta_{\alpha\beta} \delta(t-t')
 \end{align}
 %
-These equations mean that, for any value of $\gamma$, the perfectly balanced damping and stochastic terms, defined in the equations above, will maintain a constant temperature and also generate the correct Maxwell-Boltzmann distribution of velocities. In the limit $\gamma \rightarrow 0$, the Newton equations of motion are recovered and the microcanonical ensemble is sampled.
+These equations mean that, for any value of $\gamma$, the perfectly balanced damping and stochastic terms, defined in equation \ref{eq:langevin}, will maintain a constant temperature and also generate the correct Maxwell-Boltzmann distribution of velocities. In the limit $\gamma \rightarrow 0$, the Newton equations of motion are recovered and the microcanonical ensemble is sampled.
 Larger values of $\gamma$ thermostat the system more strongly, but introduce more random noise necessitating longer trajectories when calculating system bulk properties.
 It has previously been shown that Langevin dynamics can be utilized to correct inaccurate force calculations to maintain correct dynamical properties.~\cite{a:langevin-why,a:2ndcpmd,b:tuckerman-stat,a:ceriotti} 
 
@@ -201,7 +201,7 @@ In theory, both $\gamma$ and $\Delta$ should be system-size independent, but in 
 We found that $\Delta$ is dependent on system size due to finite size effects, which decay for increasing system size.
 Fortunately, $\gamma$ and $\Delta$ can be separately optimized for a given system of interest, assuming a method of accurate force calculation can be applied to the system for a short trajectory. 
 
-An optimized $\gamma$ is one that is: large enough to adequately absorb force discontinuities; large enough to correctly thermostat the system of interest on a reasonable time scale; and small enough not to significantly affect dynamical properties on the time scale of interest. 
+An optimized $\gamma$ is one that is: large enough to adequately absorb force discontinuities introduced by finite $R_{c}$; large enough to correctly thermostat the system of interest on a reasonable time scale; and small enough not to significantly affect dynamical properties on the time scale of interest. 
 The relative weight of the three is determined by the specifics of the system and what is most important to the researcher. 
 To optimize $\gamma$ given the relative importance of the above properties, we suggest running several short trajectories on the system of interest (or a scaled-down version of it) using a tightly converged potential energy surface calculation and varying the value of $\gamma$. 
 We found that a value of $\gamma$ between $10^{-5}$ and $10^{-3}\ \mathrm{fs^{-1}}$ was optimal for the purposes of the research presented here.
@@ -240,10 +240,10 @@ Note that for our system, the ACF decays rapidly enough that the forces can be c
 \begin{figure}
 \includegraphics[trim={0.5cm 0cm 0.7cm 0.1cm},clip,width=8.6cm]{DeltaForceComparison_with_ACF.eps}
 \caption{\label{fig:randomforce} Comparison of random force introduced from $R_{c}$ and $\epsilon_{\text{SCF}}$. 
-The red line is the Euclidean norm of the instantaneous error $\langle \| \delta \vec{f_{i}}(t) \| \rangle_{i}$, the black line is the magnitude of the time average of the instantaneous error vector, and the green line is the standard deviation from the average. 
-(a) $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$~a.u., using fully converged ALMO SCF reference.
-(b) $R_{c} = 1.6$ vdWR and fully converged ALMO SCF, using fully converged SCF reference.
-(c) $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$~a.u., using fully converged SCF reference.
+The red line is the Euclidean norm of the instantaneous error $\langle \| \delta \vec{f_{i}}(t) \| \rangle_{i}$, the black line is the magnitude of the time average of the instantaneous error vector, and the green line is the time average of the red line. 
+(a) $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$~a.u., using fully converged ALMO SCF as a reference.
+(b) $R_{c} = 1.6$ vdWR and fully converged ALMO SCF, using fully converged OT SCF as a reference.
+(c) $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$~a.u., using fully converged OT SCF as a reference.
 (d) Normalized ACF of the instantaneous error in panel (a) $\frac{1}{3}\langle \delta \vec{f}_i (t) \cdot \delta\vec{f}_i(t+\tau) \rangle_{it} $.
 Forces are computed with the PBE XC functional and TZV2P basis set for the configurations from a 10-ps trajectory generated with KS-based AIMD at T=298~K. 
 }
@@ -282,7 +282,7 @@ Although the accuracy of calculated properties in figure \ref{fig:dynproperties}
 Some of the error can be attributed to the 9 K difference in the thermodynamic temperature between the reference system and our system of interest.
 Other sources of error present: small temporal sample size given our choice of $\gamma$; random error due to finite localization radius $R_{c}$; and random error due to high $\epsilon_{\text{SCF}}$.
 From figure \ref{fig:randomforce}, it's apparent that high values of $R_{c}$ and $\epsilon_{\text{SCF}}$ both introduce substantial error in calculation of forces.
-However, raising both $R_{c}$ and $\gamma$ decreases computation time significantly, and it is ultimately up to the user to determine their maximum tolerance of force inaccuracy when using ALMO DFT methods.
+However, raising both $R_{c}$ and $\gamma$ decreases computation time significantly, and it is ultimately up to the user to determine their maximum tolerance of force inaccuracy when using the ALMO DFT method presented here.
 
 \begin{figure}
 \includegraphics[trim={1.3cm 0.1cm 3.3cm 1.3cm},clip,width=8.6cm]{Dynamical_Data_Tiled.eps}
@@ -295,12 +295,12 @@ Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and TZV2P 
 
 %\section{Speed}
 
-To show the computational efficiency gained by using unconverged ALMO DFT forces, we compare the average wall-time per MD step over 10 time steps for various values of $\epsilon_{\text{SCF}}$ in figure \ref{fig:strongscaling_log}.
-For these simulations, we chose to set the localization radius $R_{c} = 1.6$ van der Waals radii (vdWR), as was done for calculation of dynamical properties.
+To demonstrate the computational efficiency gained by using unconverged ALMO DFT forces, we compare the average wall-time per MD step over 10 time steps for various values of $\epsilon_{\text{SCF}}$ in figure \ref{fig:strongscaling_log}.
+For these simulations, we chose to set the localization radius to $R_{c} = 1.6$ van der Waals radii (vdWR), as was done for calculation of dynamical properties.
 We also show timing of the fully converged OT SCF method, as well as the recently developed ``second generation Car-Parinello'' MD method, which improves upon the OT computational cost prefactor.~\cite{a:2ndcpmd}
 ALMO methods show clear asymptotic LS behavior for all values of $\epsilon_{\text{SCF}}$ tested.
 OT SCF scales approximately cubically, as expected.
-Our findings show that the fastest ALMO DFT method presented here runs faster than second-generation Car-Parinello using OT DFT for water simulations larger than 256 molecules.
+Our findings show that the fastest ALMO DFT methods presented here runs faster than second-generation Car-Parinello using OT DFT for water simulations larger than 256 molecules.
 
 \begin{figure}
 \includegraphics[trim={2.5cm 0.5cm 3.4cm 0.1cm},clip,width=8.6cm]{strongscaling_log.eps}
@@ -311,7 +311,7 @@ Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and TZV2P 
 The localization radius was set to $R_{c} = 1.6$ vdWR.}
 \end{figure}
 
-Figure \ref{fig:weakscaling} shows that ALMO MD code is well optimized for parallelization, and that computational cost grows linearly under a wide range of available computing power. 
+Figure \ref{fig:weakscaling} shows that ALMO MD code is well optimized for parallelization, and that the computational cost grows linearly under a wide range of available computing power. 
 In fact, we were able to successfully simulate systems as large as 32768 water molecules within 25 minutes of wall-clock time using 4096 cores.
 
 %\begin{figure}
@@ -341,7 +341,7 @@ We have also shown that due to its linear scaling nature, the ALMO DFT technique
 
 To summarize, a low-cost linear-scaling AIMD method for weakly-interacting molecular systems was developed by utilizing compact molecular orbitals strictly localized within predefined radii. High efficiency of the method is achieved without sacrificing its accuracy with a combination of two techniques: (1) on-the-fly construction of accurate localized orbitals without lengthy self-consistent optimization and (2) a modified Langevin equation that is fine-tuned to retain stable dynamics even with imperfect forces. A remarkable feature of the implemented method is that it remains efficient for challenging condensed phase systems, even with diffuse atom-centered basis sets. Using liquid water as an example, it is demonstrated that the new AIMD method enables simulations of molecular systems on previously inaccessible time and length scales. 
 
-Generalization of the method to more challenging systems of strongly interacting atoms (e.g. covalent crystals) will also be discussed.
+Generalization of the method to more challenging systems of strongly interacting atoms (e.g. covalent crystals) will also be explored in the future.
 
 %Such simulations are important for Use if empirical force fields or QM/MM are not applicable:
 %Chemical reactions that happen throughout your system, not in a localized spatial region (e.g. proton transfer in water)
