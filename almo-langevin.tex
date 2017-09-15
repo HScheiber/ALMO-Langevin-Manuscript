@@ -121,14 +121,8 @@ f^{\text{KS}}_{i\alpha}(t) = f^{\text{ALMO}}_{i\alpha}(t) + \delta f_{i\alpha} (
 %
 where $\alpha$ is a Cartesian component of the force acting on atom $i$ at time $t$. $\delta f_{i\alpha} (t)$ comprises neglected terms that originate from %fixed terms in the trial ALMOs (i.e. orbitals obtained in the first SCF step are not re-optimized in the second step), 
 a finite localization radius $R_c$ and incomplete SCF optimization of the electronic degrees of freedom. 
-$\delta f_{i\alpha} (t)$ can be reduced \emph{systematically} to zero by increasing $R_c$ (Figure~\ref{fig:forcecomp}) and decreasing $\epsilon_{\text{SCF}}$ -- the maximum norm of the gradient of the \mbox{ALMO} DFT energy with respect to the ALMO coefficients. $\epsilon_{\text{SCF}}$ is chosen such that the electronic ground state is considered sufficiently close to the Born-Oppenheimer state for values less than $\epsilon_{\text{SCF}}$.
+$\delta f_{i\alpha} (t)$ can be reduced \emph{systematically} to zero by increasing $R_c$ (Figure~\ref{fig:forcecomp} in the Supplemental Material) and decreasing $\epsilon_{\text{SCF}}$ -- the maximum norm of the gradient of the \mbox{ALMO} DFT energy with respect to the ALMO coefficients. $\epsilon_{\text{SCF}}$ is chosen such that the electronic ground state is considered sufficiently close to the Born-Oppenheimer state for values less than $\epsilon_{\text{SCF}}$.
 %ZZZ For $\epsilon_{\text{SCF}} \leqslant 10^{-7}$~a.u. ALMO SCF is considered converged.
-
-\begin{figure}[t]
-\includegraphics[trim={0cm 0cm 0.1cm 0.1cm},clip,width=8.6cm]{DeltaForceComparison_ALMO_SCF.eps}
-\caption{\label{fig:forcecomp} Dependence of the Euclidean norm of the instantaneous error $\langle \| \delta \vec{f_{i}}(t) \| \rangle_{i}$ (red line) on the ALMO localization radius $R_c$ expressed in units of atomic van der Waals radii. Black line is the magnitude of the time average of the instantaneous error vector. %calculated as the average difference between fully converged Born-Oppenheimer forces and fully converged ALMO DFT forces, averaged over all dimensions and all molecules for each time step. 
-Forces are computed with the PBE XC functional, TZV2P basis set, and $\epsilon_{\text{SCF}} = 10^{-7}$~a.u. for the configurations from a 10-ps trajectory generated with KS-based AIMD at T=298~K.}
-\end{figure}
 
 %For any finite value of $R_{c}$, forces are undefined at manifold of due to the discontinuous jump in potential energy when a neighboring molecule passes beyond the localization radius $R_{c}$ and is suddenly ignored in potential energy calculations. 
 %Setting $R_{c}$ to larger values can reduce the magnitude of the discontinuity, but increases the computational cost as longer distance (but physically less important) interactions must be calculated. 
@@ -270,9 +264,9 @@ IR spectra, radial distribution functions, diffusivity plots, and diffusion cons
 %\section{Accuracy}
 
 In order to confirm that ALMO DFT forces are accurate in the limit where localization radius $R_{c} \rightarrow \infty$, we computed the average difference in force between fully converged Born-Oppenheimer forces and forces calculated from ALMO DFT with varying $R_{c}$. 
-Figure \ref{fig:forcecomp} shows that as $R_{c}$ is increased to infinity, forces converge toward the Born-Oppenheimer limit.
+Figure \ref{fig:forcecomp} in the Supplemental Material shows that as $R_{c}$ is increased to infinity, forces converge toward the Born-Oppenheimer limit.
 
-To test the accuracy of our unconverged ALMO based MD we computed the Infrared (IR) spectrum, radial distribution function (RDF), kinetic energy distribution, and mean-squared displacement (MSD) function from a 10 ps MD trajectory (see fig. \ref{fig:dynproperties} and the Supplemental Material). 
+To test the accuracy of our unconverged ALMO based MD we computed the Infrared (IR) spectrum, radial distribution function (RDF), kinetic energy distribution, and mean-squared displacement (MSD) function from a 10 ps MD trajectory (see fig. \ref{fig:dynproperties} and \ref{fig:diffusion} in the Supplemental Material). 
 We compared the IR spectrum, RDF, and MSD function to corresponding reference functions calculated with fully converged KS DFT forces.
 The kinetic energy distribution is compared with the theoretical Maxwell-Boltzmann distribution at the average temperature of the system.
 From the slope of the MSD functions we also calculated diffusion constants.
@@ -314,13 +308,6 @@ The localization radius was set to $R_{c} = 1.6$ vdWR.}
 Figure \ref{fig:weakscaling} shows that ALMO MD code is well optimized for parallelization, and that the computational cost grows linearly under a wide range of available computing power. 
 In fact, we were able to successfully simulate systems as large as 32768 water molecules within 25 minutes of wall-clock time using 4096 cores.
 
-%\begin{figure}
-%\includegraphics[trim={1.7cm 0.5cm 3.3cm 0.1cm},clip,width=8.6cm]{strongscaling_linear.eps}
-%\caption{\label{fig:strongscaling_linear} Linear plots showing LS behaviour of all ALMO methods for liquid water at 298 K. 
-%Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set on 256 cores. 
-%The localization radius was set to $R_{c} = 1.6$ vdWR.}
-%\end{figure}
-
 \begin{figure}
 \includegraphics[trim={1.6cm 0cm 4.7cm 0cm},clip,width=8.6cm]{weakscaling.eps}
 \caption{\label{fig:weakscaling} Weak scalability benchmarks showing optimization of code for parallel computing.
@@ -351,11 +338,40 @@ Generalization of the method to more challenging systems of strongly interacting
 
 \textbf{Acknowledgments.} The research was funded by the Natural Sciences and Engineering Research Council of Canada through the Discovery Grant. The authors are grateful to Compute Canada and McGill HPC Centre for computer time.
 
-%\textbf{Supplemental Material}
 
 %ZZZ outline procedure to compute forces using the DM obtained from ALMOs.
 % ZZZ figure to show 
 
 \bibliography{almo-langevin}
+
+\clearpage
+\widetext
+\setcounter{figure}{0}
+\setcounter{page}{1}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\begin{center}
+\textbf{\large Supplemental Material}
+\end{center}
+
+\begin{figure}[!htb]
+\includegraphics[trim={0cm 0cm 0.1cm 0.1cm},clip,width=\textwidth]{DeltaForceComparison_ALMO_SCF.eps}
+\caption{\label{fig:forcecomp} Dependence of the Euclidean norm of the instantaneous error $\langle \| \delta \vec{f_{i}}(t) \| \rangle_{i}$ (red line) on the ALMO localization radius $R_c$ expressed in units of atomic van der Waals radii. Black line is the magnitude of the time average of the instantaneous error vector. %calculated as the average difference between fully converged Born-Oppenheimer forces and fully converged ALMO DFT forces, averaged over all dimensions and all molecules for each time step. 
+Forces are computed with the PBE XC functional, TZV2P basis set, and $\epsilon_{\text{SCF}} = 10^{-7}$~a.u. for the configurations from a 10-ps trajectory generated with KS-based AIMD at T=298~K.}
+\end{figure}
+
+\begin{figure}[!htb]
+\includegraphics[trim={1.7cm 0.5cm 3.3cm 0.1cm},clip,width=\textwidth]{strongscaling_linear.eps}
+\caption{\label{fig:strongscaling_linear} Linear plots showing LS behaviour of all ALMO methods for liquid water at 298 K. 
+Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set, averaged over 10 MD steps. 
+The localization radius was set to $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$~a.u.}
+\end{figure}
+
+\begin{figure}[!htb]
+\includegraphics[trim={2.5cm 0.2cm 4.5cm 1.2cm},clip,width=\textwidth]{Diffusion_Comparison.eps}
+\caption{\label{fig:diffusion} Calculated mean-squared displacement function of water using ALMO DFT with $\epsilon_{\text{SCF}} = 10^{-2}$~a.u. and $R_{c} = 1.6$ vdWR.
+Compared with equivalent MD run using OT DFT as a reference.
+Calculations were performed at 298 K with the PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set, using 125 water molecules for 10 ps.}
+\end{figure}
+
 
 \end{document}
