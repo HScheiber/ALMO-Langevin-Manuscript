@@ -93,7 +93,7 @@ In this work, we introduce a new AIMD method for weakly-interacting molecular sy
 Using liquid water as an example, we demonstrate that the proposed AIMD methodology enables computational studies of molecular systems on previously inaccessible time and length scales. 
 
 The new AIMD method utilizes a recently developed LS DFT~\cite{a:almo-ls} based on absolutely localized molecular orbitals (\mbox{ALMOs}). 
-Unlike delocalized KS orbitals, each \mbox{ALMO} has its own localization center -- atomic orbitals of a molecule are used here -- and a predefined localization radius that typically includes localization centers of neighbor molecules~\cite{a:stoll,a:almo-ls}. 
+Unlike delocalized KS orbitals, each \mbox{ALMO} has its own localization center -- atomic orbitals of a molecule are used as a delocalization center in the current implementation -- and a predefined localization radius that typically includes localization centers of neighbor molecules~\cite{a:stoll,a:almo-ls}. 
 The key feature of ALMO DFT is that its trial wavefunctions are constructed to circumvent the problem of the sluggish variational optimization that have rendered many previous MO-based LS methods impractical. 
 The trial ALMOs are optimized variationally in a two-step self-consistent-field (SCF) procedure~\cite{a:almo-ls}. 
 In the first step, ALMOs are constrained to their localization centers~\cite{a:khal} whereas, in the second step, ALMOs are relaxed to allow delocalization onto the neighbor molecules within their localization radius $R_{c}$. 
