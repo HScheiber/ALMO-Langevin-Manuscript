@@ -67,43 +67,38 @@ In all LS DFT methods, the \emph{delocalized} eigenstates of the effective KS Ha
 ~\footnote{Canonical KS orbitals are delocalized over all atoms in the system. 
 This delocalization is the main reason for the steep growth of the cost of the conventional KS DFT: since both the number of orbitals and the number of localization regions (e.g. atomic basis functions) increase linearly with the number of atoms, the total number of the electronic degrees of freedom that describe delocalized orbitals grows quadratically.}. 
 Most LS methods~\cite{a:linscale3,a:lee-yang-1996,a:ls-scuseria-1997,a:ls-manolopoulos-1998,a:ls-helgaker-2001,a:ls-niklasson-2003,a:curvy2,a:ls-dm-sign} explore the natural locality of the one-electron density matrix (DM). 
-%However, the variational optimization of the DM is very inefficient for accurate DFT calculations that require many basis functions per atom~\cite{a:ls-rev-1999,a:ls-dm-sign}. 
 However, in accurate DFT calculations that require many basis functions per atom, the variational optimization of the DM is advantageous only for impractically large systems~\cite{a:ls-rev-1999,a:ls-dm-sign,a:almo-ls}.
-%However, in accurate DFT calculations with many basis functions per atom are required, the DM becomes sufficiently sparse only for impractically large systems~\cite{a:ls-rev-1999,a:ls-dm-sign,a:almo-ls}. 
 Therefore, the application of DM-based LS methods have been restricted to minimal-basis tight-binding problems. 
 The optimal basis variants of the DM methods~\cite{a:ls-stechel-1994,a:ls-gillan-1995,a:ls-gillan-1996,a:ls-onetep-2003} designed to rectify this issue contract large basis sets into a small number of new localized basis functions and then optimize the DM in the contracted basis. 
 Although such methods have been successfully used for the evaluation of accurate DFT energies of large static systems~\cite{a:ls-onetep-2009,a:ls-conquest-2010,a:ls-onetep-2010-app1,a:ls-rev-2012} their use in AIMD is hampered by the costly optimization of both the contracted orbitals and the density matrix. 
-%
-Alternatively, LS can be achieved using a set of local electronic descriptors constructed by enforcing strict locality on the KS orbitals and, at the same time, by relaxing the orthogonality constraints imposed on them. 
-From the computational point of view, LS methods based on the direct optimization of such compact localized nonorthogonal orbitals~\cite{a:ls-galli-parrinello-1992,a:ls-mauri-galli-car-1993,a:ls-ordejon-1993,a:ls-mauri-galli-1994,a:ls-ordejon-1995,a:ls-kim-mauri-galli-1995,a:ls-fattebert-2004,a:ls-fattebert-2006,a:burger-yang-2008} are more promising since they require only the occupied orbitals and, thus, deal with fewer variational degrees of freedom than the DM methods. 
-Unfortunately, the progress in the development of orbital-based LS methods has been hindered by the inherently difficult optimization of localized orbitals~\cite{a:ls-mauri-galli-car-1993,a:ls-ordejon-1995,a:ls-fattebert-2004,a:ls-rev-1999,a:weitao-yang-2013}. 
+
+To obviate the DM optimization, another set of natural local electronic descriptors can be constructed by enforcing strict locality on the KS orbitals and, necessarily, by relaxing the orthogonality constraints imposed on them. 
+From the computational point of view, LS methods based on the direct optimization of such compact localized nonorthogonal orbitals~\cite{a:ls-galli-parrinello-1992,a:ls-mauri-galli-car-1993,a:ls-ordejon-1993,a:ls-mauri-galli-1994,a:ls-ordejon-1995,a:ls-kim-mauri-galli-1995,a:ls-fattebert-2004,a:ls-fattebert-2006,a:burger-yang-2008} are very promising since they require only the occupied orbitals and, thus, deal with fewer variational degrees of freedom than the DM methods. 
+Unfortunately, the development of orbital-based LS methods has been hindered by the inherently difficult optimization of localized orbitals reported by multiple research groups~\cite{a:ls-mauri-galli-car-1993,a:ls-ordejon-1995,a:ls-fattebert-2004,a:ls-rev-1999,a:weitao-yang-2013}. 
 
 %ZZZ-important addition: we did not include a large family of the so-called fragmentation methods 
 %included only those methods that attempt to construct  set 
 %It is important to note all LS DFT methods reviewed above attempt to obtain the electronic description that do not construct  based on fragmentation methods that do that there  LS DFT methods the presented logical partitioning with the subsequent construction of localized MOs is a rather general approach used in a large number of electronic structure theories, which are collectively known as fragmentation methods~\cite{a:fragmentation-rev}. These methods vary greatly in how the partitioning and recombination are performed and, therefore, differ in accuracy and computational cost. We would like to emphasize that in our approach a proper quantum mechanical description of the entire system is constructed in the form of the total idempotent density matrix. This approach provides the most rigorous description of the electronic structure.
 
-
-%Thus, despite remarkable recent progress in linear scaling density function theory, the computational cost of existing methods remains too high for routine \emph{ab initio} molecular dynamics (AIMD) simulations.
 Thus, despite remarkable recent progress the high computational overhead of existing asymptotically linear-scaling DFT methods restrict their use in AIMD simulations to very short \emph{time scales}, systems of low dimensions, or problems that can be adequately described with minimal basis sets. 
-Otherwise, LS DFT cannot compete with the straightforward cubically scaling KS DFT on the length scales accessible in routine AIMD simulations.
-%Thus,  the computational cost of the existing asymptotically linear-scaling DFT methods remains too high to compete with the straightforward cubically scaling KS DFT on the length scales practically accessible in routine AIMD simulations.
-%Thus, although there exist numerous DFT methods capable of yielding asymptotic LS, their computational cost for systems in/on the practically accessible length scale remains too high to compete with the conventional cubically scaling KS DFT with its highly-optimized numerical algorithms.  
+On the length and time scales required for accurate routine AIMD simulations, LS DFT cannot compete with the straightforward low-cost cubically-scaling KS DFT.
 
-In this work, we introduce a new AIMD method for weakly-interacting molecular systems that is not only linear scaling but also has a low computational overhead. 
-Using liquid water as an example, we demonstrate that the proposed AIMD methodology enables computational studies of molecular systems on previously inaccessible time and length scales. 
+
+In this work, we introduce a new orbital-based AIMD method that is not only linear scaling but also has a low computational overhead. 
+Currently, the method is restricted to large ensembles of atoms or small molecules that do not form strong covalent bonds with each other. 
+Using liquid water as an example, we demonstrate that the new AIMD methodology enables computational studies of molecular systems on previously inaccessible time and length scales. 
 
 The new AIMD method utilizes a recently developed LS DFT~\cite{a:almo-ls} based on absolutely localized molecular orbitals (\mbox{ALMOs}). 
-Unlike delocalized KS orbitals, each \mbox{ALMO} has its own localization center -- atomic orbitals of a molecule are used as a delocalization center in the current implementation -- and a predefined localization radius that typically includes localization centers of neighbor molecules~\cite{a:stoll,a:almo-ls}. 
-The key feature of ALMO DFT is that its trial wavefunctions are constructed to circumvent the problem of the sluggish variational optimization that have rendered many previous MO-based LS methods impractical. 
-The trial ALMOs are optimized variationally in a two-step self-consistent-field (SCF) procedure~\cite{a:almo-ls}. 
+Unlike delocalized KS orbitals, each \mbox{ALMO} has its own localization center and a predefined localization radius $R_{c}$ that typically includes nearby atoms or molecules~\cite{a:stoll,a:almo-ls}. 
+In the current implementation, a localization center is a set of all local Gaussian atomic orbitals of one molecule. 
+However the approach can be easily generalized to other local and nonlocal basis sets~\cite{a:ls-galli-parrinello-1992, Galerkin}. 
+The key feature of ALMO DFT is that its one-electron wavefunctions are constructed variationally in a two-step self-consistent-field (SCF) procedure~\cite{a:almo-ls} to circumvent the problem of the sluggish variational optimization that have rendered previous MO-based LS methods impractical. 
 In the first step, ALMOs are constrained to their localization centers~\cite{a:khal} whereas, in the second step, ALMOs are relaxed to allow delocalization onto the neighbor molecules within their localization radius $R_{c}$. 
 To achieve a robust optimization in the problematic second step, it is important to keep the delocalization component of the trial wavefunction orthogonal to the fixed orbitals obtained in the first step. 
 For mathematical details, see ALMO SCF method in Ref.~\citenum{a:almo-ls}.
 
-ALMO constraints prohibit electron density transfer between distant molecules but retain all other types of interaction such as long-range electrostatic, exchange, polarization, and, if the exchange-correlation (XC) functional includes it, dispersion interactions~\cite{a:theeda}. 
-Since the energetic contribution of the electron transfer decays exponentially with distance, the \mbox{ALMO} approximation provides a natural and accurate representation of the electronic structure of molecular systems with just a few local variables if an appropriate localization radius is chosen. 
-%The advantage of ALMO DFT is that its computational complexity is linear with respect to system size because long-range electron delocalization is ignored in both optimization steps.
-%Because of the greatly reduced number of electronic variables and their robust optimization the computational cost of the implemented ALMO DFT is so low that it is [has the potential] capable of extending the range of accurate simulations to systems of thousands of molecules.
+Once the localization radius is chosen, ALMO constraint prohibits electron density transfer between distant molecules but retains all other types of interaction such as long-range electrostatic, exchange, polarization, and, if the exchange-correlation (XC) functional includes them, dispersion interactions~\cite{a:theeda}. 
+Since the importance of electron transfer decays exponentially with distance, the \mbox{ALMO} approximation provides a natural and accurate representation of the electronic structure of molecular systems with just a few local variables. 
 Because of the greatly reduced number of electronic descriptors and the robust optimization, the computational complexity of ALMO DFT grows linearly with the number of molecules while its computational overhead remains very low. These features make ALMO DFT a promising method to perform accurate AIMD simulations of large molecular systems.
 
 %To decrease the cost even further, the present paper builds on the ALMO SCF method as well as other recent work involving Brownian dynamics to compensate errors in the forces~\cite{a:ls-parinello,a:2ndcpmd,a:langevin-why}. 
@@ -111,45 +106,51 @@ Because of the greatly reduced number of electronic descriptors and the robust o
 %This is done by balancing a new computationally economical but systemically inaccurate force calculation method with an optimized version of the Langevin Equation of motion. 
 %We also introduce an easy to follow heuristic approach to optimize a system for generating correct dynamical behaviour.
 
-To adapt ALMO DFT for AIMD, the forces on atoms were computed \emph{approximately} using the idempotent DM obtained from ALMOs in a straightforward procedure that computes only the Hellmann-Feynman and Pulay forces while ignoring non-SCF forces (see the Supplemental Material). 
-The difference between these forces and the exact forces obtained using perfectly-converged fully-delocalized KS orbitals is denoted $\delta f_{i\alpha}(t)$ 
+The challenge of adopting ALMO DFT for dynamical simulations arises from the slightly nonvariational character of the localized orbitals. First, while ALMOs are variationally optimized in both SCF steps, the occupied-space projector obtained in the first step must remain fixed during the second step to ensure convergence. Second, some neglected electron transfer effects can suddenly become active in the course of a dynamical simulation when a neighboring molecule passes the localization threshold $R_{c}$. In addition to the ALMO-specific issues, the variational optimization in any AIMD methods is never truly complete and is interrupted once the norm of the gradient of the energy with respect to the variational electronic degrees of freedom drops below small but nevertheless finite convergence threshold $\epsilon_{\text{SCF}}$. While these non-SCF errors are minor and do not affect accuracy of static ALMO DFT calculations, geometry optimization, and ALMO-based Monte-Carlo simulations, they accumulate in molecular dynamics trajectories resulting in non-physical sampling and eventually disrupting them.
+
+%For any finite value of $R_{c}$, forces are undefined at manifold of due to the discontinuous jump in potential energy when a neighboring molecule passes beyond the localization radius $R_{c}$ and is suddenly ignored in potential energy calculations. 
+%Setting $R_{c}$ to larger values can reduce the magnitude of the discontinuity, but increases the computational cost as longer distance (but physically less important) interactions must be calculated. 
+%As long as the discontinuity in force is small compared with the random numerical noise in the calculation, it can be safely ignored~\cite{ZZZ-any-references}. This means that $R_{c}$ has to be kept relatively large to maintain stable and accurate dynamics.
+
+%While these issues can be resolved by  by increasing  to account for non-SCF forces, increasing  and decreasing While  are the known formal strategies for resolving these 
+
+In order to maintain stable and accurate dynamics, one could use a set of strategies that includes computing the non-SCF contribution to the forces through a coupled perturbed procedure, increasing $R_{c}$, and decreasing $\epsilon_{\text{SCF}}$. %relative to the corresponding optimal values for static energy calculations or Monte-Carlo simulations. 
+This however would dramatically increase the computational cost of the ALMO AIMD. %as longer-distance but physically unimportant interactions must be calculated with an additional iterative coupled perturbed solver. 
+%
+In this work we propose another approach, which obviates the need in a coupled-perturbed solver, allows for relaxation of the tight constraints on $R_{c}$ and $\epsilon_{\text{SCF}}$, and thus keeps the complexity and cost of simulations low. 
+
+In our approach, the forces on atoms are calculated \emph{approximately} after the two-step ALMO SCF using a straightforward procedure that computes only the Hellmann-Feynman and Pulay components and neglects the computationally intense non-SCF component of the forces. 
+The difference between these approximate ALMO forces and the \emph{reference} forces that would be obtained from perfectly converged fully-delocalized KS orbitals is $\delta f_{i\alpha}(t)$:
 %
 \begin{align}
 \label{eq:deltaf}
 f^{\text{KS}}_{i\alpha}(t) = f^{\text{ALMO}}_{i\alpha}(t) + \delta f_{i\alpha} (t),
 \end{align}
 %
-where $\alpha$ is a Cartesian component of the force acting on atom $i$ at time $t$. $\delta f_{i\alpha} (t)$ comprises neglected terms that originate from %fixed terms in the trial ALMOs (i.e. orbitals obtained in the first SCF step are not re-optimized in the second step), 
-a finite localization radius $R_c$ and incomplete SCF optimization of the electronic degrees of freedom. 
-$\delta f_{i\alpha} (t)$ can be reduced \emph{systematically} to zero by increasing $R_c$ (Figure~\ref{fig:forcecomp} in the Supplemental Material) and decreasing $\epsilon_{\text{SCF}}$ -- the maximum norm of the gradient of the \mbox{ALMO} DFT energy with respect to the ALMO coefficients. $\epsilon_{\text{SCF}}$ is chosen such that the electronic ground state is considered sufficiently close to the Born-Oppenheimer state for values less than $\epsilon_{\text{SCF}}$.
+where $\alpha$ is a Cartesian component of the force acting on atom $i$ at time $t$. $\delta f_{i\alpha} (t)$ comprises all neglected terms that originate from a finite localization radius $R_c$ and incomplete SCF optimization. 
+$\delta f_{i\alpha} (t)$ can be reduced \emph{systematically} to zero by increasing $R_c$ (Figure~\ref{fig:forcecomp} in the Supplemental Material) and decreasing $\epsilon_{\text{SCF}}$. %$\epsilon_{\text{SCF}}$ is chosen such that the electronic ground state is considered sufficiently close to the Born-Oppenheimer state for values less than $\epsilon_{\text{SCF}}$.
 %ZZZ For $\epsilon_{\text{SCF}} \leqslant 10^{-7}$~a.u. ALMO SCF is considered converged.
 
-%For any finite value of $R_{c}$, forces are undefined at manifold of due to the discontinuous jump in potential energy when a neighboring molecule passes beyond the localization radius $R_{c}$ and is suddenly ignored in potential energy calculations. 
-%Setting $R_{c}$ to larger values can reduce the magnitude of the discontinuity, but increases the computational cost as longer distance (but physically less important) interactions must be calculated. 
-%As long as the discontinuity in force is small compared with the random numerical noise in the calculation, it can be safely ignored~\cite{ZZZ-any-references}. This means that $R_{c}$ has to be kept relatively large to maintain stable and accurate dynamics.
+%The approach is inspired by ``Second Generation Car-Parinello'' MD~\cite{a:2ndcpmd} and
 
-In order to maintain stable and accurate dynamics, $R_{c}$ has to be larger and $\epsilon_{\text{SCF}}$ has to be smaller than the corresponding optimal values used in static energy calculations or Monte-Carlo simulations. 
-This, however, greatly increases the computational overhead of the simulation as longer-distance but physically less important interactions must be calculated. 
-Therefore, in this work we propose a different approach to ALMO-based AIMD, which allows for relaxation of the tight constraints on $R_{c}$ and $\epsilon_{\text{SCF}}$ resulting in a great reduction in the simulation cost. The approach is inspired by ``Second Generation Car-Parinello'' MD~\cite{a:2ndcpmd} and requires the use of the Langevin equations of motion:~\cite{a:Kubo-1986}
+Our approach to compensate for the missing $\delta f_{i\alpha}(t)$ term follows the methodology that have been introduced into AIMD by Krajewski \emph{et al.}~\cite{PRB-73-041105R}, formalized by K\"uhne \emph{et al.}~\cite{a:2ndcpmd} and rationalized by Dai \emph{et al.}~\cite{a:langevin-why} before becoming informally known as the second generation Car-Parrinello molecular dynamics~\cite{doi:10.1002/wcms.1176}. Inspired by this method, ALMO AIMD is chosen by be governed by the Langevin equations of motion, which can be written using the unknown reference forces as:
 %
 \begin{align}
 \label{eq:langevin}
 m_i \ddot{r}_{i\alpha} = f^{\text{KS}}_{i\alpha} - \gamma m_i \dot{r}_{i\alpha} + R^{\gamma}_{i\alpha} (t),
 \end{align}
 %
-where $m_i$ is the mass of atom $i$, $r_{i\alpha}$ is its position along dimension $\alpha$, and $\gamma$ is the Langevin scaling factor.
-% which defines the strength of both the damping term and the stochastic term $R^{\gamma}_{i\alpha} (t)$. 
-In order to sample the canonical distribution correctly, the stochastic force must have zero vector average and, according to the second fluctuation dissipation theorem~\cite{a:Kubo-1986,b:tuckerman-stat} must be related to the damping through $\gamma$:
+where $m_i$ is the mass of atom $i$, $r_{i\alpha}$ is its position along dimension $\alpha$, $\gamma$ is the Langevin scaling factor, and $R^{\gamma}_{i\alpha} (t)$ is stochastic force represented by a white Gaussian noise with the zero mean and the strength related to the damping term through $\gamma$:
 %
 \begin{align}
 \label{eq:stochastic}
 \langle R^{\gamma}_{i\alpha} (t) \rangle &= 0, \\
-\langle R^{\gamma}_{i\alpha} (t)  R^{\gamma}_{j\beta} (t') \rangle &= 2 k_B T \gamma m_i \delta_{ij} \delta_{\alpha\beta} \delta(t-t')
+\langle R^{\gamma}_{i\alpha} (t)  R^{\gamma}_{j\beta} (t') \rangle &= 2 k_B T \gamma m_i \delta_{ij} \delta_{\alpha\beta} \delta(t-t').
 \end{align}
 %
-These equations mean that, for any value of $\gamma$, the perfectly balanced damping and stochastic terms, defined in equation \ref{eq:langevin}, will maintain a constant temperature and also generate the correct Maxwell-Boltzmann distribution of velocities. In the limit $\gamma \rightarrow 0$, the Newton equations of motion are recovered and the microcanonical ensemble is sampled.
-Larger values of $\gamma$ thermostat the system more strongly, but introduce more random noise necessitating longer trajectories when calculating system bulk properties.
-It has previously been shown that Langevin dynamics can be utilized to correct inaccurate force calculations to maintain correct dynamical properties.~\cite{a:langevin-why,a:2ndcpmd,b:tuckerman-stat,a:ceriotti} 
+This relation means that, for any value of $\gamma$, the perfectly balanced damping and stochastic terms will maintain a constant average temperature $T$ and generate the correct Maxwell-Boltzmann distribution of velocities~\cite{a:Kubo-1986,b:tuckerman-stat}. In the limit $\gamma \rightarrow 0$, the Newton equations of motion are recovered and the microcanonical ensemble is sampled. Finite values of $\gamma$ correspond to imposing canonical thermostat on the system, with larger $\gamma$ leading to more random noise in trajectories, faster equilibration but more distorted results for calculated dynamical properties. 
+
+%It has previously been shown that Langevin dynamics can be utilized to correct inaccurate force calculations to maintain correct dynamical properties.~\cite{a:langevin-why,a:2ndcpmd,b:tuckerman-stat,a:ceriotti} 
 
 %By utilizing Eq.\ (\ref{eq:langevin}) in conjunction with the ALMO SCF method of force calculation, we will show that discontinuity in the PES can be ignored for sufficiently large $\gamma$. 
 % Perhaps this statement is not correct: Note that increasing $\gamma$ increases the sample size required to generate accurate dynamical properties, as more random Gaussian noise is introduced.
@@ -161,7 +162,7 @@ It has previously been shown that Langevin dynamics can be utilized to correct i
 %By increasing the allowable $\epsilon_{\text{SCF}}$, a great reduction in computational cost can be achieved. 
 %Obviously, this introduces a significant error into the calculation of forces during each time step. 
 
-The main assumption of ALMO AIMD is that the error in the ALMO forces is well approximated by a stochastic ``white noise'' term $R^{\Delta}_{i\alpha} (t)$
+The main assumption of ALMO AIMD is that the error in the ALMO forces is well approximated by a stochastic white Gaussian noise $R^{\Delta}_{i\alpha} (t)$:
 %
 \begin{align}
 \label{eq:assumption}
@@ -177,15 +178,15 @@ that obeys
 \langle R^{\Delta}_{i\alpha} (t)  R^{\Delta}_{j\beta} (t') \rangle &= 2 k_B T \Delta m_i \delta_{ij} \delta_{\alpha\beta} \delta(t-t')
 \end{align}
 %
-Figure~\ref{fig:randomforce} shows that this assumption is sufficiently justified for the case of liquid water. 
-Therefore, the Langevin equations of motion (\ref{eq:langevin}) can be re-written with the two stochastic terms combined into one:
+This assumption, shown below to be well justified (Figure~\ref{fig:randomforce}), allows us to write the Langevin equations using the approximate ALMO forces:
 %
 \begin{align}
 \label{eq:langevin2}
 m_i \ddot{r}_{i\alpha} = f^{\text{ALMO}}_{i\alpha} - \gamma m_i \dot{r}_{i\alpha} + R^{\gamma + \Delta}_{i\alpha} (t)
 \end{align}
 %
-where $R^{\gamma + \Delta}_{i\alpha} = R^{\gamma}_{i\alpha} + R^{\Delta}_{i\alpha}$. 
+where the two stochastic terms are combined into one $R^{\gamma + \Delta}_{i\alpha} = R^{\gamma}_{i\alpha} + R^{\Delta}_{i\alpha}$. This new Langevin equation means that the value of $\Delta$ must be known to re-balance the damping and stochastic terms and generate the correct Maxwell-Boltzmann distribution in simulations. 
+
 Note that $\Delta$ can be either positive or negative depending on the way errors are introduced in the system of interest. 
 $\Delta$ was found to be positive for all systems considered here, increasing the amplitude of the effective random force on the system.
 
