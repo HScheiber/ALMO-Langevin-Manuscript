@@ -4,5 +4,8 @@ Database file #1: almo-langevinNotes.bib
 Warning--entry type for "Note1" isn't style-file defined
 --line 1 of file almo-langevinNotes.bib
 Database file #2: almo-langevin.bib
+Warning--I didn't find a database entry for "Galerkin"
+Warning--I didn't find a database entry for "PRB-73-041105R"
+Warning--I didn't find a database entry for "doi:10.1002/wcms.1176"
 achemso 2017/05/18 v3.10i
-(There was 1 warning)
+(There were 4 warnings)

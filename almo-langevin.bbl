@@ -8,7 +8,7 @@
 \providecommand*\mcitethebibliography{\thebibliography}
 \csname @ifundefined\endcsname{endmcitethebibliography}
   {\let\endmcitethebibliography\endthebibliography}{}
-\begin{mcitethebibliography}{46}
+\begin{mcitethebibliography}{45}
 \providecommand*\natexlab[1]{#1}
 \providecommand*\mciteSetBstSublistMode[1]{}
 \providecommand*\mciteSetBstMaxWidthForm[2]{}
@@ -294,6 +294,13 @@ K{\"u}hne,~T.~D.; Krack,~M.; Mohamed,~F.~R.; Parrinello,~M. \emph{Phys. Rev.
 \mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
 {\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
 \EndOfBibitem
+\bibitem[Dai and Yuan(2009)Dai, and Yuan]{a:langevin-why}
+Dai,~J.; Yuan,~J. \emph{EPL (Europhysics Letters)} \textbf{2009}, \emph{88},
+  20001\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
 \bibitem[Kubo(1986)]{a:Kubo-1986}
 Kubo,~R. \emph{Science} \textbf{1986}, \emph{233}, 330--334\relax
 \mciteBstWouldAddEndPuncttrue
@@ -303,21 +310,6 @@ Kubo,~R. \emph{Science} \textbf{1986}, \emph{233}, 330--334\relax
 \bibitem[Tuckerman(2010)]{b:tuckerman-stat}
 Tuckerman,~M.~E. \emph{Statistical Mechanics: Theory and Molecular Simulation};
   Oxford University Press, 2010; pp 568--600\relax
-\mciteBstWouldAddEndPuncttrue
-\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
-{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
-\EndOfBibitem
-\bibitem[Dai and Yuan(2009)Dai, and Yuan]{a:langevin-why}
-Dai,~J.; Yuan,~J. \emph{EPL (Europhysics Letters)} \textbf{2009}, \emph{88},
-  20001\relax
-\mciteBstWouldAddEndPuncttrue
-\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
-{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
-\EndOfBibitem
-\bibitem[Ceriotti \latin{et~al.}(2009)Ceriotti, Bussi, and
-  Parrinello]{a:ceriotti}
-Ceriotti,~M.; Bussi,~G.; Parrinello,~M. \emph{Phys. Rev. Lett.} \textbf{2009},
-  \emph{102}, 020601\relax
 \mciteBstWouldAddEndPuncttrue
 \mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
 {\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
