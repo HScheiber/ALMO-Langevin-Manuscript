@@ -3,7 +3,7 @@
 \documentclass[aps,prl,reprint,amsmath,amssymb]{revtex4-1}
 
 % define variable that compiles the main text (as opposed to SI text)
-\newcommand*{\MAINTEXT}{}
+%\newcommand*{\MAINTEXT}{}
 
 %\documentclass[10pt,aps,prl,twocolumn,amsmath,amssymb,superscriptaddress,longbibliography]{revtex4-1}
 %\documentclass[preprint,showpacs,preprintnumbers,amsmath,amssymb]{revtex4-1}
@@ -32,7 +32,7 @@
 \ifdefined\MAINTEXT
 \else
 	\clearpage
-	\widetext
+	%\widetext
 	\setcounter{figure}{0}
 	\setcounter{page}{1}
 	\renewcommand{\thefigure}{S\arabic{figure}}
@@ -49,7 +49,6 @@ Low-cost linear-scaling \emph{ab initio} molecular dynamics for weakly-interacti
 }
 
 \author{Hayden Scheiber}
-% RZK update email
 \email{scheiber@chem.ubc.ca}
 \author{Yifei Shi}
 \author{Rustam Z. Khaliullin}
@@ -136,7 +135,7 @@ where $\alpha$ is a Cartesian component of the force acting on atom $i$ at time 
 $\delta f_{i\alpha} (t)$ can be reduced to zero \emph{systematically} by increasing $R_c$ and decreasing $\epsilon_{\text{SCF}}$.
 
 Our approach to compensate for the missing $\delta f_{i\alpha}(t)$ term follows the methodology that have been introduced into AIMD by Krajewski \emph{et al.}~\cite{RZK:PRB-73-041105R}, formalized by K\"uhne \emph{et al.}~\cite{a:2ndcpmd} and rationalized by Dai \emph{et al.}~\cite{a:langevin-why} before becoming informally known as the second generation Car-Parrinello molecular dynamics~\cite{RZK:10.1002/wcms.1176}. 
-Inspired by this method, ALMO AIMD is chosen to be governed by the Langevin equation of motion that are first written in terms of the unknown reference forces:
+Inspired by this method, ALMO AIMD is chosen to be governed by the Langevin equation of motion that is first written in terms of the unknown reference forces:
 %
 \begin{align}
 \label{eq:langevin}
@@ -151,9 +150,9 @@ where $m_i$ is the mass of atom $i$, $r_{i\alpha}$ is its position along dimensi
 \langle R^{\gamma}_{i\alpha} (t)  R^{\gamma}_{j\beta} (t') \rangle &= 2 k_B T \gamma m_i \delta_{ij} \delta_{\alpha\beta} \delta(t-t').
 \end{align}
 % 
-The last relation means that, for any value of $\gamma$, the damping and stochastic terms are in perfect balance and will generate the correct Maxwell-Boltzmann distribution of velocities for a requested temperature $T$~\cite{a:Kubo-1986}. 
-In the limit $\gamma \rightarrow 0$, the Newton equations of motion are recovered. %and the microcanonical ensemble is sampled. 
-Finite values of $\gamma$ correspond to imposing canonical thermostat on the system, with larger $\gamma$ leading to faster equilibration but more distorted results for dynamical properties. 
+The last relation means that, for any value of $\gamma$, the damping and stochastic terms are in perfect balance and trajectories generated with Eq.~(\ref{eq:langevin}) will sample the canonical ensemble at specified temperature $T$~\cite{a:Kubo-1986}. 
+%will generate the correct Maxwell-Boltzmann distribution of velocities for a desired temperature $T$~\cite{a:Kubo-1986}. 
+Larger $\gamma$ lead to faster equilibration but more distorted results for dynamical properties. %In the limit $\gamma \rightarrow 0$, the Newton equation is recovered and the microcanonical ensemble is sampled. 
 
 %It has previously been shown that Langevin dynamics can be utilized to correct inaccurate force calculations to maintain correct dynamical properties.~\cite{a:langevin-why,a:2ndcpmd,b:tuckerman-stat,a:ceriotti} 
 
@@ -200,11 +199,11 @@ This term compensates for imperfections in ALMO forces and must be adjusted to r
 %\section{Optimizing $\Delta$}
 
 %RZK: There is a problem with the integral equation below. The r.h.s. depends on $i$ but in the l.h.s. does not. If I remember correctly we evaluate the integral for molecules, not atoms. In liquid water all our molecules are the same and we do not have to deal with the issue of different Delta for different molecules. Eliminating the problem
-In principle, $\Delta$ can be calculated using the integral of Eq.~(\ref{eq:stochastic3})
+In principle, $\Delta$ can be calculated using the integral of Eq.~(\ref{eq:stochastic3}) weighed over all types of atoms with different $m_i$
 %
 \begin{align}
 \label{eq:delta}
-\Delta &= (2 k_B T m_i )^{-1} \int_{-\infty}^{\infty}\langle \delta f_{i\alpha} (0)  \delta f_{i\alpha} (t) \rangle dt
+\Delta &= (6 k_B T m_i )^{-1} \int_{-\infty}^{\infty} \langle \delta \vec{f}_i (0) \cdot \delta\vec{f}_i(\tau) \rangle d\tau
 \end{align}
 %
 if one can afford computing the reference forces $f^{\text{KS}}_{i\alpha}(t)$ (i.e. $R_c \rightarrow \infty$ and $\epsilon_{\text{SCF}} \rightarrow 0$) for a short representative AIMD trajectory. 
@@ -222,7 +221,6 @@ Nevertheless, the ACF integral can provide a reasonable starting value of $\Delt
 \begin{figure}
 \includegraphics[trim={1.3cm 0.1cm 3.3cm 1.3cm},clip,width=8.6cm]{Dynamical_Data_Tiled.eps}
 \caption{\label{fig:dynproperties} 
-%RZK: "G_OO -> g_OO", "Intensity (au)" -> "Intensity", remove "DFT" in two legend labels 
 Calculated properties of water using ALMO AIMD with $\epsilon_{\text{SCF}} = 10^{-2}$~a.u. and $R_{c} = 1.6$ vdWR (red line) and fully converged OT reference (black line).
 (a) RDF, 
 (b) kinetic energy distribution (the black curve shows the theoretical Maxwell-Boltzmann distribution), 
@@ -236,7 +234,6 @@ Accuracy and efficiency of ALMO AIMD was tested using liquid water as an example
 This system is challenging because intermolecular electron delocalization is a critical component of hydrogen bonding and must be described correctly to reproduce static and dynamical properties of liquid water. 
 %To calculate properties of water at ambient conditions, 
 A periodic cell containing 125 molecules was simulated for $\SI{10}{\ps}$ at $T=\SI{298}{\K}$ and a constant density of $\SI{1.01}{\g\cdot\cm^{-3}}$. 
-% RZK: we do not need to specify details on gamma optimization since they are well-known.
 Ricci-Ciccotti algorithm~\cite{RZK:10.1080/0026897031000108113} was used to integrate the Langevin equation. We found that $\gamma = \SI{e-3}{\per\fs}$ is large enough to thermostat the system efficiently and small enough not to significantly affect dynamical properties of liquid water.
 %
 In the dual Gaussian and plane-wave scheme implemented in CP2K~\cite{a:quickstep}, the TZV2P basis set was used to represent molecular orbitals, and a plane-wave cutoff of $\SI{320}{Ry}$ used to represent electron density. 
@@ -251,23 +248,23 @@ To measure the ability of the $R^{\Delta}$ term to compensate for imperfections 
 
 \begin{figure}
 \includegraphics[trim={0.5cm 0cm 0.7cm 0.1cm},clip,width=8.6cm]{DeltaForceComparison_with_ACF.eps}
-\caption{\label{fig:randomforce}  
+\caption{\label{fig:randomforce} 
+%RZK: label of the third panel: "d" -> "c" 
 The red line is the Euclidean norm of the instantaneous error $\langle \| \delta \vec{f_{i}}(t) \| \rangle_{i}$, the black line is the magnitude of the time average of the instantaneous error vector, and the green line is the time average of the red line. 
 %(a) $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$~a.u. relative to the fully converged ALMO reference, 
 (a) $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$~a.u., 
 (b) $R_{c} = 1.6$ vdWR and fully converged ALMO SCF, 
-(c) Normalized ACF of the instantaneous error in panel (a) $\frac{1}{3}\langle \delta \vec{f}_i (t) \cdot \delta\vec{f}_i(t+\tau) \rangle_{it} $.
+(c) Normalized ACF $\frac{1}{3}\langle \delta \vec{f}_i (t) \cdot \delta\vec{f}_i(t+\tau) \rangle_{it}$ of the instantaneous error in panel (a).
 %Forces are computed with the PBE XC functional and TZV2P basis set for the configurations from a 10-ps trajectory generated with KS-based AIMD at T=298~K. 
 }
 \end{figure}
 
-%RZK: 5K deviation from the target temperature is considered insignificant. Even with perfect forces, the actual temperature deviates from the target temperature by 5 K. This shows that our simulations are still too short to get the correct average. This is fine though.
 Even with $\epsilon_{\text{SCF}} = 10^{-2}$, we stabilized the simulation at the correct average temperature and perfect Maxwell-Boltzmann distribution (Figure~\ref{fig:dynproperties}b). $\Delta$ was initially estimated at $\SI{2e-5}{\per\fs}$ using Eq.~(\ref{eq:delta}) and then refined heuristically to $\SI{6e-5}{\per\fs}$. 
 %RZK: factor of 3 bothers me. We need to check that this is not because we sum over 3 atoms in a molecule. See previous comments on the ACF integral.
 We found that it is easier to optimize $\Delta$ when $\gamma$ is set to zero because of reduced noise in the trial runs. 
 %In theory, $\Delta$ should be independent on system size. However, we found that $\Delta$ dependents on system size due to finite size effects, which decay for increasing system size.
 %
-Analysis of $\delta \vec{f_{i}}(t)$ shows that the error indeed resembles Gaussian white noise. The mean of the error is zero (black line in Figure~\ref{fig:randomforce}a). Its ACF decays rapidly (Figure~\ref{fig:randomforce}c) so that the errors can be considered uncorrelated on time scale of $\SI{50}{\fs}$. Thus the main assumption behind our approach to ALMO AIMD is justified for liquid water. The main source of error in forces for this system is the loose convergence criterion and not the finite $R_c$: fully converged ALMO SCF calculations remove the rapidly oscillating component of the error (Figure~\ref{fig:randomforce}b). We also confirmed that the ALMO forces converge to the reference forces in the limit $R_{c} \rightarrow \infty$ 
+Analysis of $\delta \vec{f_{i}}(t)$ shows that the error indeed resembles Gaussian white noise. The mean of the error is zero (black line in Figure~\ref{fig:randomforce}a). Its ACF decays rapidly (Figure~\ref{fig:randomforce}c) so that the errors can be considered uncorrelated on time scale of $\SI{50}{\fs}$. Thus the main assumption behind our approach to ALMO AIMD is justified for liquid water. The main source of error in forces for this system is the loose convergence criterion and not the finite $R_c$: fully converged ALMO SCF calculations remove the rapidly oscillating component of the error (Figure~\ref{fig:randomforce}b). We also verified that the ALMO forces converge to the reference forces in the limit $R_{c} \rightarrow \infty$ 
 %(Figure~\ref{fig:forcecomp} in the Supplemental Material).
 (Figure~S1 in the Supplemental Material).
 
@@ -331,7 +328,7 @@ Generalization of the methodology to systems of strongly interacting atoms (e.g.
 
 \else
 
-%\section{Procedure to estimate the value of $\Delta$}
+\subsection{Analytical expression for $\Delta$}
 %
 %Another approach based on Eq. (\ref{eq:assumption}) can be used to find $\Delta$ within an order of magnitude if one can afford computing tightly converged SCF forces for a short MD trajectory. 
 %First, run the simulation with $\Delta = 0$ and converged SCF forces. 
@@ -346,11 +343,67 @@ Generalization of the methodology to systems of strongly interacting atoms (e.g.
 %%
 %In other words, we use the integral of the ACF to estimate the strength of the random force. 
 
-\begin{figure*}[h!]
-\includegraphics[trim={0cm 0cm 0.1cm 0.1cm},clip,width=\textwidth]{DeltaForceComparison_ALMO_SCF.eps}
+Among several possible expression for $\Delta$ we consider the following two options.
+
+\textbf{Option 1.} $\Delta$ is calculated as a weighted average of atom TYPES (e.g. oxygen and hydrogen). Subindex $\text{T}$ refers to atom type.
+
+\textbf{\emph{Step 1.}} Compute the average ACF for each atom type. In this step averaging is done over all time origins $t$, over all atoms of THIS type $i$, and over all dimensions $\alpha$. The ACF includes the mass-dependent factor $(2 k_B T m_\text{T} )^{-1}$ where $T$ is the requested temperature.
+%
+\begin{align}
+\label{eq:deltaS1}
+\text{ACF}_{\text{T}}(\tau) = (2 k_B T m_\text{T} )^{-1} \, \langle \delta f_{i\alpha} (t) \, \delta f_{i\alpha}(t + \tau) \rangle_{t i\alpha}
+\end{align}
+%
+\textbf{\emph{Step 2.}} Integrate the ACF for each atom type.
+%
+\begin{align}
+\label{eq:deltaS2}
+\Delta_{\text{T}} = \int_{-\infty}^{\infty} \text{ACF}_{T}(\tau) \, d\tau
+\end{align}
+%
+\textbf{\emph{Step 3.}} Average all over all atom types.
+%
+\begin{align}
+\label{eq:deltaS3}
+\Delta = \frac{1}{N} \sum_{\text{T}} N_{\text{T}} \Delta_{\text{T}}
+\end{align}
+%
+where $N$ is the number of atoms.
+
+If all these step are combined the following expression for $\Delta$ is obtained:
+%
+\begin{align}
+\label{eq:deltaTOT}
+\Delta = \int \, d\tau \left[ \frac{1}{3N} \sum_{i=1}^{N} \sum_{\alpha=1}^{3} \frac{ \langle \delta f_{i\alpha} (t) \, \delta f_{i\alpha}(t + \tau) \rangle_{t} }{2 k_B T m_i} \right]
+\end{align}
+%
+Thus the weight of each of the $3N$ degrees of freedom in this scheme is proportional to the inverse atomic mass.
+
+\textbf{Option 2.} If the same averaging scheme is applied to MOLECULE types (not ATOM types) then the value of $\Delta$ is given by:
+%
+\begin{align}
+\label{eq:O2deltaTOT}
+\Delta = \int \, d\tau \left[ \frac{1}{3M} \sum_{p=1}^{M} \sum_{\alpha=1}^{3} \frac{ \sum_i^{N_p}\sum_j^{N_p} \langle \delta f_{i\alpha} (t) \, \delta f_{j\alpha}(t + \tau) \rangle_{t} }{2 k_B T \sum_k^{N_p}m_k} \right]
+\end{align}
+%
+where $M$ is the number of molecules, $N_p$ is the number of atoms in molecule $p$. The value of this $\Delta$ might be different from Option 1 because (a) all correlations between two atoms inside one molecule are taken into account and (b) the weight of each degree of freedom is different. The difference between Option 1 and 2 can be clearly seen for a special case of identical molecules:
+%
+\begin{align}
+\label{eq:O2deltaSPECIAL}
+\Delta = \int \, d\tau \left[ \frac{1}{3N} \sum_{i=1}^{N} \sum_{\alpha=1}^{3} \frac{ \sum_j^{N_p} \langle \delta f_{i\alpha} (t) \, \delta f_{j\alpha}(t + \tau) \rangle_{t} }{2 k_B T \langle m \rangle } \right]
+\end{align}
+%
+where $\langle m \rangle = (\sum_k^{N_p} m_k )/N_p$ is the average atom mass in a molecule.
+
+\subsection{Dependence of the forces on the electron localization radius}
+
+The ALMO forces converge to the reference forces as the electron localization radius increases (Figure~\ref{fig:forcecomp}).
+
+\begin{figure}[h!]
+\includegraphics[trim={0cm 0cm 0.1cm 0.1cm},clip,width=8.6cm]{DeltaForceComparison_ALMO_SCF.eps}
 \caption{\label{fig:forcecomp} Dependence of the Euclidean norm of the instantaneous error $\langle \| \delta \vec{f_{i}}(t) \| \rangle_{i}$ (red line) on the ALMO localization radius $R_c$ expressed in units of atomic van der Waals radii. Black line is the magnitude of the time average of the instantaneous error vector. %calculated as the average difference between fully converged Born-Oppenheimer forces and fully converged ALMO DFT forces, averaged over all dimensions and all molecules for each time step. 
 Forces are computed with the PBE XC functional, TZV2P basis set, and $\epsilon_{\text{SCF}} = 10^{-7}$~a.u. for the configurations from a 10-ps trajectory generated with KS-based AIMD at T=298~K.}
-\end{figure*}
+\end{figure}
 
 %\begin{figure}[!htb]
 %\includegraphics[trim={1.7cm 0.5cm 3.3cm 0.1cm},clip,width=\textwidth]{strongscaling_linear.eps}
