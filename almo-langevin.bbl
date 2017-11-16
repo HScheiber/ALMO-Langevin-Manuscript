@@ -6,7 +6,7 @@
 %Control: page (0) single
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{35}%
+\begin{thebibliography}{24}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -58,13 +58,6 @@
   {Parrinello}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
   {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {55}},\ \bibinfo {pages}
   {2471} (\bibinfo {year} {1985})}\BibitemShut {NoStop}%
-\bibitem [{Note1()}]{Note1}%
-  \BibitemOpen
-  \bibinfo {note} {The delocalization of KS orbitals over all atoms is the main
-  reason for the steep growth of the cost of KS DFT: since both the number of
-  orbitals and the number of localization regions (e.g. atomic basis functions)
-  increase linearly with the number of atoms, the total number of the
-  electronic degrees of freedom grows quadratically.}\BibitemShut {Stop}%
 \bibitem [{\citenamefont {Goedecker}(1999)}]{a:ls-rev-1999}%
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
@@ -102,32 +95,6 @@
   \bibinfo {note} {pMID: 26589159},\ \Eprint
   {http://arxiv.org/abs/http://dx.doi.org/10.1021/ct400595k}
   {http://dx.doi.org/10.1021/ct400595k} \BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Hierse}\ and\ \citenamefont
-  {Stechel}(1994)}]{a:ls-stechel-1994}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {W.}~\bibnamefont
-  {Hierse}}\ and\ \bibinfo {author} {\bibfnamefont {E.~B.}\ \bibnamefont
-  {Stechel}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Phys.
-  Rev. B}\ }\textbf {\bibinfo {volume} {50}},\ \bibinfo {pages} {17811}
-  (\bibinfo {year} {1994})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Hernandez}\ and\ \citenamefont
-  {Gillan}(1995)}]{a:ls-gillan-1995}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {E.}~\bibnamefont
-  {Hernandez}}\ and\ \bibinfo {author} {\bibfnamefont {M.~J.}\ \bibnamefont
-  {Gillan}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Phys.
-  Rev. B}\ }\textbf {\bibinfo {volume} {51}},\ \bibinfo {pages} {10157}
-  (\bibinfo {year} {1995})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Hernandez}\ \emph {et~al.}(1996)\citenamefont
-  {Hernandez}, \citenamefont {Gillan},\ and\ \citenamefont
-  {Goringe}}]{a:ls-gillan-1996}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {E.}~\bibnamefont
-  {Hernandez}}, \bibinfo {author} {\bibfnamefont {M.~J.}\ \bibnamefont
-  {Gillan}}, \ and\ \bibinfo {author} {\bibfnamefont {C.~M.}\ \bibnamefont
-  {Goringe}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Phys.
-  Rev. B}\ }\textbf {\bibinfo {volume} {53}},\ \bibinfo {pages} {7147}
-  (\bibinfo {year} {1996})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Mostofi}\ \emph {et~al.}(2003)\citenamefont
   {Mostofi}, \citenamefont {Haynes}, \citenamefont {Skylaris},\ and\
   \citenamefont {Payne}}]{a:ls-onetep-2003}%
@@ -139,45 +106,22 @@
   {} {\bibfield  {journal} {\bibinfo  {journal} {J. Chem. Phys.}\ }\textbf
   {\bibinfo {volume} {119}},\ \bibinfo {pages} {8842} (\bibinfo {year}
   {2003})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Hine}\ \emph {et~al.}(2009)\citenamefont {Hine},
-  \citenamefont {Haynes}, \citenamefont {Mostofi}, \citenamefont {Skylaris},\
-  and\ \citenamefont {Payne}}]{a:ls-onetep-2009}%
+\bibitem [{\citenamefont {van Aggelen}\ \emph {et~al.}(2013)\citenamefont {van
+  Aggelen}, \citenamefont {Yang},\ and\ \citenamefont
+  {Yang}}]{a:weitao-yang-2013}%
   \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {N.~D.~M.}\
-  \bibnamefont {Hine}}, \bibinfo {author} {\bibfnamefont {P.~D.}\ \bibnamefont
-  {Haynes}}, \bibinfo {author} {\bibfnamefont {A.~A.}\ \bibnamefont {Mostofi}},
-  \bibinfo {author} {\bibfnamefont {C.~K.}\ \bibnamefont {Skylaris}}, \ and\
-  \bibinfo {author} {\bibfnamefont {M.~C.}\ \bibnamefont {Payne}},\ }\href@noop
-  {} {\bibfield  {journal} {\bibinfo  {journal} {Comput. Phys. Commun.}\
-  }\textbf {\bibinfo {volume} {180}},\ \bibinfo {pages} {1041} (\bibinfo {year}
-  {2009})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Bowler}\ and\ \citenamefont
-  {Miyazaki}(2010)}]{a:ls-conquest-2010}%
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {H.}~\bibnamefont {van
+  Aggelen}}, \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont {Yang}}, \ and\
+  \bibinfo {author} {\bibfnamefont {W.}~\bibnamefont {Yang}},\ }\href {\doibase
+  10.1103/PhysRevA.88.030501} {\bibfield  {journal} {\bibinfo  {journal} {Phys.
+  Rev. A}\ }\textbf {\bibinfo {volume} {88}},\ \bibinfo {pages} {030501}
+  (\bibinfo {year} {2013})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Tsuchida}(2007)}]{a:ls-tsuchida-aomm}%
   \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.~R.}\ \bibnamefont
-  {Bowler}}\ and\ \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
-  {Miyazaki}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J.
-  Phys.: Condens. Matter}\ }\textbf {\bibinfo {volume} {22}},\ \bibinfo {pages}
-  {074207} (\bibinfo {year} {2010})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Hine}\ \emph {et~al.}(2010)\citenamefont {Hine},
-  \citenamefont {Haynes}, \citenamefont {Mostofi},\ and\ \citenamefont
-  {Payne}}]{a:ls-onetep-2010-app1}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {N.~D.~M.}\
-  \bibnamefont {Hine}}, \bibinfo {author} {\bibfnamefont {P.~D.}\ \bibnamefont
-  {Haynes}}, \bibinfo {author} {\bibfnamefont {A.~A.}\ \bibnamefont {Mostofi}},
-  \ and\ \bibinfo {author} {\bibfnamefont {M.~C.}\ \bibnamefont {Payne}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J. Chem. Phys.}\
-  }\textbf {\bibinfo {volume} {133}},\ \bibinfo {pages} {12} (\bibinfo {year}
-  {2010})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Galli}\ and\ \citenamefont
-  {Parrinello}(1992)}]{a:ls-galli-parrinello-1992}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
-  {Galli}}\ and\ \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
-  {Parrinello}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
-  {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {69}},\ \bibinfo {pages}
-  {3547} (\bibinfo {year} {1992})}\BibitemShut {NoStop}%
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {E.}~\bibnamefont
+  {Tsuchida}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J.
+  Phys. Soc. Jpn.}\ }\textbf {\bibinfo {volume} {76}},\ \bibinfo {pages}
+  {034708} (\bibinfo {year} {2007})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Mauri}\ \emph {et~al.}(1993)\citenamefont {Mauri},
   \citenamefont {Galli},\ and\ \citenamefont
   {Car}}]{a:ls-mauri-galli-car-1993}%
@@ -188,25 +132,6 @@
   {\bibfield  {journal} {\bibinfo  {journal} {Phys. Rev. B}\ }\textbf {\bibinfo
   {volume} {47}},\ \bibinfo {pages} {9973} (\bibinfo {year}
   {1993})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Ordejon}\ \emph {et~al.}(1993)\citenamefont
-  {Ordejon}, \citenamefont {Drabold}, \citenamefont {Grumbach},\ and\
-  \citenamefont {Martin}}]{a:ls-ordejon-1993}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
-  {Ordejon}}, \bibinfo {author} {\bibfnamefont {D.~A.}\ \bibnamefont
-  {Drabold}}, \bibinfo {author} {\bibfnamefont {M.~P.}\ \bibnamefont
-  {Grumbach}}, \ and\ \bibinfo {author} {\bibfnamefont {R.~M.}\ \bibnamefont
-  {Martin}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Phys.
-  Rev. B}\ }\textbf {\bibinfo {volume} {48}},\ \bibinfo {pages} {14646}
-  (\bibinfo {year} {1993})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Mauri}\ and\ \citenamefont
-  {Galli}(1994)}]{a:ls-mauri-galli-1994}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {F.}~\bibnamefont
-  {Mauri}}\ and\ \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont {Galli}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Phys. Rev. B}\
-  }\textbf {\bibinfo {volume} {50}},\ \bibinfo {pages} {4316} (\bibinfo {year}
-  {1994})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Ordejon}\ \emph {et~al.}(1995)\citenamefont
   {Ordejon}, \citenamefont {Drabold}, \citenamefont {Martin},\ and\
   \citenamefont {Grumbac}}]{a:ls-ordejon-1995}%
@@ -218,16 +143,6 @@
   }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Phys. Rev. B}\
   }\textbf {\bibinfo {volume} {51}},\ \bibinfo {pages} {1456} (\bibinfo {year}
   {1995})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Kim}\ \emph {et~al.}(1995)\citenamefont {Kim},
-  \citenamefont {Mauri},\ and\ \citenamefont
-  {Galli}}]{a:ls-kim-mauri-galli-1995}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.~N.}\ \bibnamefont
-  {Kim}}, \bibinfo {author} {\bibfnamefont {F.}~\bibnamefont {Mauri}}, \ and\
-  \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont {Galli}},\ }\href@noop {}
-  {\bibfield  {journal} {\bibinfo  {journal} {Phys. Rev. B}\ }\textbf {\bibinfo
-  {volume} {52}},\ \bibinfo {pages} {1640} (\bibinfo {year}
-  {1995})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Fattebert}\ and\ \citenamefont
   {Gygi}(2004)}]{a:ls-fattebert-2004}%
   \BibitemOpen
@@ -236,32 +151,6 @@
   {Gygi}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Comput.
   Phys. Commun.}\ }\textbf {\bibinfo {volume} {162}},\ \bibinfo {pages} {24}
   (\bibinfo {year} {2004})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Fattebert}\ and\ \citenamefont
-  {Gygi}(2006)}]{a:ls-fattebert-2006}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.~L.}\ \bibnamefont
-  {Fattebert}}\ and\ \bibinfo {author} {\bibfnamefont {F.}~\bibnamefont
-  {Gygi}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Phys.
-  Rev. B}\ }\textbf {\bibinfo {volume} {73}},\ \bibinfo {pages} {115124}
-  (\bibinfo {year} {2006})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Burger}\ and\ \citenamefont
-  {Yang}(2008)}]{a:burger-yang-2008}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.~K.}\ \bibnamefont
-  {Burger}}\ and\ \bibinfo {author} {\bibfnamefont {W.~T.}\ \bibnamefont
-  {Yang}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J.
-  Phys.: Condens. Matter}\ }\textbf {\bibinfo {volume} {20}},\ \bibinfo {pages}
-  {294209} (\bibinfo {year} {2008})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {van Aggelen}\ \emph {et~al.}(2013)\citenamefont {van
-  Aggelen}, \citenamefont {Yang},\ and\ \citenamefont
-  {Yang}}]{a:weitao-yang-2013}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {H.}~\bibnamefont {van
-  Aggelen}}, \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont {Yang}}, \ and\
-  \bibinfo {author} {\bibfnamefont {W.}~\bibnamefont {Yang}},\ }\href {\doibase
-  10.1103/PhysRevA.88.030501} {\bibfield  {journal} {\bibinfo  {journal} {Phys.
-  Rev. A}\ }\textbf {\bibinfo {volume} {88}},\ \bibinfo {pages} {030501}
-  (\bibinfo {year} {2013})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Stoll}\ \emph {et~al.}(1980)\citenamefont {Stoll},
   \citenamefont {Wagenblast},\ and\ \citenamefont {Preuss}}]{a:stoll}%
   \BibitemOpen
@@ -271,6 +160,14 @@
   }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Theor. Chim.
   Acta}\ }\textbf {\bibinfo {volume} {57}},\ \bibinfo {pages} {169} (\bibinfo
   {year} {1980})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Galli}\ and\ \citenamefont
+  {Parrinello}(1992)}]{a:ls-galli-parrinello-1992}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
+  {Galli}}\ and\ \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Parrinello}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
+  {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {69}},\ \bibinfo {pages}
+  {3547} (\bibinfo {year} {1992})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Khaliullin}\ \emph {et~al.}(2006)\citenamefont
   {Khaliullin}, \citenamefont {Head-Gordon},\ and\ \citenamefont
   {Bell}}]{a:khal}%
