@@ -262,7 +262,7 @@ A periodic cell containing 125 molecules was simulated for $\SI{10}{\ps}$ at $T=
 Ricci-Ciccotti algorithm~\cite{Ricci2003} was used to integrate the Langevin equation. We found that $\gamma = \SI{e-3}{\per\fs}$ is large enough to thermostat the system efficiently and small enough not to significantly affect dynamical properties of liquid water.
 %
 In the dual Gaussian and plane-wave scheme implemented in CP2K~\cite{a:quickstep}, the TZV2P basis set was used to represent molecular orbitals, and a plane-wave cutoff of $\SI{320}{Ry}$ used to represent electron density. 
-The XC energy was approximated using the PBE functional~\cite{a:PBEfunctional}. 
+The XC energy was approximated using the dispersion-corrected PBE functional~\cite{a:PBEfunctional,Grimme2010}. 
 Separable norm-conserving pseudopotentials were used~\cite{a:hgh} and the Brillouin zone was sampled at the $\Gamma$-point. 
 %to describe the interactions between the valence electrons and the ionic cores. 
 %
