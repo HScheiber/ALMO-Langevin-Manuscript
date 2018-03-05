@@ -1,13 +1,5 @@
-%https://spiral.imperial.ac.uk/bitstream/10044/1/15407/2/ndmh_forces.pdf
-%https://www.sciencedirect.com/science/article/pii/S0010465512001099
-%http://aip.scitation.org/doi/pdf/10.1063/1.4807059
-%https://journals.aps.org/prb/pdf/10.1103/PhysRevB.86.174308
-%http://epubs.siam.org/doi/pdf/10.1137/140956476
-%http://aip.scitation.org/doi/pdf/10.1063/1.4978684
-%http://iopscience.iop.org/article/10.1088/0034-4885/75/3/036503/pdf
-%\documentclass[journal=jacsat]{achemso}
-
 \documentclass[aps,prl,reprint,amsmath,amssymb]{revtex4-1}
+%\documentclass[journal=jacsat]{achemso}
 
 % define variable that compiles the main text (as opposed to SI text)
 \newcommand*{\MAINTEXT}{}
@@ -65,11 +57,9 @@ Low-cost linear-scaling \emph{ab initio} molecular dynamics for weakly-interacti
 
 \ifdefined\MAINTEXT
 
-%RZK: one order of magnitude error in the PBE+D3 diffusion constant
-
 \begin{abstract}
-Within the framework of linear-scaling Kohn-Sham density functional theory, a robust method for maintaining compact localized orbitals close to the ground state is coupled with nuclear dynamics to obviate the commonly employed optimization of the one-electron density matrix and to create an efficient \emph{ab initio} molecular dynamics method for weakly-interacting systems. 
-An application to liquid water demonstrates that the low computational overhead of the developed method makes it well-suited for routine simulations whereas its linear scaling complexity allows to extend first-principle dynamical studies of molecular systems to previously inaccessible time and length scales. 
+Within the framework of linear-scaling Kohn-Sham density functional theory, a robust method for maintaining compact orbitals close to the ground state is coupled with nuclear dynamics to obviate the commonly employed optimization of the one-electron density matrix and to create an efficient orbital-only molecular dynamics method for weakly-interacting systems. 
+An application to liquid water demonstrates that the low computational overhead of the method makes it well-suited for routine simulations whereas its linear scaling complexity allows to extend first-principle dynamical studies of molecular systems to previously inaccessible time and length scales. 
 %Within the framework of linear-scaling Kohn-Sham density functional theory, a robust method for maintaining compact localized orbitals close to the ground state coupled with nuclear dynamics enables us to create low-cost linear-scaling \emph{ab initio} molecular dynamics for weakly-interacting systems. High efficiency of simulations is achieved by calculating the forces approximately without lengthy optimization of localized orbitals and by adjusting the Langevin equation of motion to stabilize the dynamics with the imperfect forces. An application to liquid water demonstrates that low computational overhead of this procedure makes it well-suited for routine simulations whereas its linear scaling complexity allows to extend first-principle molecular dynamical studies to previously inaccessible time and length scales. 
 \end{abstract}
 
@@ -134,7 +124,7 @@ On typical length and time scales required in practical and accurate AIMD simula
 In this work, we present an AIMD method that overcomes difficulties of orbital-only local DFT to achieve LS with extremely low computational overhead. 
 %Currently, the method is restricted to systems of small molecules that do not form strong covalent bonds with each other. 
 To demonstrate advantages of the new method we applied it here to systems of weakly-interacting molecules. 
-However, the same approach is readily applicable to systems of strongly-interacting fragments that do not form strong covalent bonds such as ionic materials: salts, liquids, and semiconductors. 
+However, the same approach is readily applicable to systems of strongly-interacting fragments that do not form strong covalent bonds such as ionic materials---salts, liquids, and semiconductors. 
 A generalization of the method to all finite-gap systems, including covalently bonded atoms, will be reported later. 
 %It is important to emphasize that delocalized electrons in metals, which are particularly challenging for all LS DFT~\cite{Kuehne,recent-Skylaris}, cannot be described efficiently within the presented framework.
 
@@ -265,7 +255,7 @@ ALMO AIMD was implemented in CP2K, an open source materials modeling package~\ci
 Accuracy and efficiency of ALMO AIMD was tested using liquid water as an example. 
 This system is challenging because intermolecular electron delocalization is a critical component of hydrogen bonding and must be described correctly to reproduce static and dynamical properties of liquid water. 
 %To calculate properties of water at ambient conditions, 
-A periodic cell containing 125 molecules was simulated for $\SI{10}{\ps}$ at $T=\SI{298}{\K}$ and a constant density of $\SI{1.01}{\g\cdot\cm^{-3}}$. 
+A periodic cell containing 125 molecules was simulated for $\SI{30}{\ps}$ at $T=\SI{298}{\K}$ and a constant density of $\SI{1.01}{\g\cdot\cm^{-3}}$. 
 Ricci-Ciccotti algorithm~\cite{Ricci2003} was used to integrate the Langevin equation. We found that $\gamma = \SI{e-3}{\per\fs}$ is large enough to thermostat the system efficiently and small enough not to significantly affect dynamical properties of liquid water.
 %
 In the dual Gaussian and plane-wave scheme implemented in CP2K~\cite{a:quickstep}, the TZV2P basis set was used to represent molecular orbitals, and a plane-wave cutoff of $\SI{320}{Ry}$ used to represent electron density. 
@@ -308,7 +298,7 @@ Analysis of $\delta \vec{f_{i}}(t)$ shows that the error indeed resembles Gaussi
 %\section{Accuracy}
 
 To test the accuracy of ALMO AIMD we used trajectory analyzer TRAVIS~\cite{a:travis-main} to compute the infrared (IR) spectrum, RDF, and diffusion coefficient of liquid water from both the ALMO trajectory ($\epsilon_{\text{SCF}} = 10^{-2}$~a.u. and $R_{c} = 1.6$ vdWR) and from the reference trajectory. 
-The diffusion coefficients $D_{\text{OT}}=\SI{4.61E-10}{\m^{2}\cdot\s^{-1}}$ and $D_{\text{ALMO}}=\SI{3.19E-10}{\m^{2}\cdot\s^{-1}}$ and RDFs (Figure~\ref{fig:dynproperties}a) are in good agreement. The quality of the ALMO IR spectrum (Figure~\ref{fig:dynproperties}c) is good despite minor errors in the intensity of the OH stretching mode, which is sensitive to the precise positions of the centers of localized orbitals. These stringent tests show that despite noticeable errors in the ALMO forces (Figure \ref{fig:randomforce}a) the compensating $R^{\Delta}(t)$ term in the modified Langevin equation makes it possible to recover atomic dynamics properly. We would like to note that ALMO AIMD could not be stabilized with $\Delta=0$. Neither we were able to find any values of $\Delta$ that stabilize trajectories generated using perturbative versions of ALMO DFT~\cite{a:almo-ls}.
+The diffusion coefficients $D_{\text{OT}}=\SI{1.9\pm0.9E-10}{\m^{2}\cdot\s^{-1}}$ and $D_{\text{ALMO}}=\SI{1.8\pm0.4E-10}{\m^{2}\cdot\s^{-1}}$ and RDFs (Figure~\ref{fig:dynproperties}a) are in good agreement. The quality of the ALMO IR spectrum (Figure~\ref{fig:dynproperties}c) is good despite minor errors in the intensity of the OH stretching mode, which is sensitive to the precise positions of the centers of localized orbitals. These stringent tests show that despite noticeable errors in the ALMO forces (Figure \ref{fig:randomforce}a) the compensating $R^{\Delta}(t)$ term in the modified Langevin equation makes it possible to recover atomic dynamics properly. We would like to note that ALMO AIMD could not be stabilized with $\Delta=0$. Neither we were able to find any values of $\Delta$ that stabilize trajectories generated using perturbative versions of ALMO DFT~\cite{a:almo-ls}.
 
 %\section{Speed}
 
