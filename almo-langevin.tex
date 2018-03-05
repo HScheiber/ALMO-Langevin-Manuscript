@@ -131,7 +131,7 @@ A generalization of the method to all finite-gap systems, including covalently b
 The new AIMD method utilizes a recently developed LS DFT~\cite{a:almo-ls} based on absolutely localized molecular orbitals (\mbox{ALMOs}). 
 Unlike delocalized KS orbitals, each \mbox{ALMO} has its own \emph{localization center} and a predefined \emph{localization radius} $R_{c}$ that typically includes nearby atoms or molecules~\cite{a:stoll,a:almo-ls}. 
 In the current implementation, a localization center is defined as a set of all Gaussian atomic orbitals of one molecule. 
-However the approach can use other local and nonlocal basis sets~\cite{a:ls-galli-parrinello-1992, Lin2012}. 
+However the approach can use other local and nonlocal basis sets~\cite{a:galli_loc, Lin2012}. 
 The key feature of ALMO DFT is that its one-electron wavefunctions are constructed in a two-stage self-consistent-field (SCF) procedure~\cite{a:almo-ls} to circumvent the problem of the sluggish variational optimization emphasized above. 
 In the first stage, ALMOs are constrained to their localization centers~\cite{a:khal} whereas, in the second stage, ALMOs are relaxed to allow delocalization onto the neighbor molecules within their localization radius $R_{c}$. 
 To achieve a robust optimization in the problematic second stage, it is important to keep the delocalization component of the trial wavefunction orthogonal to the fixed orbitals obtained in the first stage. 
@@ -259,7 +259,7 @@ A periodic cell containing 125 molecules was simulated for $\SI{30}{\ps}$ at $T=
 Ricci-Ciccotti algorithm~\cite{Ricci2003} was used to integrate the Langevin equation. We found that $\gamma = \SI{e-3}{\per\fs}$ is large enough to thermostat the system efficiently and small enough not to significantly affect dynamical properties of liquid water.
 %
 In the dual Gaussian and plane-wave scheme implemented in CP2K~\cite{a:quickstep}, the TZV2P basis set was used to represent molecular orbitals, and a plane-wave cutoff of $\SI{320}{Ry}$ used to represent electron density. 
-The XC energy was approximated using the dispersion-corrected PBE functional~\cite{a:PBEfunctional,Grimme2010}. 
+The XC energy was approximated using the dispersion-corrected PBE functional~\cite{a:pbe,Grimme2010}. 
 Separable norm-conserving pseudopotentials were used~\cite{a:hgh} and the Brillouin zone was sampled at the $\Gamma$-point. 
 %to describe the interactions between the valence electrons and the ionic cores. 
 %
