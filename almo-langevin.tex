@@ -2,7 +2,7 @@
 %\documentclass[journal=jacsat]{achemso}
 
 % define variable that compiles the main text (as opposed to SI text)
-\newcommand*{\MAINTEXT}{}
+%\newcommand*{\MAINTEXT}{}
 
 %\documentclass[10pt,aps,prl,twocolumn,amsmath,amssymb,superscriptaddress,longbibliography]{revtex4-1}
 %\documentclass[preprint,showpacs,preprintnumbers,amsmath,amssymb]{revtex4-1}
@@ -284,7 +284,7 @@ The red line is the Euclidean norm of the instantaneous error $\langle \| \delta
 }
 \end{figure}
 
-Even with $\epsilon_{\text{SCF}} = 10^{-2}$, we stabilized the simulation at the correct average temperature and perfect Maxwell-Boltzmann distribution (Figure~\ref{fig:dynproperties}b). $\Delta$ was initially estimated at $\SI{2e-5}{\per\fs}$ using Eq.~(\ref{eq:delta}) and then refined heuristically to $\SI{6e-5}{\per\fs}$. 
+Even with $\epsilon_{\text{SCF}} = 10^{-2}$, the simulation is stable with the correct average temperature and perfect Maxwell-Boltzmann distribution (Figure~\ref{fig:dynproperties}b). $\Delta$ was initially estimated at $\SI{2e-5}{\per\fs}$ using Eq.~(\ref{eq:delta}) and then refined heuristically to $\SI{6e-5}{\per\fs}$. 
 We found that it is easier to optimize $\Delta$ when $\gamma$ is set to zero because of reduced noise in the trial runs. 
 %RZK addition for a longer article: In theory, $\Delta$ should be independent on system size. However, we found that $\Delta$ dependents on system size due to finite size effects, which decay for increasing system size.
 %
@@ -352,11 +352,10 @@ Using liquid water as an example, we showed that the new approach enables simula
 The developed method will have a significant impact on modeling of complex molecular systems (e.g. interfaces or nuclei) making completely new phenomena accessible to AIMD. 
 Generalization of the methodology to systems of strongly interacting atoms (e.g. covalent crystals) is underway.
 
-\textbf{Acknowledgments.} The authors are grateful to Thomas K\"uhne for insightful discussions. The research was funded by the Natural Sciences and Engineering Research Council of Canada through the Discovery Grant. The authors are grateful to Compute Canada and McGill HPC Centre for computer time.
+\textbf{Acknowledgments.} The authors are grateful to Thomas K\"uhne for insightful discussions. The research was funded by the Natural Sciences and Engineering Research Council of Canada through the Discovery Grant (RGPIN-2016-05059). The authors are grateful to Compute Canada and McGill HPC Centre for computer time.
 
-%RZK: incorrect journal abbreviation in a:almo-ls, formatting of all references must be checked
-
-\bibliography{almo-langevin}
+%\bibliography{almo-langevin}
+\input{almo-langevin.bbl}
 
 \else
 
@@ -452,7 +451,7 @@ The ALMO forces converge to the reference forces as the electron localization ra
 \begin{figure}[h!]
 \includegraphics[trim={0cm 0cm 0.1cm 0.1cm},clip,width=8.6cm]{DeltaForceComparison_ALMO_SCF.eps}
 \caption{\label{fig:forcecomp} Dependence of the Euclidean norm of the instantaneous error $\langle \| \delta \vec{f_{i}}(t) \| \rangle_{i}$ (red line) on the ALMO localization radius $R_c$ expressed in units of atomic van der Waals radii. Black line is the magnitude of the time average of the instantaneous error vector. %calculated as the average difference between fully converged Born-Oppenheimer forces and fully converged ALMO DFT forces, averaged over all dimensions and all molecules for each time step. 
-Forces are computed with the PBE XC functional, TZV2P basis set, and $\epsilon_{\text{SCF}} = 10^{-7}$~a.u. for the configurations from a 10-ps trajectory generated with delocalized AIMD at T=298~K.}
+Forces are computed with the PBE XC functional, TZV2P basis set, and $\epsilon_{\text{SCF}} = 10^{-7}$~a.u. for the configurations from a 30-ps trajectory generated with delocalized AIMD at T=298~K.}
 \end{figure}
 
 %\begin{figure}[!htb]
@@ -462,12 +461,12 @@ Forces are computed with the PBE XC functional, TZV2P basis set, and $\epsilon_{
 %The localization radius was set to $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$~a.u.}
 %\end{figure}
 
-\begin{figure}[!htb]
-\includegraphics[trim={2.4cm 0cm 3.0cm 1cm},clip,width=8.6cm]{Diffusion_Comparison.eps}
-\caption{\label{fig:diffusion} Calculated mean-squared displacement function of water using ALMO DFT with $\epsilon_{\text{SCF}} = 10^{-2}$~a.u. and $R_{c} = 1.6$ vdWR.
-Compared with equivalent MD run using OT DFT as a reference.
-Calculations were performed at 298 K with the dispersion-corrected PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set, using 125 water molecules for 10 ps.}
-\end{figure}
+%\begin{figure}[!htb]
+%\includegraphics[trim={2.4cm 0cm 3.0cm 1cm},clip,width=8.6cm]{Diffusion_Comparison.eps}
+%\caption{\label{fig:diffusion} Calculated mean-squared displacement function of water using ALMO DFT with $\epsilon_{\text{SCF}} = 10^{-2}$~a.u. and $R_{c} = 1.6$ vdWR.
+%Compared with equivalent MD run using OT DFT as a reference.
+%Calculations were performed at 298 K with the dispersion-corrected PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set, using 125 water molecules for 30 ps.}
+%\end{figure}
 
 \fi % SI - main text switch
 
