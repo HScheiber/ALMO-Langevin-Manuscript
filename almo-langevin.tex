@@ -101,7 +101,7 @@ However, the DM DFT becomes advantageous only for impractically large systems wh
 This issue is rectified in optimal-basis DM methods~\cite{Skylaris2005, Nakata2015, Mohr2015} that contract large basis sets into a small number of new localized functions and then optimize the DM in the contracted basis. 
 %Later: Although such methods have been successfully used for the evaluation of accurate DFT energies of large static systems~\cite{a:ls-onetep-2009,a:ls-conquest-2010,a:ls-onetep-2010-app1,a:ls-rev-2012} 
 %While most large-scale DFT calculations are performed using this class of methods
-Despite becoming the most popular approach to LS DFT the efficiency of these methods is hampered by the costly optimization of both the contracted orbitals and the DM~\cite{a:ls-onetep-2003}. 
+Despite becoming the most popular approach to LS DFT, the efficiency of these methods is hampered by the costly optimization of both the contracted orbitals and the DM~\cite{a:ls-onetep-2003}. 
 %
 From this point of view, a direct variation of molecular orbitals that are strictly localized within predefined regions is preferable because LS can be achieved with significantly fewer variables. 
 Advantages of the orbitals-only LS DFT are especially pronounced in accurate calculations that require many basis functions per atom.
@@ -116,7 +116,7 @@ Unfortunately, the development of promising orbital-based LS methods has been al
 %RZK important addition for a more detialed publication: review of a large family of fragmentation methods into the review following these guidelines.
 %It is important to note all LS DFT methods reviewed above attempt to obtain the electronic description that do not construct  based on fragmentation methods that do that there  LS DFT methods the presented logical partitioning with the subsequent construction of localized MOs is a rather general approach used in a large number of electronic structure theories, which are collectively known as fragmentation methods~\cite{a:fragmentation-rev}. These methods vary greatly in how the partitioning and recombination are performed and, therefore, differ in accuracy and computational cost. We would like to emphasize that in our approach a proper quantum mechanical description of the entire system is constructed in the form of the total idempotent density matrix. This approach provides the most rigorous description of the electronic structure.
 
-Thus, despite impressive progress of LS description of the electronic and atomic structure of large static systems~\cite{Bowler2010,a:ls-dm-sign} the high computational overhead of existing LS methods restrict their use in dynamical simulations to very short \emph{time scales}, systems of low dimensions, and low-quality minimal basis sets~\cite{a:ls-dm-sign, Otsuka2016, Hine2011, Bowler2010}. 
+Thus, despite impressive progress of the LS description of the electronic and atomic structure of large static systems~\cite{Bowler2010,a:ls-dm-sign}, the high computational overhead of existing LS methods restrict their use in dynamical simulations to very short \emph{time scales}, systems of low dimensions, and low-quality minimal basis sets~\cite{a:ls-dm-sign, Otsuka2016, Hine2011, Bowler2010}. 
 %RZK: Although such methods have been successfully used for the evaluation of accurate DFT energies [electronic structure and atomic configurations] of large static systems~\cite{Bowler2010,a:ls-dm-sign}
 On typical length and time scales required in practical and accurate AIMD simulations, LS DFT still cannot compete with the straightforward low-cost cubically-scaling KS DFT.
 
@@ -130,13 +130,13 @@ A generalization of the method to all finite-gap systems, including covalently b
 The new AIMD method utilizes a recently developed LS DFT~\cite{a:almo-ls} based on absolutely localized molecular orbitals (\mbox{ALMOs}). 
 Unlike delocalized KS orbitals, each \mbox{ALMO} has its own \emph{localization center} and a predefined \emph{localization radius} $R_{c}$ that typically includes nearby atoms or molecules~\cite{a:stoll,a:almo-ls}. 
 In the current implementation, a localization center is defined as a set of all Gaussian atomic orbitals of one molecule. 
-However the approach can use other local and nonlocal basis sets~\cite{a:ls-galli-parrinello-1992, Lin2012}. 
+However, the approach can use other local and nonlocal basis sets~\cite{a:galli_loc, Lin2012}. 
 The key feature of ALMO DFT is that its one-electron wavefunctions are constructed in a two-stage self-consistent-field (SCF) procedure~\cite{a:almo-ls} to circumvent the problem of the sluggish variational optimization emphasized above. 
 In the first stage, ALMOs are constrained to their localization centers~\cite{a:khal} whereas, in the second stage, ALMOs are relaxed to allow delocalization onto the neighbor molecules within their localization radius $R_{c}$. 
 To achieve a robust optimization in the problematic second stage, it is important to keep the delocalization component of the trial wavefunction orthogonal to the fixed orbitals obtained in the first stage. 
-For mathematical details, see ALMO SCF method in Ref.~\citenum{a:almo-ls}.
+For mathematical details, see the ALMO SCF method in Ref.~\citenum{a:almo-ls}.
 
-ALMO constraints imposed by $R_c$ prohibit electron density transfer between distant molecules but retain all other types of interaction such as long-range electrostatic, exchange, polarization, and, if the exchange-correlation (XC) functional includes them, dispersion interactions~\cite{a:theeda}. 
+ALMO constraints imposed by $R_c$ prohibit electron density transfer between distant molecules, but retain all other types of interaction such as long-range electrostatic, exchange, polarization, and---if the exchange-correlation (XC) functional includes them---dispersion interactions~\cite{a:theeda}. 
 Since the importance of electron transfer decays exponentially with distance in finite-gap materials~\cite{a:ls-rev-1999}, the \mbox{ALMO} approximation is expected to provide a natural and accurate representation of the electronic structure of molecular systems. %with just a few local variables. 
 Because of the greatly reduced number of electronic descriptors and the robust optimization, the computational complexity of ALMO DFT grows linearly with the number of molecules while its computational overhead remains very low. These features make ALMO DFT a promising method for accurate AIMD simulations of large molecular systems.
 
@@ -165,14 +165,14 @@ where $\alpha$ is a Cartesian component of the force acting on atom $i$ at time 
 $\delta f_{i\alpha} (t)$ can be reduced to zero \emph{systematically} by increasing $R_c$ and decreasing $\epsilon_{\text{SCF}}$.
 
 Our approach to compensate for the missing $\delta f_{i\alpha}(t)$ term is inspired by the methodology introduced into AIMD by Krajewski \emph{et al.}~\cite{Krajewski}, formalized by K\"uhne \emph{et al.}~\cite{a:2ndcpmd} and rationalized by Dai \emph{et al.}~\cite{a:langevin-why} before becoming informally known as the second generation Car-Parrinello molecular dynamics~\cite{Kuhne2013}. 
-Adopting the principle of Refs.~\onlinecite{Krajewski} and \onlinecite{a:2ndcpmd}, ALMO AIMD is chosen to be governed by the Langevin equation of motion that can be written in terms of the unknown reference forces:
+Adopting the principle of Refs.~\onlinecite{Krajewski} and \onlinecite{a:2ndcpmd}, ALMO AIMD is chosen to be governed by the Langevin equation of motion that can be written in terms of the unknown reference forces
 %
 \begin{align}
 \label{eq:langevin}
 m_i \ddot{r}_{i\alpha} = f^{\text{KS}}_{i\alpha}(t) - \gamma m_i \dot{r}_{i\alpha} + R^{\gamma}_{i\alpha} (t),
 \end{align}
 %
-where $m_i$ is the mass of atom $i$, $r_{i\alpha}$ is its position along dimension $\alpha$, $\gamma$ is the Langevin scaling factor, and $R^{\gamma}_{i\alpha} (t)$ is the stochastic force represented by a zero-mean white Gaussian noise: %with the zero mean and the strength related to the damping term through $\gamma$:
+where $m_i$ is the mass of atom $i$, $r_{i\alpha}$ is its position along dimension $\alpha$, $\gamma$ is the Langevin scaling factor, and $R^{\gamma}_{i\alpha} (t)$ is the stochastic force represented by a zero-mean white Gaussian noise %with the zero mean and the strength related to the damping term through $\gamma$:
 %
 \begin{align}
 \label{eq:stochastic}
@@ -197,14 +197,14 @@ that obeys
 \label{eq:stochastic2}
 \langle R^{\Delta}_{i\alpha} (t) \rangle &= 0, \\
 \label{eq:stochastic3}
-\langle R^{\Delta}_{i\alpha} (t)  R^{\Delta}_{j\beta} (t') \rangle &= 2 k_B T \Delta m_i \delta_{ij} \delta_{\alpha\beta} \delta(t-t')
+\langle R^{\Delta}_{i\alpha} (t)  R^{\Delta}_{j\beta} (t') \rangle &= 2 k_B T \Delta m_i \delta_{ij} \delta_{\alpha\beta} \delta(t-t') .
 \end{align}
 %
-This assumption, shown to be well justified, allows us to rewrite the Langevin equation using the ALMO forces:
+This assumption, shown to be well justified, allows us to rewrite the Langevin equation using the ALMO forces
 %
 \begin{align}
 \label{eq:langevin2}
-m_i \ddot{r}_{i\alpha} = f^{\text{ALMO}}_{i\alpha}(t) - \gamma m_i \dot{r}_{i\alpha} + R^{\gamma + \Delta}_{i\alpha} (t)
+m_i \ddot{r}_{i\alpha} = f^{\text{ALMO}}_{i\alpha}(t) - \gamma m_i \dot{r}_{i\alpha} + R^{\gamma + \Delta}_{i\alpha} (t),
 \end{align}
 %
 where the two stochastic terms are combined into one $R^{\gamma + \Delta}_{i\alpha} = R^{\gamma}_{i\alpha} + R^{\Delta}_{i\alpha}$. 
@@ -244,7 +244,7 @@ Nevertheless, it is capable to reproduce correct dynamical properties of a syste
 \caption{\label{fig:dynproperties} 
 Calculated properties of water using ALMO AIMD with $\epsilon_{\text{SCF}} = 10^{-2}$~a.u. and $R_{c} = 1.6$ vdWR (red line) and fully converged OT reference (black line).
 (a) RDF, 
-(b) kinetic energy distribution (the black curve shows the theoretical Maxwell-Boltzmann distribution), 
+(b) kinetic energy distribution (the gray curve shows the theoretical Maxwell-Boltzmann distribution), 
 (c) IR spectrum.
 %Calculations were performed with the PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set, using 125 water molecules for 10 ps.
 }
@@ -258,7 +258,7 @@ A periodic cell containing 125 molecules was simulated for $\SI{30}{\ps}$ at $T=
 Ricci-Ciccotti algorithm~\cite{Ricci2003} was used to integrate the Langevin equation. We found that $\gamma = \SI{e-3}{\per\fs}$ is large enough to thermostat the system efficiently and small enough not to significantly affect dynamical properties of liquid water.
 %
 In the dual Gaussian and plane-wave scheme implemented in CP2K~\cite{a:quickstep}, the TZV2P basis set was used to represent molecular orbitals, and a plane-wave cutoff of $\SI{320}{Ry}$ used to represent electron density. 
-The XC energy was approximated using the dispersion-corrected PBE functional~\cite{a:PBEfunctional,Grimme2010}. 
+The XC energy was approximated using the dispersion-corrected PBE functional~\cite{a:pbe,Grimme2010}. 
 Separable norm-conserving pseudopotentials were used~\cite{a:hgh} and the Brillouin zone was sampled at the $\Gamma$-point. 
 %to describe the interactions between the valence electrons and the ionic cores. 
 %
@@ -266,10 +266,10 @@ Separable norm-conserving pseudopotentials were used~\cite{a:hgh} and the Brillo
 The predictor of the Kolafa scheme~\cite{Kolafa2003} was adopted to localized orbitals~\cite{a:2ndcpmd} to generate a highly accurate initial ALMOs in both SCF stages, which can be brought close to the ground state with just a few SCF steps of the robust two-stage optimization procedure. 
 %RZK: The time-reversibility of ASPC is not a critical reqirement of the proposed method.
 
-The \emph{reference} forces were calculated with fully delocalized electrons using tightly converged, $\epsilon_{\text{SCF}}=10^{-6}$~a.u., orbital transformation (OT) method~\cite{a:ot}. 
-In ALMO AIMD, element-specific cutoff radius for electron delocalization $R_c$ was set to 1.6 in units of the elements' van der Waals radii (vdWR). This localization radius includes approximately two coordination shells of an average water molecule and was shown to reproduce the reference radial distribution function (RDF) perfectly in Monte-Carlo simulations~\cite{a:almo-ls}. 
+The \emph{reference} forces were calculated with fully delocalized electrons using the tightly converged, $\epsilon_{\text{SCF}}=10^{-6}$~a.u., orbital transformation (OT) method~\cite{a:ot}. 
+In ALMO AIMD, the element-specific cutoff radius for electron delocalization $R_c$ was set to 1.6 in units of the elements' van der Waals radii (vdWR). This localization radius includes approximately two coordination shells of an average water molecule and was shown to reproduce the reference radial distribution function (RDF) perfectly in Monte-Carlo simulations~\cite{a:almo-ls}. 
 %
-To check the ability of the $R^{\Delta}(t)$ term to compensate for imperfections in ALMO forces we varied $\epsilon_{\text{SCF}}$ between tight $10^{-6}$~a.u. and loose $10^{-2}$~a.u. 
+To check the ability of the $R^{\Delta}(t)$ term to compensate for imperfections in ALMO forces, we varied $\epsilon_{\text{SCF}}$ between tight $10^{-6}$~a.u. and loose $10^{-2}$~a.u. 
 
 \begin{figure}
 \includegraphics[trim={0.5cm 0cm 0.7cm 0.1cm},clip,width=8.6cm]{DeltaForceComparison_with_ACF.eps}
@@ -296,19 +296,19 @@ Analysis of $\delta \vec{f_{i}}(t)$ shows that the error indeed resembles Gaussi
 
 %\section{Accuracy}
 
-To test the accuracy of ALMO AIMD we used trajectory analyzer TRAVIS~\cite{a:travis-main} to compute the infrared (IR) spectrum, RDF, and diffusion coefficient of liquid water from both the ALMO trajectory ($\epsilon_{\text{SCF}} = 10^{-2}$~a.u. and $R_{c} = 1.6$ vdWR) and from the reference trajectory. 
-The diffusion coefficients $D_{\text{OT}}=\SI{1.9\pm0.9E-10}{\m^{2}\cdot\s^{-1}}$ and $D_{\text{ALMO}}=\SI{1.8\pm0.4E-10}{\m^{2}\cdot\s^{-1}}$ and RDFs (Figure~\ref{fig:dynproperties}a) are in good agreement. The quality of the ALMO IR spectrum (Figure~\ref{fig:dynproperties}c) is good despite minor errors in the intensity of the OH stretching mode, which is sensitive to the precise positions of the centers of localized orbitals. These stringent tests show that despite noticeable errors in the ALMO forces (Figure \ref{fig:randomforce}a) the compensating $R^{\Delta}(t)$ term in the modified Langevin equation makes it possible to recover atomic dynamics properly. We would like to note that ALMO AIMD could not be stabilized with $\Delta=0$. Neither we were able to find any values of $\Delta$ that stabilize trajectories generated using perturbative versions of ALMO DFT~\cite{a:almo-ls}.
+To test the accuracy of ALMO AIMD we used the trajectory analyzer TRAVIS~\cite{a:travis-main} to compute the infrared (IR) spectrum, RDF, and diffusion coefficient of liquid water from both the ALMO trajectory ($\epsilon_{\text{SCF}} = 10^{-2}$~a.u. and $R_{c} = 1.6$ vdWR) and from the reference trajectory. 
+The diffusion coefficients $D_{\text{OT}}=\SI{1.7\pm0.1E-10}{\m^{2}\cdot\s^{-1}}$ and $D_{\text{ALMO}}=\SI{1.8\pm0.4E-10}{\m^{2}\cdot\s^{-1}}$ and RDFs (Figure~\ref{fig:dynproperties}a) are in good agreement. The quality of the ALMO IR spectrum (Figure~\ref{fig:dynproperties}c) is good despite minor errors in the intensity of the OH stretching mode, which is sensitive to the precise positions of the centers of localized orbitals. These stringent tests show that despite noticeable errors in the ALMO forces (Figure \ref{fig:randomforce}a), the compensating $R^{\Delta}(t)$ term in the modified Langevin equation makes it possible to recover atomic dynamics properly. We would like to note that ALMO AIMD could not be stabilized with $\Delta=0$. Neither were we able to find any values of $\Delta$ that stabilize trajectories generated using perturbative versions of ALMO DFT~\cite{a:almo-ls}.
 
 %\section{Speed}
 
 %RZK addition for a longer article: extrapolation of WFs on both SCF steps is a crucial component of our fast algorithm.
 
 % RZK longer article: averaging is done over 10 time steps 
-To demonstrate computational efficiency of ALMO AIMD, we compared the average wall-time per MD step for a variety of methods in Figure \ref{fig:strongscaling_log}.
+To demonstrate the computational efficiency of ALMO AIMD, we compared the average wall-time per MD step for a variety of methods in Figure \ref{fig:strongscaling_log}.
 %In addition to the fully converged OT reference, we included timing for the second generation Car-Parrinello method designed to decrease the computational prefactor of the cubically-scaling DFT~\cite{a:2ndcpmd}. 
-It is important to emphasize that the comparison is performed for a three-dimensional condensed phase system described with an accurate triple-$\zeta$ basis set with polarized functions -- a particularly challenging case for DM-based LS methods.
-ALMO AIMD shows clear LS behavior for all values of $\epsilon_{\text{SCF}}$ even for medium-size systems. While the second generation Car-Parrinello method decreases the computational overhead of the cubically-scaling AIMD for small systems~\cite{a:2ndcpmd}, ALMO AIMD exploits the modified Langevin concept to substantially reduce the simulation cost for systems of all sizes.
-The crossover point between ALMO AIMD and cubically scaling methods lies in the region of 256 molecules -- length scales routinely accessible with AIMD today. 
+It is important to emphasize that the comparison is performed for a three-dimensional condensed phase system described with an accurate triple-$\zeta$ basis set with polarized functions---a particularly challenging case for DM-based LS methods.
+ALMO AIMD shows clear LS behavior for all values of $\epsilon_{\text{SCF}}$, even for medium-size systems. While the second generation Car-Parrinello method decreases the computational overhead of the cubically-scaling AIMD for small systems~\cite{a:2ndcpmd}, ALMO AIMD exploits the modified Langevin concept to substantially reduce the simulation cost for systems of all sizes.
+The crossover point between ALMO AIMD and cubically scaling methods lies in the region of 256 molecules---length scales routinely accessible with AIMD today. 
 
 %RZK longer article: fully converged ALMO calculations must be reported: Delta=0, gamma=0, is total energy constant at R=1.6 vdW?
 
@@ -327,7 +327,7 @@ Cyan lines represent perfect cubic scaling, whereas gray lines represent perfect
 Weak scaling benchmarks for very large systems show (Figure~\ref{fig:weakscaling}) that localized orbitals are naturally suited for parallel execution: LS is retained for a wide range of systems and compute cores. 
 We were able to successfully simulate systems as large as $\sim10^{5}$ atoms 
 %(32768 water molecules) 
-within reasonable wall-clock time using only moderate number of compute cores -- an impressive feat for AIMD considering that accurate molecular orbitals and the idempotent DM are computed on each step.
+within reasonable wall-clock time using only moderate number of compute cores---an impressive feat for AIMD considering that accurate molecular orbitals and the idempotent DM are computed on each step.
 The horizontal line in Figure~\ref{fig:weakscaling} is shown as a rough guide to time and length scales accessible in a fixed wall-clock time given various computational resources. It indicates that ALMO AIMD can extend the range of routine simulations to $\sim10^4$ atoms on modern HPC platforms. 
 
 %CONQUEST code: 32768-atom crystalline silicon, 1 MD step is 1085 s using 1024 CPUs (with 16 cores/CPU) of Fujitsu FX10
@@ -344,12 +344,12 @@ Dashed gray lines connect systems simulated on the same number of cores to confi
 %\section{Conclusions} 
 
 % systematically improvable approximation to DFT-based AIMD.
-To summarize, we demonstrated, for the first time, that compact localized orbitals can be utilized to perform accurate and efficient LS AIMD without concomitant optimization of the DM. %for weakly-interacting systems. 
+To summarize, we demonstrated---for the first time---that compact localized orbitals can be utilized to perform accurate and efficient LS AIMD without concomitant optimization of the DM. %for weakly-interacting systems. 
 High efficiency of the presented method is achieved without sacrificing accuracy with a combination of two techniques: (1) on-the-fly calculation of approximate forces without lengthy self-consistent optimization of localized orbitals and (2) integration of a modified Langevin equation of motion that is fine-tuned to retain stable dynamics even with imperfect forces. 
-By obviating the optimization of the DM the method remains remarkably efficient even with large localized basis sets. 
+By obviating the optimization of the DM, the method remains remarkably efficient even with large localized basis sets. 
 %A remarkable feature of the method is that it remains efficient for challenging condensed phase systems even with large localized basis sets. 
 Using liquid water as an example, we showed that the new approach enables simulations of molecular systems on previously inaccessible time and length scales. 
-The developed method will have a significant impact on modeling of complex molecular systems (e.g. interfaces, nuclei) making completely new phenomena accessible to AIMD. 
+The developed method will have a significant impact on modeling of complex molecular systems (e.g. interfaces or nuclei) making completely new phenomena accessible to AIMD. 
 Generalization of the methodology to systems of strongly interacting atoms (e.g. covalent crystals) is underway.
 
 \textbf{Acknowledgments.} The authors are grateful to Thomas K\"uhne for insightful discussions. The research was funded by the Natural Sciences and Engineering Research Council of Canada through the Discovery Grant. The authors are grateful to Compute Canada and McGill HPC Centre for computer time.
@@ -463,7 +463,7 @@ Forces are computed with the PBE XC functional, TZV2P basis set, and $\epsilon_{
 %\end{figure}
 
 \begin{figure}[!htb]
-\includegraphics[trim={0cm 0cm 0.1cm 0.1cm},clip,width=8.6cm]{Diffusion_Comparison.eps}
+\includegraphics[trim={2.4cm 0cm 3.0cm 1cm},clip,width=8.6cm]{Diffusion_Comparison.eps}
 \caption{\label{fig:diffusion} Calculated mean-squared displacement function of water using ALMO DFT with $\epsilon_{\text{SCF}} = 10^{-2}$~a.u. and $R_{c} = 1.6$ vdWR.
 Compared with equivalent MD run using OT DFT as a reference.
 Calculations were performed at 298 K with the dispersion-corrected PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set, using 125 water molecules for 10 ps.}
