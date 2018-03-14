@@ -1,9 +1,4 @@
-\documentclass[aps,prl,reprint,amsmath,amssymb]{revtex4-1}
-%\documentclass[journal=jacsat]{achemso}
-
-% define variable that compiles the main text (as opposed to SI text)
-\newcommand*{\MAINTEXT}{}
-
+%\documentclass[aps,prl,reprint,amsmath,amssymb]{revtex4-1}
 %\documentclass[10pt,aps,prl,twocolumn,amsmath,amssymb,superscriptaddress,longbibliography]{revtex4-1}
 %\documentclass[preprint,showpacs,preprintnumbers,amsmath,amssymb]{revtex4-1}
 %\documentclass[twocolumn,showpacs,preprintnumbers,amsmath,amssymb]{revtex4}
@@ -11,6 +6,15 @@
 %\documentclass[preprint,aps]{revtex4}
 %\documentclass[preprint,aps,draft]{revtex4}
 %\documentclass[prb,amsmath,amssymb]{revtex4}% Physical Review B
+
+% define variable that compiles the main text (as opposed to SI text)
+\newcommand*{\MAINTEXT}{}
+
+%%% JPCL
+\documentclass[journal=jpclcd,manuscript=letter]{achemso}
+\usepackage{achemso}
+%\usepackage[T1]{fontenc} % Use modern font encodings
+%%% end JPCL
 
 \usepackage{graphicx}% Include figure files
 \usepackage{dcolumn}% Align table columns on decimal point
@@ -26,6 +30,24 @@
 %\bibliographystyle{naturemag}
 %\bibliographystyle{abbrv}
 
+\title{
+\ifdefined\MAINTEXT
+\else
+Supplemental Material: \\
+\fi
+Compact orbitals enable low-cost linear-scaling \emph{ab initio} molecular dynamics for weakly-interacting systems
+}
+
+\author{Hayden Scheiber}
+\email{scheiber@chem.ubc.ca}
+\affiliation{Department of Chemistry, McGill University, 801 Sherbrooke St. West, Montreal, QC~H3A~0B8, Canada}
+\author{Yifei Shi}
+\affiliation{Department of Chemistry, McGill University, 801 Sherbrooke St. West, Montreal, QC~H3A~0B8, Canada}
+\author{Rustam Z. Khaliullin}
+\email{rustam.khaliullin@mcgill.ca}
+\affiliation{Department of Chemistry, McGill University, 801 Sherbrooke St. West, Montreal, QC~H3A~0B8, Canada}
+
+
 \begin{document}
 
 \ifdefined\MAINTEXT
@@ -37,29 +59,18 @@
 	\renewcommand{\thefigure}{S\arabic{figure}}
 \fi
 
-\title{
-\ifdefined\MAINTEXT
-\else
-Supplemental Material: \\
-\fi
-Compact orbitals enable low-cost linear-scaling \emph{ab initio} molecular dynamics for weakly-interacting systems
-}
-
-\author{Hayden Scheiber}
-\email{scheiber@chem.ubc.ca}
-\affiliation{Department of Chemistry, McGill University, 801 Sherbrooke St. West, Montreal, QC H3A 0B8, Canada}
-\author{Yifei Shi}
-\affiliation{Department of Chemistry, McGill University, 801 Sherbrooke St. West, Montreal, QC H3A 0B8, Canada}
-\author{Rustam Z. Khaliullin}
-\email{rustam.khaliullin@mcgill.ca}
-\affiliation{Department of Chemistry, McGill University, 801 Sherbrooke St. West, Montreal, QC H3A 0B8, Canada}
-
-\date{\today}
+%\date{\today}
 
 \ifdefined\MAINTEXT
+
+\begin{tocentry}
+%\begin{figure}
+\includegraphics[width=2in]{TOCG.eps}
+%\end{figure}
+\end{tocentry}
 
 \begin{abstract}
-Today, \emph{ab initio} molecular dynamics (AIMD) relies on the locality of one-electron density matrices to achieve linear growth of computation time with systems size, crucial in large-scale simulations. While Kohn-Sham orbitals strictly localized within predefined radii can offer substantial computational advantages over density matrices, such compact orbitals are not used in AIMD because a compact representation of the electronic ground state is difficult to find. Here, a robust method for maintaining compact orbitals close to the ground state is coupled with a modified Langevin integrator to produce stable nuclear dynamics for molecular and ionic systems. This eliminates inefficient density matrix optimization and enables first orbital-only linear-scaling AIMD. An application to liquid water demonstrates that low computational overhead of the new method makes it ideal for routine medium-scale simulations while its linear-scaling complexity allows to extend first-principle studies of molecular systems to completely new chemical phenomena on previously inaccessible length scales.
+Today, \emph{ab initio} molecular dynamics (AIMD) relies on the locality of one-electron density matrices to achieve linear growth of computation time with systems size, crucial in large-scale simulations. While Kohn-Sham orbitals strictly localized within predefined radii can offer substantial computational advantages over density matrices, such compact orbitals are not used in AIMD because a compact representation of the electronic ground state is difficult to find. Here, a robust method for maintaining compact orbitals close to the ground state is coupled with a modified Langevin integrator to produce stable nuclear dynamics for molecular and ionic systems. This eliminates a density matrix optimization and enables first orbital-only linear-scaling AIMD. An application to liquid water demonstrates that low computational overhead of the new method makes it ideal for routine medium-scale simulations while its linear-scaling complexity allows to extend first-principle studies of molecular systems to completely new physical phenomena on previously inaccessible length scales.
 %Within the framework of linear-scaling Kohn-Sham density functional theory, a robust method for maintaining compact localized orbitals close to the ground state is coupled with nuclear dynamics. This allows to obviate the commonly employed optimization of the one-electron density matrix and thus create an efficient orbital-only molecular dynamics method for weakly-interacting systems. 
 %An application to liquid water demonstrates that the low computational overhead of the method makes it well-suited for routine simulations whereas its linear-scaling complexity allows to extend first-principle dynamical studies of molecular systems to previously inaccessible length scales. 
 \end{abstract}
@@ -68,7 +79,7 @@ Today, \emph{ab initio} molecular dynamics (AIMD) relies on the locality of one-
 
 \maketitle
 
-\ifdefined\MAINTEXT
+%\ifdefined\MAINTEXT
 
 %\section{Introduction}
 
@@ -85,7 +96,7 @@ However, the DM DFT becomes advantageous only for impractically large systems wh
 %Therefore, the application of DM-based LS methods have been restricted to minimal-basis tight-binding problems~\cite{Richters2014}. 
 This issue is rectified in optimal-basis DM methods~\cite{Skylaris2005, Nakata2015, Mohr2015} that contract large basis sets into a small number of new localized functions and then optimize the DM in the contracted basis. 
 Despite becoming the most popular approach to LS DFT, the efficiency of these methods is hampered by the costly optimization of both the contracted orbitals and the DM~\cite{a:ls-onetep-2003}. 
-From this point of view, a direct variation of molecular orbitals that are strictly localized within predefined regions is preferable because LS can be achieved with significantly fewer variables. 
+From this point of view, a direct variation of compact molecular orbitals---orbitals that are strictly localized within predefined regions---is preferable because LS can be achieved with significantly fewer variables. 
 Advantages of the orbitals-only LS DFT are especially pronounced in accurate calculations that require many basis functions per atom.
 Unfortunately, the development of promising orbital-based LS methods has been all but abandoned~\cite{a:weitao-yang-2013,a:ls-tsuchida-aomm} because of the inherently difficult optimization of localized orbitals~\cite{a:ls-rev-1999,a:ls-mauri-galli-car-1993,a:ls-ordejon-1995,a:ls-fattebert-2004,a:weitao-yang-2013,a:ls-tsuchida-aomm}. 
 
@@ -95,13 +106,13 @@ Unfortunately, the development of promising orbital-based LS methods has been al
 Thus, despite impressive progress of the LS description of the electronic and atomic structure of large static systems~\cite{Bowler2010,a:ls-dm-sign}, the high computational overhead of existing LS methods restrict their use in dynamical simulations to very short \emph{time scales}, systems of low dimensions, and low-quality minimal basis sets~\cite{a:ls-dm-sign, Otsuka2016, Hine2011, Bowler2010}. 
 On typical length and time scales required in practical and accurate AIMD simulations, LS DFT still cannot compete with the straightforward low-cost cubically-scaling KS DFT.
 
-In this work, we present an AIMD method that overcomes difficulties of orbital-only local DFT to achieve LS with extremely low computational overhead. 
+In this work, we present an AIMD method that overcomes difficulties of DFT based on compact orbitals to achieve LS with extremely low computational overhead. 
 To demonstrate advantages of the new method we applied it here to systems of weakly-interacting molecules. 
 However, the same approach is readily applicable to systems of strongly-interacting fragments that do not form strong covalent bonds such as ionic materials---salts, liquids, and semiconductors. 
 A generalization of the method to all finite-gap systems, including covalently bonded atoms, will be reported later. 
 %It is important to emphasize that delocalized electrons in metals, which are particularly challenging for all LS DFT~\cite{Kuehne}, cannot be described efficiently within the presented framework.
 
-The new AIMD method utilizes a recently developed LS DFT~\cite{a:almo-ls} based on absolutely localized molecular orbitals (\mbox{ALMOs}). 
+The new AIMD method utilizes a recently developed LS DFT~\cite{a:almo-ls} based on absolutely localized molecular orbitals (\mbox{ALMOs}) -- compact orbitals first described in Ref.~\citenum{a:stoll}. 
 Unlike delocalized KS orbitals, each \mbox{ALMO} has its own \emph{localization center} and a predefined \emph{localization radius} $R_{c}$ that typically includes nearby atoms or molecules~\cite{a:stoll,a:almo-ls}. 
 In the current implementation, a localization center is defined as a set of all Gaussian atomic orbitals of one molecule. 
 However, the approach can use other local and nonlocal basis sets~\cite{a:galli_loc, Lin2012}. 
@@ -132,7 +143,10 @@ where $\alpha$ is a Cartesian component of the force acting on atom $i$ at time 
 $\delta f_{i\alpha} (t)$ can be reduced to zero \emph{systematically} by increasing $R_c$ and decreasing $\epsilon_{\text{SCF}}$.
 
 Our approach to compensate for the missing $\delta f_{i\alpha}(t)$ term is inspired by the methodology introduced into AIMD by Krajewski \emph{et al.}~\cite{Krajewski}, formalized by K\"uhne \emph{et al.}~\cite{a:2ndcpmd} and rationalized by Dai \emph{et al.}~\cite{a:langevin-why} before becoming informally known as the second generation Car-Parrinello molecular dynamics~\cite{Kuhne2013}. 
-Adopting the principle of Refs.~\onlinecite{Krajewski} and \onlinecite{a:2ndcpmd}, ALMO AIMD is chosen to be governed by the Langevin equation of motion that can be written in terms of the unknown reference forces
+Adopting the principle of 
+%Refs.~\onlinecite{Krajewski} and \onlinecite{a:2ndcpmd}, 
+Refs.~\citenum{Krajewski} and~\citenum{a:2ndcpmd}, 
+ALMO AIMD is chosen to be governed by the Langevin equation of motion that can be written in terms of the unknown reference forces
 %
 \begin{align}
 \label{eq:langevin}
@@ -201,7 +215,7 @@ Nevertheless, it is capable to reproduce correct dynamical properties of a syste
 %\section{Implementation}
 
 \begin{figure}
-\includegraphics[trim={1.3cm 0.1cm 3.3cm 1.3cm},clip,width=8.6cm]{Dynamical_Data_Tiled.eps}
+\includegraphics[trim={1.3cm 0.1cm 3.3cm 1.3cm},clip,width=13cm]{Dynamical_Data_Tiled.eps}
 \caption{\label{fig:dynproperties} 
 Calculated properties of water using ALMO AIMD with $\epsilon_{\text{SCF}} = 10^{-2}$~a.u. and $R_{c} = 1.6$ vdWR (red line) and fully converged OT reference (black line).
 (a) RDF, 
@@ -232,7 +246,7 @@ In ALMO AIMD, the element-specific cutoff radius for electron delocalization $R_
 To check the ability of the $R^{\Delta}(t)$ term to compensate for imperfections in ALMO forces, we varied $\epsilon_{\text{SCF}}$ between tight $10^{-6}$~a.u. and loose $10^{-2}$~a.u. 
 
 \begin{figure}
-\includegraphics[trim={0.5cm 0cm 0.7cm 0.1cm},clip,width=8.6cm]{DeltaForceComparison_with_ACF.eps}
+\includegraphics[trim={0.5cm 0cm 0.7cm 0.1cm},clip,width=13cm]{DeltaForceComparison_with_ACF.eps}
 \caption{\label{fig:randomforce} 
 The red line is the Euclidean norm of the instantaneous error $\langle \| \delta \vec{f_{i}}(t) \| \rangle_{i}$, the black line is the magnitude of the time average of the instantaneous error vector, and the green line is the time average of the red line. 
 %(a) $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$~a.u. relative to the fully converged ALMO reference, 
@@ -272,7 +286,7 @@ The crossover point between ALMO AIMD and cubically scaling methods lies in the 
 %RZK longer article: fully converged ALMO calculations must be reported: Delta=0, gamma=0, is total energy constant at R=1.6 vdW?
 
 \begin{figure}
-\includegraphics[trim={2.5cm 0.5cm 3.4cm 0.9cm},clip,width=8.6cm]{strongscaling_log.eps}
+\includegraphics[trim={2.5cm 0.5cm 3.4cm 0.9cm},clip,width=13cm]{strongscaling_log.eps}
 \caption{\label{fig:strongscaling_log} Timing benchmarks for PBE/TZV2P simulations of liquid water on 256 compute cores. 
 %Logscale plots which show the asymptotic LS behaviour of ALMO methods for liquid water at 298 K.
 %Compared with the orbital transformation using fully converged SCF and second generation Car-Parinello force calculation methods.~\cite{a:ot,a:ot2,a:2ndcpmd}
@@ -294,7 +308,7 @@ The horizontal line in Figure~\ref{fig:weakscaling} is shown as a rough guide to
 %We also show that systems as large as 8192 molecules can be simulated for 10,000 MD steps in under a month using this method.
 
 \begin{figure}
-\includegraphics[trim={1.6cm 0.8cm 4.7cm 0cm},clip,width=8.6cm]{weakscaling.eps}
+\includegraphics[trim={1.6cm 0.8cm 4.7cm 0cm},clip,width=13cm]{weakscaling.eps}
 \caption{\label{fig:weakscaling} Weak scalability benchmarks for PBE/TZV2P ALMO AIMD with  $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$~a.u. 
 Dashed gray lines connect systems simulated on the same number of cores to confirm LS behavior. %over a range of configurations.
 }
@@ -311,448 +325,25 @@ Using liquid water as an example, we showed that the new approach enables simula
 The developed method will have a significant impact on modeling of complex molecular systems (e.g. interfaces or nuclei) making completely new phenomena accessible to AIMD. 
 Generalization of the methodology to systems of strongly interacting atoms (e.g. covalent crystals) is underway.
 
-\textbf{Acknowledgments.} The authors are grateful to Thomas K\"uhne for insightful discussions. The research was funded by the Natural Sciences and Engineering Research Council of Canada through the Discovery Grant (RGPIN-2016-05059). The authors are grateful to Compute Canada and McGill HPC Centre for computer time.
+\begin{acknowledgement}
 
-%\bibliography{almo-langevin}
+The authors are grateful to Thomas K\"uhne for insightful discussions. The research was funded by the Natural Sciences and Engineering Research Council of Canada through the Discovery Grant (RGPIN-2016-05059). The authors are grateful to Compute Canada and McGill HPC Centre for computer time.
+
+\end{acknowledgement}
+
+\bibliography{almo-langevin}
 %\input{almo-langevin.ref}
-\begin{thebibliography}{40}%
-\makeatletter
-\providecommand \@ifxundefined [1]{%
- \@ifx{#1\undefined}
-}%
-\providecommand \@ifnum [1]{%
- \ifnum #1\expandafter \@firstoftwo
- \else \expandafter \@secondoftwo
- \fi
-}%
-\providecommand \@ifx [1]{%
- \ifx #1\expandafter \@firstoftwo
- \else \expandafter \@secondoftwo
- \fi
-}%
-\providecommand \natexlab [1]{#1}%
-\providecommand \enquote  [1]{``#1''}%
-\providecommand \bibnamefont  [1]{#1}%
-\providecommand \bibfnamefont [1]{#1}%
-\providecommand \citenamefont [1]{#1}%
-\providecommand \href@noop [0]{\@secondoftwo}%
-\providecommand \href [0]{\begingroup \@sanitize@url \@href}%
-\providecommand \@href[1]{\@@startlink{#1}\@@href}%
-\providecommand \@@href[1]{\endgroup#1\@@endlink}%
-\providecommand \@sanitize@url [0]{\catcode `\\12\catcode `\$12\catcode
-  `\&12\catcode `\#12\catcode `\^12\catcode `\_12\catcode `\%12\relax}%
-\providecommand \@@startlink[1]{}%
-\providecommand \@@endlink[0]{}%
-\providecommand \url  [0]{\begingroup\@sanitize@url \@url }%
-\providecommand \@url [1]{\endgroup\@href {#1}{\urlprefix }}%
-\providecommand \urlprefix  [0]{URL }%
-\providecommand \Eprint [0]{\href }%
-\providecommand \doibase [0]{http://dx.doi.org/}%
-\providecommand \selectlanguage [0]{\@gobble}%
-\providecommand \bibinfo  [0]{\@secondoftwo}%
-\providecommand \bibfield  [0]{\@secondoftwo}%
-\providecommand \translation [1]{[#1]}%
-\providecommand \BibitemOpen [0]{}%
-\providecommand \bibitemStop [0]{}%
-\providecommand \bibitemNoStop [0]{.\EOS\space}%
-\providecommand \EOS [0]{\spacefactor3000\relax}%
-\providecommand \BibitemShut  [1]{\csname bibitem#1\endcsname}%
-\let\auto@bib@innerbib\@empty
-%</preamble>
-\bibitem [{\citenamefont {Car}\ and\ \citenamefont
-  {Parrinello}(1985)}]{a:thecpmd}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
-  {Car}}\ and\ \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
-  {Parrinello}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
-  {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {55}},\ \bibinfo {pages}
-  {2471} (\bibinfo {year} {1985})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Goedecker}(1999)}]{a:ls-rev-1999}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
-  {Goedecker}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
-  {Rev. Mod. Phys.}\ }\textbf {\bibinfo {volume} {71}},\ \bibinfo {pages}
-  {1085} (\bibinfo {year} {1999})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Bowler}\ and\ \citenamefont
-  {Miyazaki}(2012)}]{a:ls-rev-2012}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.~R.}\ \bibnamefont
-  {Bowler}}\ and\ \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
-  {Miyazaki}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Rep.
-  Prog. Phys.}\ }\textbf {\bibinfo {volume} {75}},\ \bibinfo {pages} {36503}
-  (\bibinfo {year} {2012})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Kussmann}\ \emph {et~al.}(2013)\citenamefont
-  {Kussmann}, \citenamefont {Beer},\ and\ \citenamefont
-  {Ochsenfeld}}]{Kussmann2013}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
-  {Kussmann}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Beer}}, \
-  and\ \bibinfo {author} {\bibfnamefont {C.}~\bibnamefont {Ochsenfeld}},\
-  }\href {\doibase 10.1002/wcms.1138} {\bibfield  {journal} {\bibinfo
-  {journal} {Wiley Interdiscip. Rev. Comput. Mol. Sci.}\
-  }\textbf {\bibinfo {volume} {3}},\ \bibinfo {pages} {614} (\bibinfo {year}
-  {2013})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Aarons}\ \emph {et~al.}(2016)\citenamefont {Aarons},
-  \citenamefont {Sarwar}, \citenamefont {Thompsett},\ and\ \citenamefont
-  {Skylaris}}]{Aarons2016}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
-  {Aarons}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Sarwar}},
-  \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont {Thompsett}}, \ and\
-  \bibinfo {author} {\bibfnamefont {C.-K.}\ \bibnamefont {Skylaris}},\ }\href
-  {\doibase 10.1063/1.4972007} {\bibfield  {journal} {\bibinfo  {journal} {J. 
-  Chem. Phys.}\ }\textbf {\bibinfo {volume} {145}},\ \bibinfo
-  {pages} {220901} (\bibinfo {year} {2016})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Vandevondele}\ \emph {et~al.}(2012)\citenamefont
-  {Vandevondele}, \citenamefont {Borstnik},\ and\ \citenamefont
-  {Hutter}}]{a:ls-dm-sign}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
-  {Vandevondele}}, \bibinfo {author} {\bibfnamefont {U.}~\bibnamefont
-  {Borstnik}}, \ and\ \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
-  {Hutter}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J.
-  Chem. Theory Comput.}\ }\textbf {\bibinfo {volume} {8}},\ \bibinfo {pages}
-  {3565} (\bibinfo {year} {2012})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Arita}\ \emph {et~al.}(2014)\citenamefont {Arita},
-  \citenamefont {Bowler},\ and\ \citenamefont {Miyazaki}}]{Arita2014}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
-  {Arita}}, \bibinfo {author} {\bibfnamefont {D.~R.}\ \bibnamefont {Bowler}}, \
-  and\ \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Miyazaki}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J.
-  Chem. Theory Comput.}\ }\textbf {\bibinfo {volume} {10}},\
-  \bibinfo {pages} {5419} (\bibinfo {year} {2014})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Khaliullin}\ \emph {et~al.}(2013)\citenamefont
-  {Khaliullin}, \citenamefont {VandeVondele},\ and\ \citenamefont
-  {Hutter}}]{a:almo-ls}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.~Z.}\ \bibnamefont
-  {Khaliullin}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
-  {VandeVondele}}, \ and\ \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
-  {Hutter}},\ }\href {\doibase 10.1021/ct400595k} {\bibfield  {journal}
-  {\bibinfo  {journal} {J. Chem. Theory Comput.}\ }\textbf
-  {\bibinfo {volume} {9}},\ \bibinfo {pages} {4421} (\bibinfo {year}
-  {2013})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Skylaris}\ \emph {et~al.}(2005)\citenamefont
-  {Skylaris}, \citenamefont {Haynes}, \citenamefont {Mostofi},\ and\
-  \citenamefont {Payne}}]{Skylaris2005}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.-K.}\ \bibnamefont
-  {Skylaris}}, \bibinfo {author} {\bibfnamefont {P.~D.}\ \bibnamefont
-  {Haynes}}, \bibinfo {author} {\bibfnamefont {A.~A.}\ \bibnamefont {Mostofi}},
-  \ and\ \bibinfo {author} {\bibfnamefont {M.~C.}\ \bibnamefont {Payne}},\
-  }\href {\doibase 10.1063/1.1839852} {\bibfield  {journal} {\bibinfo
-  {journal} {J. Chem. Phys.}\ }\textbf {\bibinfo {volume}
-  {122}},\ \bibinfo {pages} {84119} (\bibinfo {year} {2005})}\BibitemShut
-  {NoStop}%
-\bibitem [{\citenamefont {Nakata}\ \emph {et~al.}(2015)\citenamefont {Nakata},
-  \citenamefont {Bowler},\ and\ \citenamefont {Miyazaki}}]{Nakata2015}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {Nakata}}, \bibinfo {author} {\bibfnamefont {D.~R.}\ \bibnamefont {Bowler}},
-  \ and\ \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Miyazaki}},\
-  }\href {\doibase 10.1039/C5CP00934K} {\bibfield  {journal} {\bibinfo
-  {journal} {Phys. Chem. Chem. Phys.}\ }\textbf {\bibinfo {volume} {17}},\
-  \bibinfo {pages} {31427} (\bibinfo {year} {2015})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Mohr}\ \emph {et~al.}(2015)\citenamefont {Mohr},
-  \citenamefont {Ratcliff}, \citenamefont {Genovese}, \citenamefont {Caliste},
-  \citenamefont {Boulanger}, \citenamefont {Goedecker},\ and\ \citenamefont
-  {Deutsch}}]{Mohr2015}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
-  {Mohr}}, \bibinfo {author} {\bibfnamefont {L.~E.}\ \bibnamefont {Ratcliff}},
-  \bibinfo {author} {\bibfnamefont {L.}~\bibnamefont {Genovese}}, \bibinfo
-  {author} {\bibfnamefont {D.}~\bibnamefont {Caliste}}, \bibinfo {author}
-  {\bibfnamefont {P.}~\bibnamefont {Boulanger}}, \bibinfo {author}
-  {\bibfnamefont {S.}~\bibnamefont {Goedecker}}, \ and\ \bibinfo {author}
-  {\bibfnamefont {T.}~\bibnamefont {Deutsch}},\ }\href {\doibase
-  10.1039/C5CP00437C} {\bibfield  {journal} {\bibinfo  {journal} {Phys. Chem.
-  Chem. Phys.}\ }\textbf {\bibinfo {volume} {17}},\ \bibinfo {pages} {31360}
-  (\bibinfo {year} {2015})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Mostofi}\ \emph {et~al.}(2003)\citenamefont
-  {Mostofi}, \citenamefont {Haynes}, \citenamefont {Skylaris},\ and\
-  \citenamefont {Payne}}]{a:ls-onetep-2003}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.~A.}\ \bibnamefont
-  {Mostofi}}, \bibinfo {author} {\bibfnamefont {P.~D.}\ \bibnamefont {Haynes}},
-  \bibinfo {author} {\bibfnamefont {C.-K.}\ \bibnamefont {Skylaris}}, \ and\
-  \bibinfo {author} {\bibfnamefont {M.~C.}\ \bibnamefont {Payne}},\ }\href@noop
-  {} {\bibfield  {journal} {\bibinfo  {journal} {J. Chem. Phys.}\ }\textbf
-  {\bibinfo {volume} {119}},\ \bibinfo {pages} {8842} (\bibinfo {year}
-  {2003})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {van Aggelen}\ \emph {et~al.}(2013)\citenamefont {van
-  Aggelen}, \citenamefont {Yang},\ and\ \citenamefont
-  {Yang}}]{a:weitao-yang-2013}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {H.}~\bibnamefont {van
-  Aggelen}}, \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont {Yang}}, \ and\
-  \bibinfo {author} {\bibfnamefont {W.}~\bibnamefont {Yang}},\ }\href {\doibase
-  10.1103/PhysRevA.88.030501} {\bibfield  {journal} {\bibinfo  {journal} {Phys.
-  Rev. A}\ }\textbf {\bibinfo {volume} {88}},\ \bibinfo {pages} {030501}
-  (\bibinfo {year} {2013})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Tsuchida}(2007)}]{a:ls-tsuchida-aomm}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {E.}~\bibnamefont
-  {Tsuchida}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J.
-  Phys. Soc. Jpn.}\ }\textbf {\bibinfo {volume} {76}},\ \bibinfo {pages}
-  {34708} (\bibinfo {year} {2007})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Mauri}\ \emph {et~al.}(1993)\citenamefont {Mauri},
-  \citenamefont {Galli},\ and\ \citenamefont
-  {Car}}]{a:ls-mauri-galli-car-1993}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {F.}~\bibnamefont
-  {Mauri}}, \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont {Galli}}, \ and\
-  \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Car}},\ }\href@noop {}
-  {\bibfield  {journal} {\bibinfo  {journal} {Phys. Rev. B}\ }\textbf {\bibinfo
-  {volume} {47}},\ \bibinfo {pages} {9973} (\bibinfo {year}
-  {1993})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Ordejon}\ \emph {et~al.}(1995)\citenamefont
-  {Ordejon}, \citenamefont {Drabold}, \citenamefont {Martin},\ and\
-  \citenamefont {Grumbach}}]{a:ls-ordejon-1995}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
-  {Ordejon}}, \bibinfo {author} {\bibfnamefont {D.~A.}\ \bibnamefont
-  {Drabold}}, \bibinfo {author} {\bibfnamefont {R.~M.}\ \bibnamefont {Martin}},
-  \ and\ \bibinfo {author} {\bibfnamefont {M.~P.}\ \bibnamefont {Grumbach}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Phys. Rev. B}\
-  }\textbf {\bibinfo {volume} {51}},\ \bibinfo {pages} {1456} (\bibinfo {year}
-  {1995})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Fattebert}\ and\ \citenamefont
-  {Gygi}(2004)}]{a:ls-fattebert-2004}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.~L.}\ \bibnamefont
-  {Fattebert}}\ and\ \bibinfo {author} {\bibfnamefont {F.}~\bibnamefont
-  {Gygi}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Comput.
-  Phys. Commun.}\ }\textbf {\bibinfo {volume} {162}},\ \bibinfo {pages} {24}
-  (\bibinfo {year} {2004})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Bowler}\ and\ \citenamefont
-  {Miyazaki}(2010)}]{Bowler2010}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.~R.}\ \bibnamefont
-  {Bowler}}\ and\ \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
-  {Miyazaki}},\ }\href {http://stacks.iop.org/0953-8984/22/i=7/a=074207}
-  {\bibfield  {journal} {\bibinfo  {journal} {J. Phys. Condens.
-  Matter}\ }\textbf {\bibinfo {volume} {22}},\ \bibinfo {pages} {74207}
-  (\bibinfo {year} {2010})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Otsuka}\ \emph {et~al.}(2016)\citenamefont {Otsuka},
-  \citenamefont {Taiji}, \citenamefont {Bowler},\ and\ \citenamefont
-  {Miyazaki}}]{Otsuka2016}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
-  {Otsuka}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Taiji}},
-  \bibinfo {author} {\bibfnamefont {D.~R.}\ \bibnamefont {Bowler}}, \ and\
-  \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Miyazaki}},\ }\href
-  {http://stacks.iop.org/1347-4065/55/i=11/a=1102B1} {\bibfield  {journal}
-  {\bibinfo  {journal} {Jpn. J. Appl. Phys.}\ }\textbf
-  {\bibinfo {volume} {55}},\ \bibinfo {pages} {1102B1} (\bibinfo {year}
-  {2016})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Hine}\ \emph {et~al.}(2011)\citenamefont {Hine},
-  \citenamefont {Robinson}, \citenamefont {Haynes}, \citenamefont {Skylaris},
-  \citenamefont {Payne},\ and\ \citenamefont {Mostofi}}]{Hine2011}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {N.~D.~M.}\
-  \bibnamefont {Hine}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
-  {Robinson}}, \bibinfo {author} {\bibfnamefont {P.~D.}\ \bibnamefont
-  {Haynes}}, \bibinfo {author} {\bibfnamefont {C.-K.}\ \bibnamefont
-  {Skylaris}}, \bibinfo {author} {\bibfnamefont {M.~C.}\ \bibnamefont {Payne}},
-  \ and\ \bibinfo {author} {\bibfnamefont {A.~A.}\ \bibnamefont {Mostofi}},\
-  }\href {\doibase 10.1103/PhysRevB.83.195102} {\bibfield  {journal} {\bibinfo
-  {journal} {Phys. Rev. B}\ }\textbf {\bibinfo {volume} {83}},\ \bibinfo
-  {pages} {195102} (\bibinfo {year} {2011})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Stoll}\ \emph {et~al.}(1980)\citenamefont {Stoll},
-  \citenamefont {Wagenblast},\ and\ \citenamefont {Preuss}}]{a:stoll}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {H.}~\bibnamefont
-  {Stoll}}, \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont {Wagenblast}}, \
-  and\ \bibinfo {author} {\bibfnamefont {H.}~\bibnamefont {Preuss}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Theor. Chim.
-  Acta}\ }\textbf {\bibinfo {volume} {57}},\ \bibinfo {pages} {169} (\bibinfo
-  {year} {1980})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Galli}\ and\ \citenamefont
-  {Parrinello}(1992)}]{a:galli_loc}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
-  {Galli}}\ and\ \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
-  {Parrinello}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
-  {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {69}},\ \bibinfo {pages}
-  {3547} (\bibinfo {year} {1992})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Lin}\ \emph {et~al.}(2012)\citenamefont {Lin},
-  \citenamefont {Lu}, \citenamefont {Ying},\ and\ \citenamefont {E}}]{Lin2012}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {L.}~\bibnamefont
-  {Lin}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Lu}}, \bibinfo
-  {author} {\bibfnamefont {L.}~\bibnamefont {Ying}}, \ and\ \bibinfo {author}
-  {\bibfnamefont {W.}~\bibnamefont {E}},\ }\href {\doibase
-  https://doi.org/10.1016/j.jcp.2011.11.032} {\bibfield  {journal} {\bibinfo
-  {journal} {J. Comput. Phys.}\ }\textbf {\bibinfo {volume}
-  {231}},\ \bibinfo {pages} {2140} (\bibinfo {year} {2012})}\BibitemShut
-  {NoStop}%
-\bibitem [{\citenamefont {Khaliullin}\ \emph {et~al.}(2006)\citenamefont
-  {Khaliullin}, \citenamefont {Head-Gordon},\ and\ \citenamefont
-  {Bell}}]{a:khal}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.~Z.}\ \bibnamefont
-  {Khaliullin}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
-  {Head-Gordon}}, \ and\ \bibinfo {author} {\bibfnamefont {A.~T.}\ \bibnamefont
-  {Bell}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J. Chem.
-  Phys.}\ }\textbf {\bibinfo {volume} {124}},\ \bibinfo {pages} {204105}
-  (\bibinfo {year} {2006})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Khaliullin}\ \emph {et~al.}(2007)\citenamefont
-  {Khaliullin}, \citenamefont {Cobar}, \citenamefont {Lochan}, \citenamefont
-  {Bell},\ and\ \citenamefont {Head-Gordon}}]{a:theeda}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.~Z.}\ \bibnamefont
-  {Khaliullin}}, \bibinfo {author} {\bibfnamefont {E.~A.}\ \bibnamefont
-  {Cobar}}, \bibinfo {author} {\bibfnamefont {R.~C.}\ \bibnamefont {Lochan}},
-  \bibinfo {author} {\bibfnamefont {A.~T.}\ \bibnamefont {Bell}}, \ and\
-  \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Head-Gordon}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J. Phys. Chem. A}\
-  }\textbf {\bibinfo {volume} {111}},\ \bibinfo {pages} {8753} (\bibinfo {year}
-  {2007})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Benoit}\ \emph {et~al.}(2001)\citenamefont {Benoit},
-  \citenamefont {Sebastiani},\ and\ \citenamefont {Parrinello}}]{Benoit2001}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.~M.}\ \bibnamefont
-  {Benoit}}, \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont {Sebastiani}},
-  \ and\ \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Parrinello}},\
-  }\href {\doibase 10.1103/PhysRevLett.87.226401} {\bibfield  {journal}
-  {\bibinfo  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {87}},\
-  \bibinfo {pages} {226401} (\bibinfo {year} {2001})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Krajewski}\ and\ \citenamefont
-  {Parrinello}(2006)}]{Krajewski}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {F.~R.}\ \bibnamefont
-  {Krajewski}}\ and\ \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
-  {Parrinello}},\ }\href {\doibase 10.1103/PhysRevB.73.041105} {\bibfield
-  {journal} {\bibinfo  {journal} {Phys. Rev. B}\ }\textbf {\bibinfo {volume}
-  {73}},\ \bibinfo {pages} {041105} (\bibinfo {year} {2006})}\BibitemShut
-  {NoStop}%
-\bibitem [{\citenamefont {K{\"{u}}hne}\ \emph {et~al.}(2007)\citenamefont
-  {K{\"{u}}hne}, \citenamefont {Krack}, \citenamefont {Mohamed},\ and\
-  \citenamefont {Parrinello}}]{a:2ndcpmd}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {T.~D.}\ \bibnamefont
-  {K{\"{u}}hne}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Krack}},
-  \bibinfo {author} {\bibfnamefont {F.~R.}\ \bibnamefont {Mohamed}}, \ and\
-  \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Parrinello}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Phys. Rev. Lett.}\
-  }\textbf {\bibinfo {volume} {98}},\ \bibinfo {pages} {066401} (\bibinfo {year}
-  {2007})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Dai}\ and\ \citenamefont
-  {Yuan}(2009)}]{a:langevin-why}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
-  {Dai}}\ and\ \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Yuan}},\
-  }\href {http://stacks.iop.org/0295-5075/88/i=2/a=20001} {\bibfield  {journal}
-  {\bibinfo  {journal} {EPL}\ }\textbf {\bibinfo {volume}
-  {88}},\ \bibinfo {pages} {20001} (\bibinfo {year} {2009})}\BibitemShut
-  {NoStop}%
-\bibitem [{\citenamefont {K{\"{u}}hne}(2014)}]{Kuhne2013}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {T.~D.}\ \bibnamefont
-  {K{\"{u}}hne}},\ }\href {\doibase 10.1002/wcms.1176} {\bibfield  {journal}
-  {\bibinfo  {journal} {Wiley Interdiscip. Rev. Comput. Mol. Sci.
-  }\ }\textbf {\bibinfo {volume} {4}},\ \bibinfo {pages} {391}
-  (\bibinfo {year} {2014})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Kubo}(1986)}]{a:Kubo-1986}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
-  {Kubo}},\ }\href {\doibase 10.1126/science.233.4761.330} {\bibfield
-  {journal} {\bibinfo  {journal} {Science}\ }\textbf {\bibinfo {volume}
-  {233}},\ \bibinfo {pages} {330} (\bibinfo {year} {1986})}\BibitemShut
-  {NoStop}%
-\bibitem [{\citenamefont {www.cp2k.org}(2017)}]{www:cp2k}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibnamefont {Www.cp2k.org}},\
-  }\href@noop {} {\enquote {\bibinfo {title} {{CP2K Open Source Molecular
-  Dynamics}},}\ } (\bibinfo {year} {Accessed August 18, 2017})\BibitemShut
-  {NoStop}%
-\bibitem [{\citenamefont {Ricci}\ and\ \citenamefont
-  {Ciccotti}(2003)}]{Ricci2003}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {Ricci}}\ and\ \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
-  {Ciccotti}},\ }\href {\doibase 10.1080/0026897031000108113} {\bibfield
-  {journal} {\bibinfo  {journal} {Mol. Phys.}\ }\textbf {\bibinfo
-  {volume} {101}},\ \bibinfo {pages} {1927} (\bibinfo {year}
-  {2003})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Vandevondele}\ \emph {et~al.}(2005)\citenamefont
-  {Vandevondele}, \citenamefont {Krack}, \citenamefont {Mohamed}, \citenamefont
-  {Parrinello}, \citenamefont {Chassaing},\ and\ \citenamefont
-  {Hutter}}]{a:quickstep}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
-  {Vandevondele}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Krack}},
-  \bibinfo {author} {\bibfnamefont {F.}~\bibnamefont {Mohamed}}, \bibinfo
-  {author} {\bibfnamefont {M.}~\bibnamefont {Parrinello}}, \bibinfo {author}
-  {\bibfnamefont {T.}~\bibnamefont {Chassaing}}, \ and\ \bibinfo {author}
-  {\bibfnamefont {J.}~\bibnamefont {Hutter}},\ }\href@noop {} {\bibfield
-  {journal} {\bibinfo  {journal} {Comput. Phys. Commun.}\ }\textbf {\bibinfo
-  {volume} {167}},\ \bibinfo {pages} {103} (\bibinfo {year}
-  {2005})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Perdew}\ \emph {et~al.}(1996)\citenamefont {Perdew},
-  \citenamefont {Burke},\ and\ \citenamefont {Ernzerhof}}]{a:pbe}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.~P.}\ \bibnamefont
-  {Perdew}}, \bibinfo {author} {\bibfnamefont {K.}~\bibnamefont {Burke}}, \
-  and\ \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Ernzerhof}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Phys. Rev. Lett.}\
-  }\textbf {\bibinfo {volume} {77}},\ \bibinfo {pages} {3865} (\bibinfo {year}
-  {1996})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Grimme}\ \emph {et~al.}(2010)\citenamefont {Grimme},
-  \citenamefont {Antony}, \citenamefont {Ehrlich},\ and\ \citenamefont
-  {Krieg}}]{Grimme2010}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
-  {Grimme}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Antony}},
-  \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Ehrlich}}, \ and\
-  \bibinfo {author} {\bibfnamefont {H.}~\bibnamefont {Krieg}},\ }\href
-  {\doibase 10.1063/1.3382344} {\bibfield  {journal} {\bibinfo  {journal} {
-  J. Chem. Phys.}\ }\textbf {\bibinfo {volume} {132}},\ \bibinfo
-  {pages} {154104} (\bibinfo {year} {2010})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Hartwigsen}\ \emph {et~al.}(1998)\citenamefont
-  {Hartwigsen}, \citenamefont {Goedecker},\ and\ \citenamefont
-  {Hutter}}]{a:hgh}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
-  {Hartwigsen}}, \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
-  {Goedecker}}, \ and\ \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
-  {Hutter}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Phys.
-  Rev. B}\ }\textbf {\bibinfo {volume} {58}},\ \bibinfo {pages} {3641}
-  (\bibinfo {year} {1998})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Kolafa}(2004)}]{Kolafa2003}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
-  {Kolafa}},\ }\href {\doibase 10.1002/jcc.10385} {\bibfield  {journal}
-  {\bibinfo  {journal} {J. Comput. Chem.}\ }\textbf {\bibinfo
-  {volume} {25}},\ \bibinfo {pages} {335} (\bibinfo {year} {2004})}\BibitemShut
-  {NoStop}%
-\bibitem [{\citenamefont {Vandevondele}\ and\ \citenamefont
-  {Hutter}(2003)}]{a:ot}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
-  {Vandevondele}}\ and\ \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
-  {Hutter}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J.
-  Chem. Phys.}\ }\textbf {\bibinfo {volume} {118}},\ \bibinfo {pages} {4365}
-  (\bibinfo {year} {2003})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Brehm}\ and\ \citenamefont
-  {Kirchner}(2011)}]{a:travis-main}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
-  {Brehm}}\ and\ \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont
-  {Kirchner}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J.
-  Chem. Inf. Model.}\ }\textbf {\bibinfo {volume} {51}},\ \bibinfo {pages}
-  {2007} (\bibinfo {year} {2011})}\BibitemShut {NoStop}%
-\end{thebibliography}%
 
-\else
+%\else
+
+\begin{suppinfo}
 
 \subsection{Dependence of the forces on the electron localization radius}
 
 The ALMO forces converge to the reference forces as the electron localization radius increases (Figure~\ref{fig:forcecomp}).
 
 \begin{figure}[h!]
-\includegraphics[trim={0cm 0cm 0.1cm 0.1cm},clip,width=8.6cm]{DeltaForceComparison_ALMO_SCF.eps}
+\includegraphics[trim={0cm 0cm 0.1cm 0.1cm},clip,width=13cm]{DeltaForceComparison_ALMO_SCF.eps}
 \caption{\label{fig:forcecomp} Dependence of the Euclidean norm of the instantaneous error $\langle \| \delta \vec{f_{i}}(t) \| \rangle_{i}$ (red line) on the ALMO localization radius $R_c$ expressed in units of atomic van der Waals radii. Black line is the magnitude of the time average of the instantaneous error vector. %calculated as the average difference between fully converged Born-Oppenheimer forces and fully converged ALMO DFT forces, averaged over all dimensions and all molecules for each time step. 
 Forces are computed with the PBE XC functional, TZV2P basis set, and $\epsilon_{\text{SCF}} = 10^{-7}$~a.u. for the configurations from a 30-ps trajectory generated with delocalized AIMD at T=298~K.}
 \end{figure}
@@ -771,6 +362,8 @@ Forces are computed with the PBE XC functional, TZV2P basis set, and $\epsilon_{
 %Calculations were performed at 298 K with the dispersion-corrected PBE $\mathrm{E_{XC}}$ functional and TZV2P basis set, using 125 water molecules for 30 ps.}
 %\end{figure}
 
-\fi % SI - main text switch
+\end{suppinfo}
+
+%\fi % SI - main text switch
 
 \end{document}
