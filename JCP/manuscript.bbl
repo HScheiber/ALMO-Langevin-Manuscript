@@ -1,0 +1,363 @@
+\providecommand{\latin}[1]{#1}
+\providecommand*\mcitethebibliography{\thebibliography}
+\csname @ifundefined\endcsname{endmcitethebibliography}
+  {\let\endmcitethebibliography\endthebibliography}{}
+\begin{mcitethebibliography}{41}
+\providecommand*\natexlab[1]{#1}
+\providecommand*\mciteSetBstSublistMode[1]{}
+\providecommand*\mciteSetBstMaxWidthForm[2]{}
+\providecommand*\mciteBstWouldAddEndPuncttrue
+  {\def\EndOfBibitem{\unskip.}}
+\providecommand*\mciteBstWouldAddEndPunctfalse
+  {\let\EndOfBibitem\relax}
+\providecommand*\mciteSetBstMidEndSepPunct[3]{}
+\providecommand*\mciteSetBstSublistLabelBeginEnd[3]{}
+\providecommand*\EndOfBibitem{}
+\mciteSetBstSublistMode{f}
+\mciteSetBstMaxWidthForm{subitem}{(\alph{mcitesubitemcount})}
+\mciteSetBstSublistLabelBeginEnd
+  {\mcitemaxwidthsubitemform\space}
+  {\relax}
+  {\relax}
+
+\bibitem[Car and Parrinello(1985)Car, and Parrinello]{a:thecpmd}
+Car,~R.; Parrinello,~M. {Unified Approach for Molecular-Dynamics and
+  Density-Functional Theory}. \emph{Phys. Rev. Lett.} \textbf{1985}, \emph{55},
+  2471\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Goedecker(1999)]{a:ls-rev-1999}
+Goedecker,~S. {Linear scaling electronic structure methods}. \emph{Rev. Mod.
+  Phys.} \textbf{1999}, \emph{71}, 1085\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Bowler and Miyazaki(2012)Bowler, and Miyazaki]{a:ls-rev-2012}
+Bowler,~D.~R.; Miyazaki,~T. {O(N) methods in electronic structure
+  calculations}. \emph{Rep. Prog. Phys.} \textbf{2012}, \emph{75}, 36503\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Kussmann \latin{et~al.}(2013)Kussmann, Beer, and
+  Ochsenfeld]{Kussmann2013}
+Kussmann,~J.; Beer,~M.; Ochsenfeld,~C. {Linear-scaling self-consistent field
+  methods for large molecules}. \emph{Wiley Interdiscip. Rev. Comput. Mol. Sci.}
+  \textbf{2013}, \emph{3}, 614--636\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Aarons \latin{et~al.}(2016)Aarons, Sarwar, Thompsett, and
+  Skylaris]{Aarons2016}
+Aarons,~J.; Sarwar,~M.; Thompsett,~D.; Skylaris,~C.-K. {Perspective: Methods
+  for large-scale density functional calculations on metallic systems}.
+  \emph{J. Chem. Phys.} \textbf{2016}, \emph{145},
+  220901\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Vandevondele \latin{et~al.}(2012)Vandevondele, Borstnik, and
+  Hutter]{a:ls-dm-sign}
+VandeVondele,~J.; Borstnik,~U.; Hutter,~J. {Linear Scaling Self-Consistent
+  Field Calculations with Millions of Atoms in the Condensed Phase}. \emph{J.
+  Chem. Theory Comput.} \textbf{2012}, \emph{8}, 3565\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Arita \latin{et~al.}(2014)Arita, Bowler, and Miyazaki]{Arita2014}
+Arita,~M.; Bowler,~D.~R.; Miyazaki,~T. {Stable and efficient linear scaling
+  first-principles molecular dynamics for 10000+ atoms}. \emph{J.
+  Chem. Theory Comput.} \textbf{2014}, \emph{10}, 5419--5425\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Khaliullin \latin{et~al.}(2013)Khaliullin, VandeVondele, and
+  Hutter]{a:almo-ls}
+Khaliullin,~R.~Z.; VandeVondele,~J.; Hutter,~J. {Efficient Linear-Scaling
+  Density Functional Theory for Molecular Systems}. \emph{J.
+  Chem. Theory Comput.} \textbf{2013}, \emph{9}, 4421--4427\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Skylaris \latin{et~al.}(2005)Skylaris, Haynes, Mostofi, and
+  Payne]{Skylaris2005}
+Skylaris,~C.-K.; Haynes,~P.~D.; Mostofi,~A.~A.; Payne,~M.~C. {Introducing
+  ONETEP: Linear-scaling density functional simulations on parallel computers}.
+  \emph{J. Chem. Phys.} \textbf{2005}, \emph{122}, 84119\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Nakata \latin{et~al.}(2015)Nakata, Bowler, and Miyazaki]{Nakata2015}
+Nakata,~A.; Bowler,~D.~R.; Miyazaki,~T. {Optimized multi-site local orbitals in
+  the large-scale DFT program CONQUEST}. \emph{Phys. Chem. Chem. Phys.}
+  \textbf{2015}, \emph{17}, 31427--31433\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Mohr \latin{et~al.}(2015)Mohr, Ratcliff, Genovese, Caliste, Boulanger,
+  Goedecker, and Deutsch]{Mohr2015}
+Mohr,~S.; Ratcliff,~L.~E.; Genovese,~L.; Caliste,~D.; Boulanger,~P.;
+  Goedecker,~S.; Deutsch,~T. {Accurate and efficient linear scaling DFT
+  calculations with universal applicability}. \emph{Phys. Chem. Chem. Phys.}
+  \textbf{2015}, \emph{17}, 31360--31370\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Mostofi \latin{et~al.}(2003)Mostofi, Haynes, Skylaris, and
+  Payne]{a:ls-onetep-2003}
+Mostofi,~A.~A.; Haynes,~P.~D.; Skylaris,~C.-K.; Payne,~M.~C. {Preconditioned
+  iterative minimization for linear-scaling electronic structure calculations}.
+  \emph{J. Chem. Phys.} \textbf{2003}, \emph{119}, 8842\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[van Aggelen \latin{et~al.}(2013)van Aggelen, Yang, and
+  Yang]{a:weitao-yang-2013}
+van Aggelen,~H.; Yang,~Y.; Yang,~W. {Exchange-correlation energy from pairing
+  matrix fluctuation and the particle-particle random-phase approximation}.
+  \emph{Phys. Rev. A} \textbf{2013}, \emph{88}, 30501\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Tsuchida(2007)]{a:ls-tsuchida-aomm}
+Tsuchida,~E. {Augmented orbital minimization method for linear scaling
+  electronic structure calculations}. \emph{J. Phys. Soc. Jpn.} \textbf{2007},
+  \emph{76}, 34708\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Mauri \latin{et~al.}(1993)Mauri, Galli, and
+  Car]{a:ls-mauri-galli-car-1993}
+Mauri,~F.; Galli,~G.; Car,~R. {Orbital formulation for electronic structure 
+  calculations with linear system-size scaling}. \emph{Phys. Rev. B}
+  \textbf{1993}, \emph{47}, 9973\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Ordejon \latin{et~al.}(1995)Ordejon, Drabold, Martin, and
+  Grumbac]{a:ls-ordejon-1995}
+Ordejon,~P.; Drabold,~D.~A.; Martin,~R.~M.; Grumbac,~M.~P. {Linear system-size 
+  scaling methods for electronic-structure calculations}. \emph{Phys. Rev. B}
+  \textbf{1995}, \emph{51}, 1456\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Fattebert and Gygi(2004)Fattebert, and Gygi]{a:ls-fattebert-2004}
+Fattebert,~J.~L.; Gygi,~F. {Linear scaling first-principles molecular dynamics
+  with controlled accuracy}. \emph{Comput. Phys. Commun.} \textbf{2004},
+  \emph{162}, 24\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Bowler and Miyazaki(2010)Bowler, and Miyazaki]{Bowler2010}
+Bowler,~D.~R.; Miyazaki,~T. {Calculations for millions of atoms with density
+  functional theory: linear scaling shows its potential}. \emph{
+  J. Phys. Condens. Matter} \textbf{2010}, \emph{22}, 74207\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Otsuka \latin{et~al.}(2016)Otsuka, Taiji, Bowler, and
+  Miyazaki]{Otsuka2016}
+Otsuka,~T.; Taiji,~M.; Bowler,~D.~R.; Miyazaki,~T. {Linear-scaling
+  first-principles molecular dynamics of complex biological systems with the C
+  onquest code}. \emph{Jpn. J. Appl. Phys.} \textbf{2016},
+  \emph{55}, 1102B1\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Hine \latin{et~al.}(2011)Hine, Robinson, Haynes, Skylaris, Payne, and
+  Mostofi]{Hine2011}
+Hine,~N. D.~M.; Robinson,~M.; Haynes,~P.~D.; Skylaris,~C.-K.; Payne,~M.~C.;
+  Mostofi,~A.~A. {Accurate ionic forces and geometry optimization in
+  linear-scaling density-functional theory with local orbitals}. \emph{Phys.
+  Rev. B} \textbf{2011}, \emph{83}, 195102\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Stoll \latin{et~al.}(1980)Stoll, Wagenblast, and Preuss]{a:stoll}
+Stoll,~H.; Wagenblast,~G.; Preuss,~H. {On the Use of Local Basis-Sets for
+  Localized Molecular-Orbitals}. \emph{Theor. Chim. Acta} \textbf{1980},
+  \emph{57}, 169\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Galli and Parrinello(1992)Galli, and Parrinello]{a:galli_loc}
+Galli,~G.; Parrinello,~M. {Large-scale electronic-structure calculations}.
+  \emph{Phys. Rev. Lett.} \textbf{1992}, \emph{69}, 3547\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Lin \latin{et~al.}(2012)Lin, Lu, Ying, and E]{Lin2012}
+Lin,~L.; Lu,~J.; Ying,~L.; E,~W. {Adaptive local basis set for Kohn-Sham
+  density functional theory in a discontinuous Galerkin framework I: Total
+  energy calculation}. \emph{J. Comput. Phys.} \textbf{2012},
+  \emph{231}, 2140--2154\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Khaliullin \latin{et~al.}(2006)Khaliullin, Head-Gordon, and
+  Bell]{a:khal}
+Khaliullin,~R.~Z.; Head-Gordon,~M.; Bell,~A.~T. {An efficient self-consistent
+  field method for large systems of weakly interacting components}. \emph{J.
+  Chem. Phys.} \textbf{2006}, \emph{124}, 204105\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Khaliullin \latin{et~al.}(2007)Khaliullin, Cobar, Lochan, Bell, and
+  Head-Gordon]{a:theeda}
+Khaliullin,~R.~Z.; Cobar,~E.~A.; Lochan,~R.~C.; Bell,~A.~T.; Head-Gordon,~M.
+  {Unravelling the origin of intermolecular interactions using absolutely
+  localized molecular orbitals}. \emph{J. Phys. Chem. A} \textbf{2007},
+  \emph{111}, 8753\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Benoit \latin{et~al.}(2001)Benoit, Sebastiani, and
+  Parrinello]{Benoit2001}
+Benoit,~D.~M.; Sebastiani,~D.; Parrinello,~M. {Accurate Total Energies without
+  Self-Consistency}. \emph{Phys. Rev. Lett.} \textbf{2001}, \emph{87},
+  226401\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Krajewski and Parrinello(2006)Krajewski, and Parrinello]{Krajewski}
+Krajewski,~F.~R.; Parrinello,~M. {Linear scaling electronic structure
+  calculations and accurate statistical mechanics sampling with noisy forces}.
+  \emph{Phys. Rev. B} \textbf{2006}, \emph{73}, 41105\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[K{\"{u}}hne \latin{et~al.}(2007)K{\"{u}}hne, Krack, Mohamed, and
+  Parrinello]{a:2ndcpmd}
+K{\"{u}}hne,~T.~D.; Krack,~M.; Mohamed,~F.~R.; Parrinello,~M. {Efficient and
+  accurate Car-Parrinello-like approach to
+  Born-Oppenheimer molecular dynamics}. \emph{Phys. Rev. Lett.}
+  \textbf{2007}, \emph{98}, 66401\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Dai and Yuan(2009)Dai, and Yuan]{a:langevin-why}
+Dai,~J.; Yuan,~J. {Large-scale efficient Langevin dynamics, and why it works}.
+  \emph{EPL} \textbf{2009}, \emph{88}, 20001\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[K{\"{u}}hne(2014)]{Kuhne2013}
+K{\"{u}}hne,~T.~D. {Second generation Car-Parrinello molecular dynamics}.
+  \emph{Wiley Interdiscip. Rev. Comput. Mol. Sci.}
+  \textbf{2014}, \emph{4}, 391--406\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Kubo(1986)]{a:Kubo-1986}
+Kubo,~R. {Brownian Motion and Nonequilibrium Statistical Mechanics}.
+  \emph{Science} \textbf{1986}, \emph{233}, 330--334\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Www.cp2k.org(Accessed August 18, 2017)]{www:cp2k}
+Www.cp2k.org, {CP2K Open Source Molecular Dynamics}. Accessed August 18,
+  2017\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[RICCI and CICCOTTI(2003)RICCI, and CICCOTTI]{Ricci2003}
+Ricci,~A.; Cicotti,~G. {Algorithms for Brownian dynamics}. \emph{Mol.
+  Phys.} \textbf{2003}, \emph{101}, 1927--1931\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Vandevondele \latin{et~al.}(2005)Vandevondele, Krack, Mohamed,
+  Parrinello, Chassaing, and Hutter]{a:quickstep}
+VandeVondele,~J.; Krack,~M.; Mohamed,~F.; Parrinello,~M.; Chassaing,~T.;
+  Hutter,~J. {QUICKSTEP: Fast and accurate density functional calculations
+  using a mixed Gaussian and plane waves approach}. \emph{Comput. Phys.
+  Commun.} \textbf{2005}, \emph{167}, 103\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Perdew \latin{et~al.}(1996)Perdew, Burke, and Ernzerhof]{a:pbe}
+Perdew,~J.~P.; Burke,~K.; Ernzerhof,~M. {Generalized gradient approximation
+  made simple}. \emph{Phys. Rev. Lett.} \textbf{1996}, \emph{77}, 3865\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Grimme \latin{et~al.}(2010)Grimme, Antony, Ehrlich, and
+  Krieg]{Grimme2010}
+Grimme,~S.; Antony,~J.; Ehrlich,~S.; Krieg,~H. {A consistent and accurate ab
+  initio parametrization of density functional dispersion correction (DFT-D)
+  for the 94 elements H-Pu}. \emph{J. Chem. Phys.}
+  \textbf{2010}, \emph{132}, 154104\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Hartwigsen \latin{et~al.}(1998)Hartwigsen, Goedecker, and
+  Hutter]{a:hgh}
+Hartwigsen,~C.; Goedecker,~S.; Hutter,~J. {Relativistic separable dual-space
+  Gaussian pseudopotentials from H to Rn}. \emph{Phys.
+  Rev. B} \textbf{1998}, \emph{58}, 3641\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Kolafa(2004)]{Kolafa2003}
+Kolafa,~J. {Time-reversible always stable predictor-corrector method for
+  molecular dynamics of polarizable molecules}. \emph{J. Comp. Chem.
+  } \textbf{2004}, \emph{25}, 335--342\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Vandevondele and Hutter(2003)Vandevondele, and Hutter]{a:ot}
+VandeVondele,~J.; Hutter,~J. {An efficient orbital transformation method for
+  electronic structure calculations}. \emph{J. Chem. Phys.} \textbf{2003},
+  \emph{118}, 4365\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Brehm and Kirchner(2011)Brehm, and Kirchner]{a:travis-main}
+Brehm,~M.; Kirchner,~B. {TRAVIS - a free analyzer and visualizer for Monte
+  Carlo and molecular dynamics trajectories}. \emph{J. Chem. Inf. Model.}
+  \textbf{2011}, \emph{51}, 2007\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\end{mcitethebibliography}
