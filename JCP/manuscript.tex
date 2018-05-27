@@ -178,7 +178,7 @@ The estimated $\Delta$ can be further fine-tuned in a series of short trial-and-
 
 The inherently stochastic approach presented here does not aim to produce fully time-reversible dynamics for atomic nuclei. 
 Nevertheless, it is capable to reproduce correct dynamical properties of a system as long as $\gamma$ is set to a small value and  partially optimized ALMOs remain close to the ground state resulting in $\Delta \ll \gamma$. 
-An alternative approach to performing microcanonical MO-based LS AIMD would be to combine ALMO DFT with the extended Lagrangian method described in Ref.~\onlinecite{Niklasson2008} that has been shown to conserve the total energy in DM-based simulations~\cite{Cawkwell2012}.
+An alternative approach to performing microcanonical MO-based LS AIMD would be to combine ALMO DFT with the extended Lagrangian method described in Ref.~\onlinecite{Niklasson2008}. This method has been shown to conserve the total energy in LS DM-based AIMD simulations~\cite{Cawkwell2012}. 
 
 % RZK
 % Niklasson2008  --> DOI: 10.1103/PhysRevLett.100.123004
@@ -201,7 +201,7 @@ ALMO AIMD was implemented in CP2K, an open source materials modeling package~\ci
 Accuracy and efficiency of ALMO AIMD was tested using liquid water as an example. 
 This system is challenging because intermolecular electron delocalization is a critical component of hydrogen bonding and must be described correctly to reproduce static and dynamical properties of liquid water. 
 A periodic cell containing 125 molecules was simulated for $\SI{30}{\ps}$ at $T=\SI{298}{\K}$ and a constant density of $\SI{1.01}{\g\cdot\cm^{-3}}$. 
-The initial configurations of the water boxes were created by equilibrating the system for 20~ps using the fully converged orbitals. 
+The initial configurations of the water boxes were created by equilibrating the system for 20~ps using fully converged orbitals. 
 Ricci-Ciccotti algorithm~\cite{Ricci2003} was used to integrate the Langevin equation (see Supporting Information). We found that $\gamma = \SI{e-3}{\per\fs}$ is large enough to thermostat the system efficiently and small enough not to significantly affect dynamical properties of liquid water.
 %
 In the dual Gaussian and plane-wave scheme implemented in CP2K~\cite{a:quickstep}, the TZV2P basis set was used to represent molecular orbitals, and a plane-wave cutoff of $\SI{320}{Ry}$ used to represent electron density. 
@@ -217,7 +217,7 @@ In ALMO AIMD, the element-specific cutoff radius for electron delocalization $R_
 To check the ability of the $R^{\Delta}(t)$ term to compensate for imperfections in ALMO forces, we varied $\epsilon_{\text{SCF}}$ between tight $10^{-6}$~a.u. and loose $10^{-2}$~a.u. 
 
 \begin{figure}
-\includegraphics[trim={0cm 0cm 0cm 0cm},clip,width=8.6cm]{2.eps}
+\includegraphics[trim={0.5cm 0cm 0.7cm 0.1cm},clip,width=8.6cm]{2.eps}
 \caption{\label{fig:randomforce} 
 The red line is the Euclidean norm of the instantaneous error $\langle \| \delta \vec{f_{i}}(t) \| \rangle_{i}$, the black line is the magnitude of the time average of the instantaneous error vector, and the green line is the time average of the red line. 
 %(a) $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$~a.u. relative to the fully converged ALMO reference, 
