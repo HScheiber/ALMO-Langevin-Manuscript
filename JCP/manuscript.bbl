@@ -79,9 +79,9 @@
   {Kussmann}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Beer}}, \
   and\ \bibinfo {author} {\bibfnamefont {C.}~\bibnamefont {Ochsenfeld}},\
   }\href {\doibase 10.1002/wcms.1138} {\bibfield  {journal} {\bibinfo
-  {journal} {Wiley Interdisciplinary Reviews: Computational Molecular Science}\
-  }\textbf {\bibinfo {volume} {3}},\ \bibinfo {pages} {614} (\bibinfo {year}
-  {2013})}\BibitemShut {NoStop}%
+  {journal} {Wiley Interdiscip. Rev. Comput. Mol. Sci.}\ }\textbf {\bibinfo
+  {volume} {3}},\ \bibinfo {pages} {614} (\bibinfo {year} {2013})}\BibitemShut
+  {NoStop}%
 \bibitem [{\citenamefont {Aarons}\ \emph {et~al.}(2016)\citenamefont {Aarons},
   \citenamefont {Sarwar}, \citenamefont {Thompsett},\ and\ \citenamefont
   {Skylaris}}]{Aarons2016}%
@@ -90,9 +90,9 @@
   {Aarons}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Sarwar}},
   \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont {Thompsett}}, \ and\
   \bibinfo {author} {\bibfnamefont {C.-K.}\ \bibnamefont {Skylaris}},\ }\href
-  {\doibase 10.1063/1.4972007} {\bibfield  {journal} {\bibinfo  {journal} {The
-  Journal of Chemical Physics}\ }\textbf {\bibinfo {volume} {145}},\ \bibinfo
-  {pages} {220901} (\bibinfo {year} {2016})}\BibitemShut {NoStop}%
+  {\doibase 10.1063/1.4972007} {\bibfield  {journal} {\bibinfo  {journal} {J.
+  Chem. Phys.}\ }\textbf {\bibinfo {volume} {145}},\ \bibinfo {pages} {220901}
+  (\bibinfo {year} {2016})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Vandevondele}, \citenamefont {Borstnik},\ and\
   \citenamefont {Hutter}(2012)}]{a:ls-dm-sign}%
   \BibitemOpen
@@ -108,9 +108,9 @@
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
   {Arita}}, \bibinfo {author} {\bibfnamefont {D.~R.}\ \bibnamefont {Bowler}}, \
   and\ \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Miyazaki}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Journal of
-  chemical theory and computation}\ }\textbf {\bibinfo {volume} {10}},\
-  \bibinfo {pages} {5419} (\bibinfo {year} {2014})}\BibitemShut {NoStop}%
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J. Chem. Theory
+  Comput.}\ }\textbf {\bibinfo {volume} {10}},\ \bibinfo {pages} {5419}
+  (\bibinfo {year} {2014})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Khaliullin}, \citenamefont {VandeVondele},\ and\
   \citenamefont {Hutter}(2013)}]{a:almo-ls}%
   \BibitemOpen
@@ -118,9 +118,9 @@
   {Khaliullin}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
   {VandeVondele}}, \ and\ \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
   {Hutter}},\ }\href {\doibase 10.1021/ct400595k} {\bibfield  {journal}
-  {\bibinfo  {journal} {Journal of Chemical Theory and Computation}\ }\textbf
-  {\bibinfo {volume} {9}},\ \bibinfo {pages} {4421} (\bibinfo {year}
-  {2013})}\BibitemShut {NoStop}%
+  {\bibinfo  {journal} {J. Chem. Theory Comput.}\ }\textbf {\bibinfo {volume}
+  {9}},\ \bibinfo {pages} {4421} (\bibinfo {year} {2013})}\BibitemShut
+  {NoStop}%
 \bibitem [{\citenamefont {Skylaris}\ \emph {et~al.}(2005)\citenamefont
   {Skylaris}, \citenamefont {Haynes}, \citenamefont {Mostofi},\ and\
   \citenamefont {Payne}}]{Skylaris2005}%
@@ -130,9 +130,8 @@
   {Haynes}}, \bibinfo {author} {\bibfnamefont {A.~A.}\ \bibnamefont {Mostofi}},
   \ and\ \bibinfo {author} {\bibfnamefont {M.~C.}\ \bibnamefont {Payne}},\
   }\href {\doibase 10.1063/1.1839852} {\bibfield  {journal} {\bibinfo
-  {journal} {The Journal of Chemical Physics}\ }\textbf {\bibinfo {volume}
-  {122}},\ \bibinfo {pages} {84119} (\bibinfo {year} {2005})}\BibitemShut
-  {NoStop}%
+  {journal} {J. Chem. Phys.}\ }\textbf {\bibinfo {volume} {122}},\ \bibinfo
+  {pages} {84119} (\bibinfo {year} {2005})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Nakata}, \citenamefont {Bowler},\ and\ \citenamefont
   {Miyazaki}(2015)}]{Nakata2015}%
   \BibitemOpen
@@ -217,9 +216,9 @@
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.~R.}\ \bibnamefont
   {Bowler}}\ and\ \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
   {Miyazaki}},\ }\href {http://stacks.iop.org/0953-8984/22/i=7/a=074207}
-  {\bibfield  {journal} {\bibinfo  {journal} {Journal of Physics: Condensed
-  Matter}\ }\textbf {\bibinfo {volume} {22}},\ \bibinfo {pages} {74207}
-  (\bibinfo {year} {2010})}\BibitemShut {NoStop}%
+  {\bibfield  {journal} {\bibinfo  {journal} {J. Phys. Condens. Matter}\
+  }\textbf {\bibinfo {volume} {22}},\ \bibinfo {pages} {74207} (\bibinfo {year}
+  {2010})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Otsuka}\ \emph {et~al.}(2016)\citenamefont {Otsuka},
   \citenamefont {Taiji}, \citenamefont {Bowler},\ and\ \citenamefont
   {Miyazaki}}]{Otsuka2016}%
@@ -229,9 +228,9 @@
   \bibinfo {author} {\bibfnamefont {D.~R.}\ \bibnamefont {Bowler}}, \ and\
   \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Miyazaki}},\ }\href
   {http://stacks.iop.org/1347-4065/55/i=11/a=1102B1} {\bibfield  {journal}
-  {\bibinfo  {journal} {Japanese Journal of Applied Physics}\ }\textbf
-  {\bibinfo {volume} {55}},\ \bibinfo {pages} {1102B1} (\bibinfo {year}
-  {2016})}\BibitemShut {NoStop}%
+  {\bibinfo  {journal} {Jpn. J. Appl. Phys.}\ }\textbf {\bibinfo {volume}
+  {55}},\ \bibinfo {pages} {1102B1} (\bibinfo {year} {2016})}\BibitemShut
+  {NoStop}%
 \bibitem [{\citenamefont {Hine}\ \emph {et~al.}(2011)\citenamefont {Hine},
   \citenamefont {Robinson}, \citenamefont {Haynes}, \citenamefont {Skylaris},
   \citenamefont {Payne},\ and\ \citenamefont {Mostofi}}]{Hine2011}%
@@ -270,9 +269,8 @@
   {author} {\bibfnamefont {L.}~\bibnamefont {Ying}}, \ and\ \bibinfo {author}
   {\bibfnamefont {W.}~\bibnamefont {E}},\ }\href {\doibase
   https://doi.org/10.1016/j.jcp.2011.11.032} {\bibfield  {journal} {\bibinfo
-  {journal} {Journal of Computational Physics}\ }\textbf {\bibinfo {volume}
-  {231}},\ \bibinfo {pages} {2140} (\bibinfo {year} {2012})}\BibitemShut
-  {NoStop}%
+  {journal} {J. Comput. Phys.}\ }\textbf {\bibinfo {volume} {231}},\ \bibinfo
+  {pages} {2140} (\bibinfo {year} {2012})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Khaliullin}, \citenamefont {Head-Gordon},\ and\
   \citenamefont {Bell}(2006)}]{a:khal}%
   \BibitemOpen
@@ -329,16 +327,15 @@
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
   {Dai}}\ and\ \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Yuan}},\
   }\href {http://stacks.iop.org/0295-5075/88/i=2/a=20001} {\bibfield  {journal}
-  {\bibinfo  {journal} {EPL (Europhysics Letters)}\ }\textbf {\bibinfo {volume}
-  {88}},\ \bibinfo {pages} {20001} (\bibinfo {year} {2009})}\BibitemShut
-  {NoStop}%
+  {\bibinfo  {journal} {EPL}\ }\textbf {\bibinfo {volume} {88}},\ \bibinfo
+  {pages} {20001} (\bibinfo {year} {2009})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {K{\"{u}}hne}(2014)}]{Kuhne2013}%
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {T.~D.}\ \bibnamefont
   {K{\"{u}}hne}},\ }\href {\doibase 10.1002/wcms.1176} {\bibfield  {journal}
-  {\bibinfo  {journal} {Wiley Interdisciplinary Reviews: Computational
-  Molecular Science}\ }\textbf {\bibinfo {volume} {4}},\ \bibinfo {pages} {391}
-  (\bibinfo {year} {2014})}\BibitemShut {NoStop}%
+  {\bibinfo  {journal} {Wiley Interdiscip. Rev. Comput. Mol. Sci.}\ }\textbf
+  {\bibinfo {volume} {4}},\ \bibinfo {pages} {391} (\bibinfo {year}
+  {2014})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Kubo}(1986)}]{a:Kubo-1986}%
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
@@ -350,33 +347,32 @@
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.~M.~N.}\
   \bibnamefont {Niklasson}},\ }\href {\doibase 10.1103/PhysRevLett.100.123004}
-  {\bibfield  {journal} {\bibinfo  {journal} {Physical Review Letters}\
-  }\textbf {\bibinfo {volume} {100}},\ \bibinfo {pages} {123004} (\bibinfo
-  {year} {2008})}\BibitemShut {NoStop}%
+  {\bibfield  {journal} {\bibinfo  {journal} {Phys. Rev. Lett.}\ }\textbf
+  {\bibinfo {volume} {100}},\ \bibinfo {pages} {123004} (\bibinfo {year}
+  {2008})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Cawkwell}\ and\ \citenamefont
   {Niklasson}(2012)}]{Cawkwell2012}%
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.~J.}\ \bibnamefont
   {Cawkwell}}\ and\ \bibinfo {author} {\bibfnamefont {A.~M.}\ \bibnamefont
   {Niklasson}},\ }\href {\doibase 10.1063/1.4755991} {\bibfield  {journal}
-  {\bibinfo  {journal} {Journal of Chemical Physics}\ }\textbf {\bibinfo
-  {volume} {137}},\ \bibinfo {pages} {134105} (\bibinfo {year}
-  {2012})}\BibitemShut {NoStop}%
+  {\bibinfo  {journal} {J. Chem. Phys.}\ }\textbf {\bibinfo {volume} {137}},\
+  \bibinfo {pages} {134105} (\bibinfo {year} {2012})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Www.cp2k.org}(2017)}]{www:cp2k}%
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibnamefont {Www.cp2k.org}},\
   }\href@noop {} {\enquote {\bibinfo {title} {{CP2K Open Source Molecular
   Dynamics}},}\ } (\bibinfo {year} {Accessed August 18, 2017})\BibitemShut
   {NoStop}%
-\bibitem [{\citenamefont {RICCI}\ and\ \citenamefont
-  {CICCOTTI}(2003)}]{Ricci2003}%
+\bibitem [{\citenamefont {Ricci}\ and\ \citenamefont
+  {Ciccotti}(2003)}]{Ricci2003}%
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {RICCI}}\ and\ \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
-  {CICCOTTI}},\ }\href {\doibase 10.1080/0026897031000108113} {\bibfield
-  {journal} {\bibinfo  {journal} {Molecular Physics}\ }\textbf {\bibinfo
-  {volume} {101}},\ \bibinfo {pages} {1927} (\bibinfo {year}
-  {2003})}\BibitemShut {NoStop}%
+  {Ricci}}\ and\ \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
+  {Ciccotti}},\ }\href {\doibase 10.1080/0026897031000108113} {\bibfield
+  {journal} {\bibinfo  {journal} {Mol. Phys.}\ }\textbf {\bibinfo {volume}
+  {101}},\ \bibinfo {pages} {1927} (\bibinfo {year} {2003})}\BibitemShut
+  {NoStop}%
 \bibitem [{\citenamefont {Vandevondele}\ \emph {et~al.}(2005)\citenamefont
   {Vandevondele}, \citenamefont {Krack}, \citenamefont {Mohamed}, \citenamefont
   {Parrinello}, \citenamefont {Chassaing},\ and\ \citenamefont
@@ -408,9 +404,9 @@
   {Grimme}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Antony}},
   \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Ehrlich}}, \ and\
   \bibinfo {author} {\bibfnamefont {H.}~\bibnamefont {Krieg}},\ }\href
-  {\doibase 10.1063/1.3382344} {\bibfield  {journal} {\bibinfo  {journal} {The
-  Journal of Chemical Physics}\ }\textbf {\bibinfo {volume} {132}},\ \bibinfo
-  {pages} {154104} (\bibinfo {year} {2010})}\BibitemShut {NoStop}%
+  {\doibase 10.1063/1.3382344} {\bibfield  {journal} {\bibinfo  {journal} {J.
+  Chem. Phys.}\ }\textbf {\bibinfo {volume} {132}},\ \bibinfo {pages} {154104}
+  (\bibinfo {year} {2010})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Hartwigsen}, \citenamefont {Goedecker},\ and\
   \citenamefont {Hutter}(1998)}]{a:hgh}%
   \BibitemOpen
@@ -424,9 +420,8 @@
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
   {Kolafa}},\ }\href {\doibase 10.1002/jcc.10385} {\bibfield  {journal}
-  {\bibinfo  {journal} {Journal of Computational Chemistry}\ }\textbf {\bibinfo
-  {volume} {25}},\ \bibinfo {pages} {335} (\bibinfo {year} {2004})}\BibitemShut
-  {NoStop}%
+  {\bibinfo  {journal} {J. Comp. Chem.}\ }\textbf {\bibinfo {volume} {25}},\
+  \bibinfo {pages} {335} (\bibinfo {year} {2004})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Vandevondele}\ and\ \citenamefont
   {Hutter}(2003)}]{a:ot}%
   \BibitemOpen
