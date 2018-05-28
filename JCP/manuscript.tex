@@ -86,6 +86,7 @@ However, the approach can use other local and nonlocal basis sets~\cite{a:galli_
 The key feature of ALMO DFT is that its one-electron wavefunctions are constructed in a two-stage self-consistent-field (SCF) procedure~\cite{a:almo-ls} to circumvent the problem of the sluggish variational optimization emphasized above. 
 In the first stage, ALMOs are constrained to their localization centers~\cite{a:khal} whereas, in the second stage, ALMOs are relaxed to allow delocalization onto the neighbor molecules within their localization radius $R_{c}$. 
 To achieve a robust optimization in the problematic second stage, it is important to keep the delocalization component of the trial wavefunction orthogonal to the fixed orbitals obtained in the first stage. 
+For mathematical details, see the ALMO SCF method in Ref.~\citenum{a:almo-ls}. ALMO DFT agorithms are presented in the Supplementary Material. 
 
 ALMO constraints imposed by $R_c$ prohibit electron density transfer between distant molecules, but retain all other types of interaction such as long-range electrostatic, exchange, polarization, and---if the exchange-correlation (XC) functional includes them---dispersion interactions~\cite{a:theeda}. 
 Since the importance of electron transfer decays exponentially with distance in finite-gap materials~\cite{a:ls-rev-1999}, the \mbox{ALMO} approximation is expected to provide a natural and accurate representation of the electronic structure of molecular systems. %with just a few local variables. 
@@ -201,6 +202,7 @@ Accuracy and efficiency of ALMO AIMD was tested using liquid water as an example
 This system is challenging because intermolecular electron delocalization is a critical component of hydrogen bonding and must be described correctly to reproduce static and dynamical properties of liquid water. 
 A periodic cell containing 125 molecules was simulated for $\SI{30}{\ps}$ at $T=\SI{298}{\K}$ and a constant density of $\SI{1.01}{\g\cdot\cm^{-3}}$. 
 The initial configurations of the water boxes were created by equilibrating the system for 20~ps using fully converged orbitals. 
+Ricci-Ciccotti algorithm~\cite{Ricci2003} was used to integrate the Langevin equation (see Supplementary Material). We found that $\gamma = \SI{e-3}{\per\fs}$ is large enough to thermostat the system efficiently and small enough not to significantly affect dynamical properties of liquid water.
 %
 In the dual Gaussian and plane-wave scheme implemented in CP2K~\cite{a:quickstep}, the TZV2P basis set was used to represent molecular orbitals, and a plane-wave cutoff of $\SI{320}{Ry}$ used to represent electron density. 
 The XC energy was approximated using the dispersion-corrected PBE functional~\cite{a:pbe,Grimme2010}. 
@@ -215,7 +217,11 @@ In ALMO AIMD, the element-specific cutoff radius for electron delocalization $R_
 To check the ability of the $R^{\Delta}(t)$ term to compensate for imperfections in ALMO forces, we varied $\epsilon_{\text{SCF}}$ between tight $10^{-6}$~a.u. and loose $10^{-2}$~a.u. 
 
 \begin{figure}
+<<<<<<< HEAD
 \includegraphics[trim={0cm 0cm 0cm 0cm},clip,width=8.6cm]{2.eps}
+=======
+\includegraphics[trim={0.cm 0.cm 0.cm 0.1cm},clip,width=8.6cm]{2.eps}
+>>>>>>> cfaee2996c31ee3b0483f0120ecffd1a0728c1e9
 \caption{\label{fig:randomforce} 
 The red line is the Euclidean norm of the instantaneous error $\langle \| \delta \vec{f_{i}}(t) \| \rangle_{i}$, the black line is the magnitude of the time average of the instantaneous error vector, and the green line is the time average of the red line. 
 %(a) $R_{c} = 1.6$ vdWR and $\epsilon_{\text{SCF}} = 10^{-2}$~a.u. relative to the fully converged ALMO reference, 
@@ -230,6 +236,7 @@ Even with $\epsilon_{\text{SCF}} = 10^{-2}$, the simulation is stable with the c
 We found that it is easier to optimize $\Delta$ when $\gamma$ is set to zero because of reduced noise in the trial runs. 
 %RZK addition for a longer article: In theory, $\Delta$ should be independent on system size. However, we found that $\Delta$ dependents on system size due to finite size effects, which decay for increasing system size.
 %
+Analysis of $\delta \vec{f_{i}}(t)$ shows that the error indeed resembles Gaussian white noise. The mean of the error is zero (black line in Figure~\ref{fig:randomforce}a). Its ACF decays rapidly (Figure~\ref{fig:randomforce}c) so that the errors can be considered uncorrelated on time scale of $\SI{50}{\fs}$. Thus the main assumption behind our approach to ALMO AIMD is justified for liquid water. We established that the main source of error in forces for this system is the loose convergence criterion and not the finite $R_c$: fully converged ALMO SCF calculations remove the oscillating component of $\delta f$ (Figure~\ref{fig:randomforce}b). We also verified that the ALMO forces converge to the reference forces in the limit $R_{c} \rightarrow \infty$ (Figure~\ref{SI-fig:forcecomp} in Supplementary Material).
 
 %we computed the average difference in force between fully converged Born-Oppenheimer forces and forces calculated from ALMO DFT with varying $R_{c}$. Figure \ref{fig:forcecomp} in the Supplemental Material shows that as $R_{c}$ is increased to infinity, forces converge toward the Born-Oppenheimer limit.
 
@@ -294,11 +301,14 @@ A generalization of the methodology to systems of strongly interacting atoms (e.
 
 %\begin{suppinfo}
 
+See supplementary material for the detailed description of ALMO AIMD algorithms and dependence of the atomic forces on the electron localization radius.
 
 %\end{suppinfo}
 
 %\begin{acknowledgement}
 
+%\textbf{Acknowledgements.} 
+The authors are grateful to Thomas K\"uhne for insightful discussions. The research was funded by the Natural Sciences and Engineering Research Council of Canada through the Discovery Grant (RGPIN-2016-05059). The authors are grateful to Compute Canada and McGill HPC Centre for computer time.
 
 %\end{acknowledgement}
 
